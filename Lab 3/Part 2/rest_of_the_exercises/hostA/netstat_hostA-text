@@ -1,0 +1,8 @@
+[jbthakka@group-82 ]netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+10.0.1.0        0.0.0.0         255.255.255.0   U         0 0          0 p2p1
+10.0.2.0        10.0.1.21       255.255.255.0   UG        0 0          0 p2p1
+10.0.3.0        10.0.1.21       255.255.255.0   UG        0 0          0 p2p1
+[jbthakka@group-82 ]
+

@@ -1,0 +1,14 @@
+[jbthakka@hostA ~] ping -c 5 10.0.1.21
+PING 10.0.1.21 (10.0.1.21) 56(84) bytes of data.
+64 bytes from 10.0.1.21: icmp_seq=1 ttl=64 time=1.07 ms
+64 bytes from 10.0.1.21: icmp_seq=2 ttl=64 time=0.248 ms
+64 bytes from 10.0.1.21: icmp_seq=3 ttl=64 time=0.230 ms
+64 bytes from 10.0.1.21: icmp_seq=4 ttl=64 time=0.233 ms
+64 bytes from 10.0.1.21: icmp_seq=5 ttl=64 time=0.227 ms
+
+--- 10.0.1.21 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4000ms
+rtt min/avg/max/mdev = 0.227/0.403/1.077/0.337 ms
+[jbthakka@hostA ~] 
+
+

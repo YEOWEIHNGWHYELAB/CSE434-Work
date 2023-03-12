@@ -1,0 +1,85 @@
+Router#
+Router#show running-config
+Building configuration...
+
+Current configuration : 986 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Router
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+ip cef
+!
+!
+multilink bundle-name authenticated
+!
+!
+!         
+archive   
+ log config
+  hidekeys
+!         
+!         
+!         
+!         
+!         
+interface FastEthernet0/0
+ ip address 10.0.2.1 255.255.255.0
+ duplex half
+ speed auto
+ no cdp enable
+ no mop enabled
+!         
+interface FastEthernet0/1
+ ip address 10.0.3.1 255.255.255.0
+ duplex auto
+ speed auto
+ no cdp enable
+!         
+interface Serial0/0/0
+ no ip address
+ shutdown 
+ clock rate 2000000
+!         
+interface Serial0/0/1
+ no ip address
+ shutdown 
+ clock rate 2000000
+ no cdp enable
+!         
+ip forward-protocol nd
+ip route 10.0.1.0 255.255.255.0 10.0.2.22
+!         
+!         
+ip http server
+!         
+snmp-server community Team RO 33
+!         
+!         
+control-plane
+!         
+!         
+line con 0
+ exec-timeout 0 0
+line aux 0
+line vty 0 4
+ password vtpassword
+ login    
+!         
+scheduler allocate 20000 1000
+no process cpu extended
+no process cpu autoprofile hog
+!         
+end       
+          
+Router#

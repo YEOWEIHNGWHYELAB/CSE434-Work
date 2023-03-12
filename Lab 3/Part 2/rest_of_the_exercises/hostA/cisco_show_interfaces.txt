@@ -1,0 +1,109 @@
+Router#show interfaces
+FastEthernet0/0 is up, line protocol is up 
+  Hardware is MV96340 Ethernet, address is 0017.95ac.b930 (bia 0017.95ac.b930)
+  Internet address is 10.0.2.1/24
+  MTU 1500 bytes, BW 100000 Kbit/sec, DLY 100 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Half-duplex, 100Mb/s, 100BaseTX/FX
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:18:56, output 00:00:04, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     360 packets input, 34832 bytes
+     Received 1 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog
+     0 input packets with dribble condition detected
+     775 packets output, 50116 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier
+     0 output buffer failures, 0 output buffers swapped out
+FastEthernet0/1 is up, line protocol is up 
+  Hardware is MV96340 Ethernet, address is 0017.95ac.b931 (bia 0017.95ac.b931)
+  Internet address is 10.0.3.1/24
+  MTU 1500 bytes, BW 100000 Kbit/sec, DLY 100 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full-duplex, 100Mb/s, 100BaseTX/FX
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:19:01, output 00:00:09, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     467 packets input, 45268 bytes
+     Received 1 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog
+     0 input packets with dribble condition detected
+     1158 packets output, 82662 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier
+     0 output buffer failures, 0 output buffers swapped out
+Serial0/0/0 is administratively down, line protocol is down 
+  Hardware is GT96K Serial
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation HDLC, loopback not set
+  Keepalive set (10 sec)
+  Last input never, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: weighted fair
+  Output queue: 0/1000/64/0 (size/max total/threshold/drops) 
+     Conversations  0/0/256 (active/max active/max total)
+     Reserved Conversations 0/0 (allocated/max allocated)
+     Available Bandwidth 1158 kilobits/sec
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     0 packets input, 0 bytes, 0 no buffer
+     Received 0 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     0 packets output, 0 bytes, 0 underruns
+     0 output errors, 0 collisions, 4 interface resets
+     0 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+     0 carrier transitions
+     DCD=down  DSR=down  DTR=down  RTS=down  CTS=down
+          
+Serial0/0/1 is administratively down, line protocol is down 
+  Hardware is GT96K Serial
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation HDLC, loopback not set
+  Keepalive set (10 sec)
+  Last input never, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: weighted fair
+  Output queue: 0/1000/64/0 (size/max total/threshold/drops) 
+     Conversations  0/0/256 (active/max active/max total)
+     Reserved Conversations 0/0 (allocated/max allocated)
+     Available Bandwidth 1158 kilobits/sec
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     0 packets input, 0 bytes, 0 no buffer
+     Received 0 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     0 packets output, 0 bytes, 0 underruns
+     0 output errors, 0 collisions, 4 interface resets
+     0 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+     0 carrier transitions
+     DCD=down  DSR=down  DTR=down  RTS=down  CTS=down
+          
+Router#
+

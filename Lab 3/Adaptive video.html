@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)https://witestlab.poly.edu/blog/adaptive-video-reproducing/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Adaptive video</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="https://witestlab.poly.edu/blog/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="./Adaptive video_files/screen.css">
+    <link rel="stylesheet" type="text/css" href="./Adaptive video_files/css">
+
+    <link rel="canonical" href="http://witestlab.poly.edu/blog/adaptive-video-reproducing/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://witestlab.poly.edu/blog/adaptive-video-reproducing/amp/">
+    
+    <meta property="og:site_name" content="Run my testbed experiment">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Adaptive video">
+    <meta property="og:description" content="This experiment explores the tradeoff between different metrics of video quality (average rate, interruptions, and variability of rate) in an adaptive video delivery system. It should take about 60-120 minutes to run this experiment. You can run this experiment on GENI, on CloudLab, or on the new FABRIC testbed! Refer">
+    <meta property="og:url" content="http://witestlab.poly.edu/blog/adaptive-video-reproducing/">
+    <meta property="og:image" content="http://witestlab.poly.edu/blog/content/images/2022/04/dash-example-1.png">
+    <meta property="article:published_time" content="2022-04-04T02:23:54.000Z">
+    <meta property="article:modified_time" content="2022-11-03T19:14:41.000Z">
+    <meta property="article:tag" content="education">
+    <meta property="article:tag" content="adaptive video">
+    <meta property="article:tag" content="video">
+    <meta property="article:tag" content="reproducing research">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Adaptive video">
+    <meta name="twitter:description" content="This experiment explores the tradeoff between different metrics of video quality (average rate, interruptions, and variability of rate) in an adaptive video delivery system. It should take about 60-120 minutes to run this experiment. You can run this experiment on GENI, on CloudLab, or on the new FABRIC testbed! Refer">
+    <meta name="twitter:url" content="http://witestlab.poly.edu/blog/adaptive-video-reproducing/">
+    <meta name="twitter:image" content="http://witestlab.poly.edu/blog/content/images/2022/04/dash-example-1.png">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Fraida Fund">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="education, adaptive video, video, reproducing research">
+    
+    <script async="" src="./Adaptive video_files/analytics.js.download"></script><script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Run my testbed experiment",
+        "logo": "http://witestlab.poly.edu/blog/ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Fraida Fund",
+        "image": "http://witestlab.poly.edu/blog/content/images/2016/01/head.jpg",
+        "url": "http://witestlab.poly.edu/blog/author/ffund/",
+        "sameAs": [
+            "http://witestlab.poly.edu/~ffund/"
+        ]
+    },
+    "headline": "Adaptive video",
+    "url": "https://witestlab.poly.edu/blog/adaptive-video-reproducing/",
+    "datePublished": "2022-04-04T02:23:54.000Z",
+    "dateModified": "2022-11-03T19:14:41.000Z",
+    "image": "http://witestlab.poly.edu/blog/content/images/2022/04/dash-example-1.png",
+    "keywords": "education, adaptive video, video, reproducing research",
+    "description": "This experiment explores the tradeoff between different metrics of video quality (average rate, interruptions, and variability of rate) in an adaptive video delivery system. It should take about 60-120 minutes to run this experiment. You can run this experiment on GENI, on CloudLab, or on the new FABRIC testbed! Refer",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://witestlab.poly.edu/blog"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.10">
+    <link rel="alternate" type="application/rss+xml" title="Run my testbed experiment" href="https://witestlab.poly.edu/blog/rss/">
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25309460-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<link href="./Adaptive video_files/css(1)" rel="stylesheet" type="text/css">
+<link href="./Adaptive video_files/css(2)" rel="stylesheet" type="text/css">
+<style>
+body,
+h1, h2, h3, h4, h5, h6,
+.main-nav a,
+.subscribe-button,
+.page-title,
+.post-meta,
+.read-next-story .post:before,
+.pagination,
+.site-footer {
+    font-family:"Fira Sans", sans-serif; /* Replace with your own font */
+}
+    
+.site-footer{
+    font-size: 1.2rem;
+}
+.main-header {
+   background-color:#0e7d8e!important; /*Replace with your own 6-digit hex color */
+}
+    
+ .nav {
+   background-color:#816c5d!important; /*Replace with your own 6-digit hex color */
+}
+    
+ .nav-opened .menu-button {
+	opacity: 0;
+   }
+h1, h2, h3{
+	color:#818790;
+}
+    
+ .post-title{
+     color:#4A4A4A;
+     margin-top: 20px;
+ }
+  .st-alert code{border:none;background:rgba(0,0,0,0.2);}.st-alert a{color:#2f8cde;}.st-alert-info a,.st-alert-info a:visited,.st-alert-info a:hover{color:#fff}
+.st-alert{padding:20px 30px;margin-bottom:20px;ttext-shadow:0 1px 0 rgba(255,255,255,0.3);background-color:#F4CCCC;position:relative;color:#484019;-webkit-border-radius:1px;-moz-border-radius:1px;border-radius:1px;}.st-alert-success{background-color:#0e7d8e;color:#445028;}.st-alert-danger,.st-alert-error{background-color:#0e7d8e;color:#fff;}.st-alert-info{background-color:#0e7d8e;color:#fff;}.st-alert span{position:absolute;left:0;top:0;padding:2px 8px;color:#fff;font-size:13px;background:rgba(0,0,0,0.2);-webkit-border-radius:1px 0 1px 0;-moz-border-radius:1px 0 1px 0;border-radius:1px 0 1px 0;}.st-alert.with_title{padding:40px 25px 30px 60px;}
+
+ .geni-specific {
+  border-color:#FB8C00; 
+  border-style:solid; 
+  padding: 15px;
+}
+h4.geni-specific {
+  color:#FB8C00; 
+  border-style: none; 
+  padding: 0px;
+
+}
+.cloudlab-specific {
+  border-color:#5e8a90; 
+  border-style:solid; 
+  padding: 15px;
+}
+h4.cloudlab-specific {
+  color:#5e8a90; 
+  border-style: none; 
+  padding: 0px;
+
+}
+.fabric-specific {
+  border-color:#47aae1; 
+  border-style:solid; 
+  padding: 15px;
+}
+h4.fabric-specific {
+  color:#47aae1; 
+  border-style: none; 
+  padding: 0px;
+
+}
+
+
+</style>
+
+<link href="./Adaptive video_files/prism.css" rel="stylesheet">
+<script src="./Adaptive video_files/prism.js.download"></script>
+
+
+<script type="text/javascript" async="" src="./Adaptive video_files/MathJax.js.download">
+</script>
+<script src="./Adaptive video_files/embed.js.download" data-timestamp="1668552063270"></script><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.a6de6ea97286e24f0dd4753382b1e015.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.a0092a9b6d9c06bf965e6c41a81f2c09.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.5a2e28d99014bd8296f13769d50defae.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><script src="./Adaptive video_files/alfie_v4.63f1ab6d6b9d5807dc0c94ef3fe0b851.js.download" async="" charset="UTF-8"></script></head>
+<body class="post-template tag-education tag-adaptive-video tag-video tag-reproducing-research nav-closed"><div id="MathJax_Message" style="display: none;"></div>
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="https://witestlab.poly.edu/blog/adaptive-video-reproducing/#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="https://witestlab.poly.edu/blog/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="https://witestlab.poly.edu/blog/about">About</a></li>
+            <li class="nav-topics" role="presentation"><a href="https://witestlab.poly.edu/blog/topics">Topics</a></li>
+    </ul>
+        <a class="subscribe-button icon-feed" href="https://witestlab.poly.edu/blog/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head " style="background-image: url(/blog/content/images/2022/04/dash-example-1.png)">
+    <nav class="main-nav overlay clearfix">
+        
+            <a class="menu-button icon-menu" href="https://witestlab.poly.edu/blog/adaptive-video-reproducing/#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post tag-education tag-adaptive-video tag-video tag-reproducing-research">
+
+        <header class="post-header">
+            <h1 class="post-title">Adaptive video</h1>
+            <section class="post-meta">
+                    <a href="https://witestlab.poly.edu/blog/author/ffund/">Fraida Fund</a>
+                <br>
+                <time class="post-date" datetime="2022-04-03">03 April 2022</time>  on <a href="https://witestlab.poly.edu/blog/tag/education/">education</a>, <a href="https://witestlab.poly.edu/blog/tag/adaptive-video/">adaptive video</a>, <a href="https://witestlab.poly.edu/blog/tag/video/">video</a>, <a href="https://witestlab.poly.edu/blog/tag/reproducing-research/">reproducing research</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>This experiment explores the tradeoff between different metrics of video quality (average rate, interruptions, and variability of rate) in an adaptive video delivery system.</p>
+
+<p>It should take about 60-120 minutes to run this experiment.</p>
+
+<p>You can run this experiment on GENI, on CloudLab, or on the new FABRIC testbed! Refer to the testbed-specific prerequisites listed below.</p>
+
+<div style="border-color:#FB8C00; border-style:solid; padding: 15px;">  
+<h4 style="color:#FB8C00;"> GENI-specific instructions: Prerequisites</h4>
+
+To reproduce this experiment on GENI, you will need an account on the <a href="http://groups.geni.net/geni/wiki/SignMeUp">GENI Portal</a>, and you will need to have <a href="http://groups.geni.net/geni/wiki/JoinAProject">joined a project</a>. You should have already <a href="http://groups.geni.net/geni/wiki/HowTo/LoginToNodes">uploaded your SSH keys to the portal and know how to log in to a node with those keys</a>.
+
+</div>  
+
+<p><br></p>
+
+<div style="border-color:#5e8a90; border-style:solid; padding: 15px;">  
+<h4 style="color:#5e8a90;"> Cloudlab-specific instructions: Prerequisites</h4>
+
+To reproduce this experiment on Cloudlab, you will need an account on <a href="https://cloudlab.us/">Cloudlab</a>, you will need to have <a href="https://docs.cloudlab.us/users.html#%28part._join-project%29">joined a project</a>, and you will need to have <a href="https://docs.cloudlab.us/users.html#%28part._ssh-access%29">set up SSH access</a>.
+
+</div>  
+
+<p><br></p>
+
+<div style="border-color:#47aae1; border-style:solid; padding: 15px;">  
+<h4 style="color:#47aae1;">FABRIC-specific instructions: Prerequisites</h4>
+
+To run this experiment on <a href="https://fabric-testbed.net/">FABRIC</a>, you should have a FABRIC account and be part of a FABRIC project. Open the JupyterHub environment on FABRIC, open a shell, and run 
+
+
+
+<pre>git clone https://github.com/ffund/fabric-notebooks
+cd fabric-notebooks
+make notebooks
+</pre>
+
+then open the notebook titled "adaptive-video.ipynb" and follow along inside the notebook.
+
+</div>  
+
+<p><br></p>
+
+<h2 id="background">Background</h2>
+
+<p><strong>Note:</strong> Parts of this section are reproduced from <a href="https://witestlab.poly.edu/blog/adaptive-video/">an earlier blog post on adaptive video</a>.</p>
+
+<h3 id="adaptivevideo">Adaptive video</h3>
+
+<p>In general high-quality video requires a higher data rate than a lower-quality equivalent. Consider the following two video frames. The first shows a video encoded at 200kbps:</p>
+
+<p><img src="./Adaptive video_files/dash-200.png" alt=""></p>
+
+<p>Here's the same frame at 500kbps, with noticeably better quality:</p>
+
+<p><img src="./Adaptive video_files/dash-500.png" alt=""></p>
+
+<p>For web services that want to share video with their users, this poses a dilemma - what quality level should they use to encode the video? If a video is low quality, it will stream without interruption even on a slow 3G cellular connection, but a user on a high speed fiber network may be unhappy with the video quality. Or, the video may be high quality, but then the slow connection would not be able to stream it without constant interruptions.</p>
+
+<p>Fortunately, there is a solution to this dilemma: adaptive video. Instead of delivering exactly the same video to every user, adaptive video delivers video that is matched to the individual user's network quality.</p>
+
+<p>There are many different adaptive video products: Microsoft Smooth Streaming, Apple HTTP Live Streaming (HLS), Adobe HTTP Dynamic Streaming (HDS), and Dynamic Adaptive Streaming over HTTP (DASH). This experiment focuses on DASH, which is widely supported as an international standard. </p>
+
+<p>To prepare a video for adaptive video streaming with DASH, the video file is first encoded into different versions, each having a different rate and/or resolution. These are called <em>representations</em> or media presentations. The representations of a video all have the same content, but they differ in quality.</p>
+
+<p>Each of these is further subdivided in time into <em>segments</em> of equal lengths (e.g., four seconds).</p>
+
+<p><img src="./Adaptive video_files/dash-stored.png" alt=""></p>
+
+<p>The content server then stores all of the segments of all of the representations (as separate files). Alongside these files, the content server stores a manifest file, called the Media Presentation Description (MPD). This is an XML file that identifies the various representations, identifies the video resolution and playback rate for each, and gives the location of every segment in each representation.</p>
+
+<p>With these preparations complete, a user can begin to stream adaptive video from the server!</p>
+
+<p>Once the MPD and video files are in place, users can start requesting DASH video.</p>
+
+<p>First, the user requests the MPD file. It parses the MPD file, learns what representations are available, and decides what representation to request for the first segment. It then retrieves that specific file using the URL given in the MPD.</p>
+
+<p>The user's device keeps a video buffer (at the application layer). As new segments are retrieved, they are placed in the buffer. As video is played back, it is removed from the buffer. </p>
+
+<p>Each time a client finishes retrieving a file into the buffer, it makes a new decision as to what representation to get for the next segment.</p>
+
+<p>For example, the client might request the following representations for the first four segments of video:</p>
+
+<p><img src="./Adaptive video_files/dash-requested.png" alt=""></p>
+
+<p>The cumulative set of decisions made by the client is called a decision policy. The decision policy is a set of rules that determine which representation to request, based on some kind of client state - for example, what the current download rate is, or how much video is currently stored in the buffer.</p>
+
+<p>The decision policy is not specified in the DASH standard. Many decision policies have been proposed by researchers, each promising to deliver better quality than the next!</p>
+
+<h3 id="dashdecisionpolicies">DASH decision policies</h3>
+
+<p>The obvious policy to maximize video quality alone would be to always retrive segments at the highest quality level. However, with this policy the user is likely to experience rebuffering - when playback is interrupted and the user has to wait for more video to be downloaded. This occurs when the video is being played back (and therefore, removed from the buffer) faster than it is being retrieved - i.e., the playback rate is higher than the download rate - so the buffer becomes empty. This state, which is known as buffer starvation, is obviously something we wish very much to avoid.</p>
+
+<p>To create a positive user experience for streaming video, therefore, requires a delicate balancing act.</p>
+
+<ul>
+<li>On the one hand, increasing the video playback rate too much (so that it is higher than the download rate) causes the undesired rebuffers.</li>
+<li>On the other hand, decreasing the video playback rate also decreases the user-perceived video quality.</li>
+</ul>
+
+<p>Performing rate selection to balance rebuffer avoidance and quality optimization is an ongoing tradeoff. Different DASH policies may make different decisions about how to balance that tradeoff. Different DASH policies may also decide to use different pieces of information for decision making. For example:</p>
+
+<ul>
+<li>A decision policy may decide to focus on download rate in its decision making - select the quality level for the next video segment according to the download rate from the previous segment(s).</li>
+<li>Or, a decision policy may focus on buffer occupancy (how much video is already downloaded into the buffer, waiting to be played back?) If there is already a lot of video in the buffer, the decision policy can afford to be aggressive in its quality selection, since it has a cushion to protect it from rebuffering. On the other hand, if there is not much video in the buffer, the decision policy should be careful not to select a quality level that is too optimistic, since it is at high risk of rebuffering.</li>
+</ul>
+
+<h3 id="specificpoliciesinthisimplementation">Specific policies in this implementation</h3>
+
+<p>In this experiment, we will use the DASH implementation developed for the following paper:</p>
+
+<blockquote>
+  <p>P. Juluri, V. Tamarapalli and D. Medhi, "SARA: Segment aware rate adaptation algorithm for dynamic adaptive streaming over HTTP," 2015 IEEE International Conference on Communication Workshop (ICCW), 2015, pp. 1765-1770, doi: 10.1109/ICCW.2015.7247436.</p>
+</blockquote>
+
+<p>which is available on <a href="https://github.com/pari685/AStream">Github</a>. It includes three DASH decision policies:</p>
+
+<p>The "basic" policy selects the video rate that is one level lower than the current network data rate. You can see <a href="https://github.com/pari685/AStream/blob/master/dist/client/adaptation/basic_dash2.py">the "basic" implementation here</a>.</p>
+
+<p>The buffer-based rate adaptation ("Netflix") algorithm uses the estimated network data rate only during the initial startup phase. Otherwise, it makes quality decisions based on the buffer occupancy. It is based on the algorithm described in the following paper:</p>
+
+<blockquote>
+  <p>Te-Yuan Huang, Ramesh Johari, Nick McKeown, Matthew Trunnell, and Mark Watson. 2014. A buffer-based approach to rate adaptation: evidence from a large video streaming service. In Proceedings of the 2014 ACM conference on SIGCOMM (SIGCOMM '14). Association for Computing Machinery, New York, NY, USA, 187–198. DOI:<a href="https://doi.org/10.1145/2619239.2626296">https://doi.org/10.1145/2619239.2626296</a></p>
+</blockquote>
+
+<p>You can see <a href="https://github.com/pari685/AStream/blob/master/dist/client/adaptation/netflix_dash.py">the "Netflix" implementation here</a>. </p>
+
+<p>Finally, the segment-aware rate adaptation ("SARA") algorithm uses the actual size of the segment and data rate of the network to estimate the time it would take to download the next segment. Then, given the current buffer occupancy, it selects the best possible video quality while avoiding buffer starvation. It is described in </p>
+
+<blockquote>
+  <p>P. Juluri, V. Tamarapalli and D. Medhi, "SARA: Segment aware rate adaptation algorithm for dynamic adaptive streaming over HTTP," 2015 IEEE International Conference on Communication Workshop (ICCW), 2015, pp. 1765-1770, doi: 10.1109/ICCW.2015.7247436.</p>
+</blockquote>
+
+<p>You can see <a href="https://github.com/pari685/AStream/blob/master/dist/client/adaptation/weighted_dash.py">the "SARA" implementation here</a>.</p>
+
+<h2 id="runmyexperiment">Run my experiment</h2>
+
+<p>For this experiment, we will use three nodes, connected in a linear topology: a client, a router, and a server. </p>
+
+<p>Follow the instructions for the testbed you are using (GENI, Cloudlab, or FABRIC) to reserve the resources and log in to each of the hosts in this experiment. </p>
+
+<div style="border-color:#FB8C00; border-style:solid; padding: 15px;">
+
+<h4 style="color:#FB8C00;"> GENI-specific instructions: Reserve resources</h4>
+
+<p>To reserve these resources on GENI, create a new slice on GENI. Click on “Add Resources”, and load the RSpec from the following URL:</p>
+
+<p><a href="https://gist.githubusercontent.com/ffund/6972f350471cd80b92c9238ffee62b9d/raw/1c82568fed16eac317f33154f652a768f1ddb69e/adaptive-video-request-rspec.xml">https://gist.githubusercontent.com/ffund/6972f350471cd80b92c9238ffee62b9d/raw/1c82568fed16eac317f33154f652a768f1ddb69e/adaptive-video-request-rspec.xml</a></p>
+
+<p>Then, select an InstaGENI site to bind to, and reserve your resources.</p>
+
+<p>Wait until the resources have turned green, indicating that they are ready to log in. Then, use the details given in the GENI Portal to SSH into each node.</p>
+
+<p>When you have logged in to each node, continue to the <a href="https://witestlab.poly.edu/blog/adaptive-video-reproducing/#preparetheserver">Prepare the server</a> section.</p>
+
+
+</div>
+
+<p><br></p>
+
+<div style="border-color:#5e8a90; border-style:solid; padding: 15px;">
+
+<h4 style="color:#5e8a90;"> Cloudlab-specific instructions: Reserve resources</h4>
+
+<p>To reserve these resources on Cloudlab, open this profile page: </p>
+
+<p><a href="https://www.cloudlab.us/p/nyunetworks/education?refspec=refs/heads/adaptive_video">https://www.cloudlab.us/p/nyunetworks/education?refspec=refs/heads/adaptive_video</a></p>
+
+
+<p>Click "next", then select the Cloudlab project that you are part of and a Cloudlab cluster with available resources. (This experiment is compatible with any of the Cloudlab clusters.) Then click "next", and "finish".</p>
+
+<p>Wait until all of the sources have turned green and have a small check mark in the top right corner of the "topology view" tab, indicating that they are fully configured and ready to log in. Then, click on "list view" to get SSH login details for the client, router, and server hosts. Use these details to SSH into each.</p>
+
+<p>When you have logged in to each node, continue to the <a href="https://witestlab.poly.edu/blog/adaptive-video-reproducing/#preparetheserver">Prepare the server</a> section.</p>
+
+
+</div>
+
+<p><br></p>
+
+<div style="border-color:#47aae1; border-style:solid; padding: 15px;">
+
+<h4 style="color:#47aae1;">FABRIC-specific instructions: Reserve resources</h4>
+
+<p>To run this experiment on <a href="https://fabric-testbed.net/">FABRIC</a>, open the JupyterHub environment on FABRIC, open a shell, and run </p>
+
+
+
+<pre>git clone https://github.com/ffund/fabric-notebooks
+cd fabric-notebooks
+make notebooks
+</pre>
+
+<p>then open the notebook titled "adaptive-video.ipynb". Follow along inside the notebook to reserve resources and get the login details for each host in the experiment.</p>
+
+<p>When you have logged in to each node, continue to the <a href="https://witestlab.poly.edu/blog/adaptive-video-reproducing/#preparetheserver">Prepare the server</a> section.</p>
+
+</div>
+
+<p><br></p>
+
+<h3 id="preparetheserver">Prepare the server</h3>
+
+<p>At the server, we will set up an HTTP server which will serve the video files to the client.</p>
+
+<p>First, install the Apache HTTP server on the "server" node:</p>
+
+<pre><code>sudo apt update  
+sudo apt install -y apache2  
+</code></pre>
+
+<p>Then, download the video segments and put them in the web server directory:</p>
+
+<pre>wget https://nyu.box.com/shared/static/d6btpwf5lqmkqh53b52ynhmfthh2qtby.tgz -O media.tgz
+sudo tar -v -xzf media.tgz -C /var/www/html/
+</pre>
+
+<p>The web server directory now contains 4-second segments of the "open" video clip <a href="https://peach.blender.org/about/">Big Buck Bunny</a>, encoded at different quality levels. The Big Buck Bunny DASH dataset is from:</p>
+
+<blockquote>
+  <p>Stefan Lederer, Christopher Müller, and Christian Timmerer. 2012. Dynamic adaptive streaming over HTTP dataset. In Proceedings of the 3rd Multimedia Systems Conference (MMSys '12). Association for Computing Machinery, New York, NY, USA, 89–94. DOI:<a href="https://doi.org/10.1145/2155555.2155570">https://doi.org/10.1145/2155555.2155570</a></p>
+</blockquote>
+
+<h3 id="preparetherouter">Prepare the router</h3>
+
+<p>At the router, we will <em>emulate</em> different network conditions, to see how each DASH policy performs. </p>
+
+<p>We will experiment with both a constant data rate, and a variable data rate like that experienced by a mobile user. For the mobile user, we'll use some network traces collected in the New York City metro area. With these traces, the data rate experienced by the DASH client in our experiment will mimic the experience of traveling around NYC on bus, subway, and ferry.</p>
+
+<p>The NYC traces are shared from the following paper:</p>
+
+<blockquote>
+  <p>Lifan Mei, Runchen Hu, Houwei Cao, Yong Liu, Zifa Han, Feng Li &amp; Jin Li. (2019, March). Realtime Mobile Bandwidth Prediction using LSTM Neural Networks. In International Conference on Passive and Active Network Measurement. Springer.</p>
+</blockquote>
+
+<p>To download the traces, on the "router" node run:</p>
+
+<pre><code>git clone https://github.com/NYU-METS/Main nyc-traces  
+</code></pre>
+
+<p>To extract the trace files from their compressed archive, we will need to install an appropriate utility:</p>
+
+<pre><code>sudo apt update  
+sudo apt install -y unrar-free  
+</code></pre>
+
+<p>Then, run</p>
+
+<pre><code>unrar nyc-traces/Dataset/Dataset_1.rar  
+</code></pre>
+
+<p>We will also download a couple of utility scripts to help us set a constant data rate or vary the data rate on the network. On the "router" node, run</p>
+
+<pre>wget https://gist.githubusercontent.com/ffund/6bc7d9be930f863de063e9925d88d608/raw/4737d1138c45aa670f14c8582ed8c49d02d1b6a1/rate-vary.sh -O ~/rate-vary.sh
+</pre>
+
+<p>and</p>
+
+<pre>wget https://gist.githubusercontent.com/ffund/4a2b04f957a5f5bee206563f16717286/raw/7b88ee798f33905cbf912557816cd1deb252493c/rate-set.sh -O ~/rate-set.sh
+</pre>
+
+<h3 id="preparetheclient">Prepare the client</h3>
+
+<p>Finally, we need to prepare the DASH client.</p>
+
+<p>Download the AStream DASH video client on the "client" node:</p>
+
+<pre><code>git clone https://github.com/pari685/AStream  
+</code></pre>
+
+<p>We must install Python2 to run the DASH video client:</p>
+
+<pre><code>sudo apt update  
+sudo apt install -y python2  
+</code></pre>
+
+<p>Now we are ready to run our experiments! We will run three experiments: one with a constant bit rate, one with a constant bit rate and an interruption in middle, and one with a varying bit rate using the NYC traces.</p>
+
+<h3 id="experimentconstantbitrate">Experiment: constant bit rate</h3>
+
+<p>On the router, set a constant bit rate of 1000 Kbits/second with</p>
+
+<pre><code>bash rate-set.sh 1000Kbit  
+</code></pre>
+
+<p>(The first time you run it, you may see an error referencing a problem deleting a <code>qdisc</code>, but you can safely ignore this error.)</p>
+
+<p>Note: you can specify a data rate in Kbits/second using <code>Kbit</code> or in Mbits/second using <code>Mbit</code>.</p>
+
+<p>Then, on the client, start the DASH player with the "basic" adaptation policy:</p>
+
+<pre>python2 ~/AStream/dist/client/dash_client.py -m http://server/media/BigBuckBunny/4sec/BigBuckBunny_4s.mpd -p 'basic' -d
+</pre>
+
+<p>(Note: you can alternatively try <code>netflix</code> or <code>sara</code> as the DASH policy.)</p>
+
+<p>Leave this running for a while. Then, you can interrupt the DASH client with Ctrl+C.</p>
+
+<p>To understand the performance of the DASH policy, we can look at the logs produced by the client. These will be located inside a directory named <code>ASTREAM_LOGS</code> in your home directory on the "client" node. Use </p>
+
+<pre><code>ls ~/ASTREAM_LOGS  
+</code></pre>
+
+<p>to find these.</p>
+
+<p>Use <code>scp</code> to retrieve the log with the <code>.csv</code> extension. </p>
+
+<p>To help with data visualization, you can use <a href="https://colab.research.google.com/drive/1-rR3Sp06nGb20POqoHrryBI-dU-2eGga?usp=sharing">this Python notebook</a>. Follow the instructions to upload your log file, change the <code>filename</code> variable, and plot your results.</p>
+
+<p>Here's an example. Note that during the intervals where the background is shaded in pink, the video is rebuffering and playback is "frozen":</p>
+
+<p><img src="./Adaptive video_files/dash-example.png" alt=""></p>
+
+<p>You can also re-create the video from the individual segments that were downloaded by the DASH client. The video segments will have been downloaded into a directory with the prefix <code>TEMP</code> in the "client" node's home directory. Find it with </p>
+
+<pre><code>ls ~  
+</code></pre>
+
+<p>and then use <code>cd</code> to enter the directory.</p>
+
+<p>To re-create the video, run</p>
+
+<pre>cat BigBuckBunny_4s_init.mp4 $(ls -vx BigBuckBunny_*.m4s) &gt; BigBuckBunny_tmp.mp4
+ffmpeg -i  BigBuckBunny_tmp.mp4 -c copy BigBuckBunny.mp4
+</pre>
+
+<p>Then, you can use <code>scp</code> to retrieve the <code>BigBuckBunny.mp4</code> file from this directory, and play it back on your own computer.</p>
+
+<h3 id="experimentconstantbitratewithinterruption">Experiment: constant bit rate with interruption</h3>
+
+<p>In the experiment above, you may not have experienced any rebuffering. </p>
+
+<p>To see how the video client works when there is a temporary interruption in the network, try repeating this experiment, but during the video session, reduce the network data rate to a very low value in middle of the session. On the router, run</p>
+
+<pre><code>bash rate-set.sh 50Kbit  
+</code></pre>
+
+<p>Then, after a brief interval, restore the previous network data rate with</p>
+
+<pre><code>bash rate-set.sh 1000Kbit  
+</code></pre>
+
+<h3 id="experimentmobileuser">Experiment: mobile user</h3>
+
+<p>Finally, you can try to experience adaptive video as a mobile user! Repeat the experiment, but instead of setting a constant data rate on the router, you can let it play back a "trace" file with e.g. </p>
+
+<pre><code>bash rate-vary.sh ~/Dataset_1/Dataset/Ferry/Ferry5.csv 0.1  
+</code></pre>
+
+<p>where the first argument is the path to a trace file, and the second argument is a scaling factor greater than 0 but less than 1. (The smaller the scaling factor, the lower the network quality while still preserving the trace dynamics.)</p>
+
+<p>The following figure shows the "dynamics" (throughput in Mbps against time) for each of the traces:</p>
+
+<p><img src="./Adaptive video_files/nyc-traces.png" alt=""></p>
+
+<p>For some traces, the throughput is always more than enough to steam the video at the highest quality level. For the traces where the throughput is <em>not</em> sufficient to stream continuously at the highest quality level, a good decision policy should still be able to smooth over the variation in network quality and deliver high quality video without rebuffering.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="https://witestlab.poly.edu/blog/author/ffund/" style="background-image: url(/blog/content/images/2016/01/head.jpg)"><span class="hidden">Fraida Fund's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="https://witestlab.poly.edu/blog/author/ffund/">Fraida Fund</a></h4>
+
+                    <p>Read <a href="https://witestlab.poly.edu/blog/author/ffund/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Brooklyn, NY</span>
+                    <span class="author-link icon-link"><a href="http://witestlab.poly.edu/~ffund/">http://witestlab.poly.edu/~ffund/</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Adaptive%20video&amp;url=https://witestlab.poly.edu/blog/adaptive-video-reproducing/" onclick="window.open(this.href, &#39;twitter-share&#39;, &#39;width=550,height=235&#39;);return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://witestlab.poly.edu/blog/adaptive-video-reproducing/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://witestlab.poly.edu/blog/adaptive-video-reproducing/" onclick="window.open(this.href, &#39;google-plus-share&#39;, &#39;width=490,height=530&#39;);return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+<p>Did you reproduce this experiment? Have useful information to share with other intrepid researchers?
+Post it here! Comments are posted following moderation.</p>
+<script id="dsq-count-scr" src="./Adaptive video_files/count.js.download" async=""></script>
+<div id="disqus_thread"><iframe id="dsq-app3715" name="dsq-app3715" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Adaptive video_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 376px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script>
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+/*
+var disqus_config = function () {
+this.page.url = https://witestlab.poly.edu/blog/adaptive-video-reproducing/; // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = ''; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+
+s.src = '//witestlab.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story " style="background-image: url(/blog/content/images/2021/12/result_latency-2.png)" href="https://witestlab.poly.edu/blog/mpcc-online-learning-multipath-congestion-control/">
+        <section class="post">
+            <h2>MPCC : Online learning multipath congestion control</h2>
+            <p>Background Multipath transport deals with the transmission and reception of internet traffic using multiple network paths at the same…</p>
+        </section>
+    </a>
+    <a class="read-next-story prev " style="background-image: url(https://witestlab.poly.edu/blog/content/images/2021/10/1flow_10ms-1.svg)" href="https://witestlab.poly.edu/blog/coexistence/">
+        <section class="post">
+            <h2>Coexistence of delay-based TCP congestion control</h2>
+            <p>Background With the emergence of delay-sensitive applications like cloud gaming, remote driving, and virtual/augmented reality (VR/AR), low…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="./Adaptive video_files/88x31.png"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</section>
+
+            <section class="poweredby">Proudly published with <a href="https://ghost.org/">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="./Adaptive video_files/jquery-1.12.0.min.js.download"></script>
+    
+    <script type="text/javascript" src="./Adaptive video_files/jquery.fitvids.js.download"></script>
+    <script type="text/javascript" src="./Adaptive video_files/index.js.download"></script>
+
+
+
+<iframe style="display: none;" src="./Adaptive video_files/saved_resource(1).html"></iframe></body></html>

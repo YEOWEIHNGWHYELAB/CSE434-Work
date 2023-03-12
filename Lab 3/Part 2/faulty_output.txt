@@ -1,0 +1,479 @@
+Router>
+Router>
+Router>
+Router>
+Router>
+Router>
+Router>
+Router>
+Router>
+Router>
+Router>
+Router>
+Router>      
+Router>
+Router>
+Router>
+Router>
+Router> 
+Router>
+Router>
+Router>
+Router>
+Router>?
+Exec commands:
+  access-enable    Create a temporary Access-List entry
+  access-profile   Apply user-profile to interface
+  clear            Reset functions
+  connect          Open a terminal connection
+  disable          Turn off privileged commands
+  disconnect       Disconnect an existing network connection
+  enable           Turn on privileged commands
+  ethernet         Ethernet parameters
+  exit             Exit from the EXEC
+  help             Description of the interactive help system
+  lock             Lock the terminal
+  login            Log in as a particular user
+  logout           Exit from the EXEC
+  modemui          Start a modem-like user interface
+  mrinfo           Request neighbor and version information from a multicast
+                   router
+  mstat            Show statistics after multiple multicast traceroutes
+  mtrace           Trace reverse multicast path from destination to source
+  name-connection  Name an existing network connection
+  pad              Open a X.29 PAD connection
+  ping             Send echo messages
+  ppp              Start IETF Point-to-Point Protocol (PPP)
+  radius           radius exec commands
+  release          Release a resource
+  renew            Renew a resource
+          
+Router>
+Router>
+Router>show running-config
+             ^
+% Invalid input detected at '^' marker.
+
+Router>enable
+Router#show running-config
+Building configuration...
+
+Current configuration : 1037 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Router
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+no ip routing
+!
+!
+no ip cef
+!
+!
+multilink bundle-name authenticated
+!
+          
+Router#show running-config
+Building configuration...
+
+Current configuration : 1037 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Router
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+no ip routing
+!
+!
+no ip cef
+!
+!
+multilink bundle-name authenticated
+!
+!         
+!         
+archive   
+ log config
+  hidekeys
+!         
+!         
+!         
+!         
+!         
+interface FastEthernet0/0
+ ip address 10.0.2.1 255.255.255.0
+ no ip route-cache
+ duplex half
+ speed auto
+ no cdp enable
+ no mop enabled
+!         
+interface FastEthernet0/1
+ ip address 10.0.3.1 255.255.255.0
+ no ip route-cache
+ duplex auto
+ speed auto
+ no cdp enable
+!         
+interface Serial0/0/0
+ no ip address
+ no ip route-cache
+ shutdown 
+ clock rate 2000000
+!         
+interface Serial0/0/1
+ no ip address
+ no ip route-cache
+ shutdown 
+ clock rate 2000000
+ no cdp enable
+!         
+ip forward-protocol nd
+!         
+!         
+ip http server
+!         
+snmp-server community Team RO 33
+!         
+!         
+control-plane
+!         
+!         
+line con 0
+ exec-timeout 0 0
+line aux 0
+line vty 0 4
+ password vtpassword
+ login    
+!         
+scheduler allocate 20000 1000
+no process cpu extended
+no process cpu autoprofile hog
+!         
+end       
+          
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#show ip route
+Default gateway is not set
+
+Host               Gateway           Last Use    Total Uses  Interface
+ICMP redirect cache is empty
+Router#clear ip route *
+Router#show ip cache
+IP routing cache 0 entries, 0 bytes
+   0 adds, 0 invalidates, 0 refcounts
+Minimum invalidation interval 2 seconds, maximum interval 5 seconds,
+   quiet interval 3 seconds, threshold 0 requests
+Invalidation rate 0 in last second, 0 in last 3 seconds
+Last full cache invalidation occurred 00:00:04 ago
+
+Prefix/Length           Age       Interface       Next Hop
+
+Router#ip route-cache
+        ^
+% Invalid input detected at '^' marker.
+
+Router#no ip route-cache
+          ^
+% Invalid input detected at '^' marker.
+
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#clear ip route *
+                 ^
+% Invalid input detected at '^' marker.
+
+Router(config)#show ip cache
+                 ^
+% Invalid input detected at '^' marker.
+
+Router(config)#end
+Router#
+*Jan  1 00:54:00.003: %SYS-5-CONFIG_I: Configured from console by console
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#no ip route-cache
+                          ^
+% Invalid input detected at '^' marker.
+
+Router(config)#end
+Router#
+*Jan  1 00:54:34.547: %SYS-5-CONFIG_I: Configured from console by console
+Router#
+Router#ip route destination mask gw_address
+        ^
+% Invalid input detected at '^' marker.
+
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)# no ip route-cache 
+                           ^
+% Invalid input detected at '^' marker.
+
+Router(config)# no ip route cache
+                            ^
+% Invalid input detected at '^' marker.
+
+Router(config)#end               
+Router#exu
+*Jan  1 00:58:33.599: %SYS-5-CONFIG_I: Configured from console by consol  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Router con0 is now available
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+Router>exit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Router con0 is now available
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+Router>
+Closing /dev/ttyS1...OK
+[jbthakka@hostA ~] clear
+
+[jbthakka@hostA ~] kermit 
+C-Kermit 9.0.301 OPEN SOURCE:, 11 Jul 2011, for Linux (64-bit)
+ Copyright (C) 1985, 2011,
+  Trustees of Columbia University in the City of New York.
+Type ? or HELP for help.
+(/root/) C-Kermit>set line /dev/ttyS1
+(/root/) C-Kermit>set carrier-watch off
+(/root/) C-Kermit>set speed 9600
+/dev/ttyS1, 9600 bps
+(/root/) C-Kermit>connect
+Connecting to /dev/ttyS1, speed 9600
+ Escape character: Ctrl-\ (ASCII 28, FS): enabled
+Type the escape character followed by C to get back,
+or followed by ? to see other options.
+----------------------------------------------------
+
+Router>enable
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#show ip route      
+                 ^
+% Invalid input detected at '^' marker.
+
+Router(config)#end
+Router#sho
+*Jan  1 01:01:22.159: %SYS-5-CONFIG_I: Configured from console by console          
+% Type "show ?" for a list of subcommands
+Router#show ip route
+Default gateway is not set
+
+Host               Gateway           Last Use    Total Uses  Interface
+ICMP redirect cache is empty
+Router#show ip cache
+IP routing cache 0 entries, 0 bytes
+   0 adds, 0 invalidates, 0 refcounts
+Minimum invalidation interval 2 seconds, maximum interval 5 seconds,
+   quiet interval 3 seconds, threshold 0 requests
+Invalidation rate 0 in last second, 0 in last 3 seconds
+Last full cache invalidation occurred 00:09:44 ago
+
+Prefix/Length           Age       Interface       Next Hop
+
+Router#ip route 10.0.3.0 255.255.255.0 10.0.3.1
+        ^
+% Invalid input detected at '^' marker.
+
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#ip route 10.0.3.0 255.255.255.0 10.0.3.1
+%Invalid next hop address (it's this router)
+Router(config)#ip route 0.0.0.0 0.0.0.0 10.0.3.1
+%Invalid next hop address (it's this router)
+Router(config)#ip route 0.0.0.0 0.0.0.0 10.0.3.1
+%Invalid next hop address (it's this router)
+Router(config)#ip route 10.0.1.0 255.255.255.0 10.0.2.22
+Router(config)#ip route show
+                         ^
+% Invalid input detected at '^' marker.
+
+Router(config)#end
+Router#ip rout
+*Jan  1 01:27:25.047: %SYS-5-CONFIG_I: Configured from console by console      
+        ^
+% Invalid input detected at '^' marker.
+
+Router#ip route show
+        ^
+% Invalid input detected at '^' marker.
+
+Router#show ip route
+Default gateway is not set
+
+Host               Gateway           Last Use    Total Uses  Interface
+ICMP redirect cache is empty
+Router#enable terminal
+              ^
+% Invalid input detected at '^' marker.
+
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#show config interface FastEthernet0/0 
+                 ^
+% Invalid input detected at '^' marker.
+
+Router(config)#interface FastEthernet0/0            
+Router(config-if)#show ip route
+                    ^
+% Invalid input detected at '^' marker.
+
+Router(config-if)#ip route-cache
+Router(config-if)#ip route 10.0.3.0 255.255.255.0 10.0.3.1
+%Invalid next hop address (it's this router)
+Router(config)#ip route 0.0.0.0 0.0.0.0 10.0.2.1
+%Invalid next hop address (it's this router)
+Router(config)#show ip route
+                 ^
+% Invalid input detected at '^' marker.
+
+Router(config)#ip route show
+                         ^
+% Invalid input detected at '^' marker.
+
+Router(config)#exit
+Router#show 
+*Jan  1 01:34:30.891: %SYS-5-CONFIG_I: Configured from console by console
+% Type "show ?" for a list of subcommands
+Router#show ip route
+Default gateway is not set
+
+Host               Gateway           Last Use    Total Uses  Interface
+ICMP redirect cache is empty
+Router#
+
