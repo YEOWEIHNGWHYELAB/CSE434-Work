@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://witestlab.poly.edu/blog/designing-subnets/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Designing subnets</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="https://witestlab.poly.edu/blog/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="./Designing subnets_files/screen.css">
+    <link rel="stylesheet" type="text/css" href="./Designing subnets_files/css">
+
+    <link rel="canonical" href="http://witestlab.poly.edu/blog/designing-subnets/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://witestlab.poly.edu/blog/designing-subnets/amp/">
+    
+    <meta property="og:site_name" content="Run my testbed experiment">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Designing subnets">
+    <meta property="og:description" content="Your task in this experiment is to set up subnets in a few small LANs to meet given design requirements. It should take about 60-120 minutes to run this experiment, after you work out what part of the address space to assign to each LAN. You can run this experiment">
+    <meta property="og:url" content="http://witestlab.poly.edu/blog/designing-subnets/">
+    <meta property="og:image" content="http://witestlab.poly.edu/blog/content/images/2017/03/subnet-topology-2.svg">
+    <meta property="article:published_time" content="2017-03-31T22:17:57.000Z">
+    <meta property="article:modified_time" content="2022-07-08T20:27:37.000Z">
+    <meta property="article:tag" content="education">
+    <meta property="article:tag" content="routing">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Designing subnets">
+    <meta name="twitter:description" content="Your task in this experiment is to set up subnets in a few small LANs to meet given design requirements. It should take about 60-120 minutes to run this experiment, after you work out what part of the address space to assign to each LAN. You can run this experiment">
+    <meta name="twitter:url" content="http://witestlab.poly.edu/blog/designing-subnets/">
+    <meta name="twitter:image" content="http://witestlab.poly.edu/blog/content/images/2017/03/subnet-topology-2.svg">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Fraida Fund">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="education, routing">
+    
+    <script async="" src="./Designing subnets_files/analytics.js.download"></script><script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Run my testbed experiment",
+        "logo": "http://witestlab.poly.edu/blog/ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Fraida Fund",
+        "image": "http://witestlab.poly.edu/blog/content/images/2016/01/head.jpg",
+        "url": "http://witestlab.poly.edu/blog/author/ffund/",
+        "sameAs": [
+            "http://witestlab.poly.edu/~ffund/"
+        ]
+    },
+    "headline": "Designing subnets",
+    "url": "https://witestlab.poly.edu/blog/designing-subnets/",
+    "datePublished": "2017-03-31T22:17:57.000Z",
+    "dateModified": "2022-07-08T20:27:37.000Z",
+    "image": "http://witestlab.poly.edu/blog/content/images/2017/03/subnet-topology-2.svg",
+    "keywords": "education, routing",
+    "description": "Your task in this experiment is to set up subnets in a few small LANs to meet given design requirements. It should take about 60-120 minutes to run this experiment, after you work out what part of the address space to assign to each LAN. You can run this experiment",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://witestlab.poly.edu/blog"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.10">
+    <link rel="alternate" type="application/rss+xml" title="Run my testbed experiment" href="https://witestlab.poly.edu/blog/rss/">
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25309460-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<link href="./Designing subnets_files/css(1)" rel="stylesheet" type="text/css">
+<link href="./Designing subnets_files/css(2)" rel="stylesheet" type="text/css">
+<style>
+body,
+h1, h2, h3, h4, h5, h6,
+.main-nav a,
+.subscribe-button,
+.page-title,
+.post-meta,
+.read-next-story .post:before,
+.pagination,
+.site-footer {
+    font-family:"Fira Sans", sans-serif; /* Replace with your own font */
+}
+    
+.site-footer{
+    font-size: 1.2rem;
+}
+.main-header {
+   background-color:#0e7d8e!important; /*Replace with your own 6-digit hex color */
+}
+    
+ .nav {
+   background-color:#816c5d!important; /*Replace with your own 6-digit hex color */
+}
+    
+ .nav-opened .menu-button {
+	opacity: 0;
+   }
+h1, h2, h3{
+	color:#818790;
+}
+    
+ .post-title{
+     color:#4A4A4A;
+     margin-top: 20px;
+ }
+  .st-alert code{border:none;background:rgba(0,0,0,0.2);}.st-alert a{color:#2f8cde;}.st-alert-info a,.st-alert-info a:visited,.st-alert-info a:hover{color:#fff}
+.st-alert{padding:20px 30px;margin-bottom:20px;ttext-shadow:0 1px 0 rgba(255,255,255,0.3);background-color:#F4CCCC;position:relative;color:#484019;-webkit-border-radius:1px;-moz-border-radius:1px;border-radius:1px;}.st-alert-success{background-color:#0e7d8e;color:#445028;}.st-alert-danger,.st-alert-error{background-color:#0e7d8e;color:#fff;}.st-alert-info{background-color:#0e7d8e;color:#fff;}.st-alert span{position:absolute;left:0;top:0;padding:2px 8px;color:#fff;font-size:13px;background:rgba(0,0,0,0.2);-webkit-border-radius:1px 0 1px 0;-moz-border-radius:1px 0 1px 0;border-radius:1px 0 1px 0;}.st-alert.with_title{padding:40px 25px 30px 60px;}
+
+ .geni-specific {
+  border-color:#FB8C00; 
+  border-style:solid; 
+  padding: 15px;
+}
+h4.geni-specific {
+  color:#FB8C00; 
+  border-style: none; 
+  padding: 0px;
+
+}
+.cloudlab-specific {
+  border-color:#5e8a90; 
+  border-style:solid; 
+  padding: 15px;
+}
+h4.cloudlab-specific {
+  color:#5e8a90; 
+  border-style: none; 
+  padding: 0px;
+
+}
+.fabric-specific {
+  border-color:#47aae1; 
+  border-style:solid; 
+  padding: 15px;
+}
+h4.fabric-specific {
+  color:#47aae1; 
+  border-style: none; 
+  padding: 0px;
+
+}
+
+
+</style>
+
+<link href="./Designing subnets_files/prism.css" rel="stylesheet">
+<script src="./Designing subnets_files/prism.js.download"></script>
+
+
+<script type="text/javascript" async="" src="./Designing subnets_files/MathJax.js.download">
+</script>
+<script src="./Designing subnets_files/embed.js(1).download" data-timestamp="1668642498438"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.a6de6ea97286e24f0dd4753382b1e015.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.a0092a9b6d9c06bf965e6c41a81f2c09.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.5a2e28d99014bd8296f13769d50defae.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style><script src="./Designing subnets_files/alfie_v4.63f1ab6d6b9d5807dc0c94ef3fe0b851.js.download" async="" charset="UTF-8"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body class="post-template tag-education tag-routing nav-closed"><div id="MathJax_Message" style="display: none;"></div>
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="https://witestlab.poly.edu/blog/designing-subnets/#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="https://witestlab.poly.edu/blog/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="https://witestlab.poly.edu/blog/about">About</a></li>
+            <li class="nav-topics" role="presentation"><a href="https://witestlab.poly.edu/blog/topics">Topics</a></li>
+    </ul>
+        <a class="subscribe-button icon-feed" href="https://witestlab.poly.edu/blog/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head " style="background-image: url(/blog/content/images/2017/03/subnet-topology-2.svg)">
+    <nav class="main-nav overlay clearfix">
+        
+            <a class="menu-button icon-menu" href="https://witestlab.poly.edu/blog/designing-subnets/#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post tag-education tag-routing">
+
+        <header class="post-header">
+            <h1 class="post-title">Designing subnets</h1>
+            <section class="post-meta">
+                    <a href="https://witestlab.poly.edu/blog/author/ffund/">Fraida Fund</a>
+                <br>
+                <time class="post-date" datetime="2017-03-31">31 March 2017</time>  on <a href="https://witestlab.poly.edu/blog/tag/education/">education</a>, <a href="https://witestlab.poly.edu/blog/tag/routing/">routing</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>Your task in this experiment is to set up subnets in a few small LANs to meet given design requirements.</p>
+
+<p>It should take about 60-120 minutes to run this experiment, <em>after</em> you work out what part of the address space to assign to each LAN.</p>
+
+<p>You can run this experiment on GENI or on CloudLab. Refer to the testbed-specific prerequisites listed below.</p>
+
+<div style="border-color:#FB8C00; border-style:solid; padding: 15px;">  
+<h4 style="color:#FB8C00;"> GENI-specific instructions: Prerequisites</h4>
+
+To reproduce this experiment on GENI, you will need an account on the <a href="http://groups.geni.net/geni/wiki/SignMeUp">GENI Portal</a>, and you will need to have <a href="http://groups.geni.net/geni/wiki/JoinAProject">joined a project</a>. You should have already <a href="http://groups.geni.net/geni/wiki/HowTo/LoginToNodes">uploaded your SSH keys to the portal and know how to log in to a node with those keys</a>.
+
+</div>  
+
+<p><br></p>
+
+<div style="border-color:#5e8a90; border-style:solid; padding: 15px;">  
+<h4 style="color:#5e8a90;"> Cloudlab-specific instructions: Prerequisites</h4>
+
+To reproduce this experiment on Cloudlab, you will need an account on <a href="https://cloudlab.us/">Cloudlab</a>, you will need to have <a href="https://docs.cloudlab.us/users.html#%28part._join-project%29">joined a project</a>, and you will need to have <a href="https://docs.cloudlab.us/users.html#%28part._ssh-access%29">set up SSH access</a>.
+
+</div>  
+
+<p><br></p>
+
+<h2 id="background">Background</h2>
+
+<p>Computer networks are often divided into subnets, to reduce the size of the broadcast domain or to create organizational, administrative and security boundaries in the network.</p>
+
+<p>The following excerpt from William Stallings, "Data and Computer Communications" explains:</p>
+
+<blockquote>
+  <p>The concept of subnet was introduced to address
+  the following requirement. Consider an internet that includes one or more WANs and a number of sites, each of which has a number of LANs. We would like to allow arbitrary complexity of interconnected LAN structures within an organization while insulating the overall internet against explosive growth in network numbers and routing complexity. One approach to this problem is to assign a single network number to all of the LANs at a site. From the point of view of the rest of the internet, there is a single network at that site, which simplifies addressing and routing. To allow the routers within the site to function properly, each LAN is assigned a subnet number. The host portion of the internet address is partitioned into a subnet number and a host number to accommodate this new level of addressing.  </p>
+  
+  <p>Within the subnetted network, the local routers must route on the basis of an extended network number consisting of the network portion of the IP address and the subnet number. The bit positions containing this extended network number are indicated by the address mask. The use of the address mask allows the host to determine whether an outgoing datagram is destined for a host on the same LAN (send directly)
+  or another LAN (send datagram to router). It is assumed that some other means (e.g., manual configuration) are used to create address masks and make them known to the local routers.  </p>
+  
+  <p>Table 18.3a shows the calculations involved in the use of a subnet mask. Note that the effect of the subnet mask is to erase the portion of the host field that refers to an actual host on a subnet. What remains is the network number and the subnet number. Figure 18.8 shows an example of the use of subnetting. The figure shows a local complex consisting of three LANs and two routers. To the rest of the internet,
+  this complex is a single network with a Class C address of the form 192.228.17.x, where the leftmost three octets are the network number and the rightmost octet contains a host number x. Both routers R1 and R2 are configured with a subnet mask with the value 255.255.255.224 (see Table 18.3a). For example, if a datagram with the destination address 192.228.17.57 arrives at R1 from either the rest of the internet or from LAN Y, R1 applies the subnet mask to determine that this address refers to subnet 1, which is LAN X, and so forwards the datagram to LAN X. Similarly, if a datagram with that destination address arrives at R2 from LAN Z, R2 applies the mask and then determines from its forwarding database that datagrams destined for subnet 1 should be forwarded to R1. Hosts must also employ a subnet mask to make routing decisions.  </p>
+  
+  <p>The default subnet mask for a given class of addresses is a null mask (Table 18.3b), which yields the same network and host number as the non-subnetted address.</p>
+</blockquote>
+
+<p><img src="./Designing subnets_files/ipnotation.svg" alt="">
+<i><small>Table 18.3 from Stallings, "Data and Computer Communications"</small></i></p>
+
+<p><img src="./Designing subnets_files/stallings-subnet-example.svg" alt="">
+<i><small>Figure 18.8 from Stallings, "Data and Computer Communications"</small></i></p>
+
+<p>When designing subnets, you typically have some constraints that you must satisfy:</p>
+
+<ul>
+<li>You will have a limited IP space available. </li>
+<li>You will need to make each subnet large enough to support the number of hosts it is expected to have.</li>
+<li>You will need to think about how traffic will be routed between subnets.</li>
+</ul>
+
+<p>As an example, consider a scenario where we have to design subnets to partition the IP address space 10.189.24.0/24 (i.e., the range from 10.189.24.0-10.189.24.255) among three LANs, using subnets. Furthermore, we are told that LAN A and LAN B must support 10 hosts each (not including the gateway), and LAN C must support 100 hosts (not including the gateway). In this section, we'll work out the solution to this problem, and show how we realize our design on GENI; in the next section, you'll have to solve a similar problem on your own.</p>
+
+<p>The first step is to identify the smallest subnet mask that can support the number of hosts required for each LAN.:</p>
+
+<ul>
+<li>To be able to address 100 hosts on LAN C, we need 7 bits to be used for the host part of the address (2<sup>7</sup> = 128. One address will be reserved for the gateway, one address is the network address, and one address is the broadcast address, leaving 125 addresses for the other hosts on the network.) Thus, LAN C should have a subnet mask of 255.255.255.128, which leaves the 7 rightmost bits free for the host address:</li>
+</ul>
+
+<pre><code>11111111.11111111.11111111.10000000  
+</code></pre>
+
+<ul>
+<li>To be able to address 10 hosts each on LAN A and LAN B, we need 4 bits to be used for the host part of the address (2<sup>4</sup> = 16. One address will be reserved for the gateway, one address is the network address, and one address is the broadcast address, leaving 13 addresses for the other hosts on the network.) Thus, LAN A and LAN B should have a subnet mask of 255.255.255.240, which leaves the 4 rightmost bits free for the host address:</li>
+</ul>
+
+<pre><code>11111111.11111111.11111111.11110000  
+</code></pre>
+
+<p>Now we are ready to begin allocating addresses to subnets. First, we'll convert the 10.189.24.0/24 address range from dotted decimal notation to binary:</p>
+
+<pre><code>00001010.10111101.00011000.00000000  
+</code></pre>
+
+<p>This will be the network address for the <em>first</em> subnet we allocate. It's usually easier to begin by allocating the largest subnet first, so we will start with LAN C. </p>
+
+<p>We've already determined the network address (10.189.24.0) and the subnet mask (255.255.255.128) for LAN C. Next, we'll compute the broadcast address for the subnet. This is the bitwise OR of the network address and the inverse of the subnet mask:</p>
+
+<pre><code>00001010.10111101.00011000.00000000  
+00000000.00000000.00000000.01111111  
+-----------------------------------
+00001010.10111101.00011000.01111111  
+</code></pre>
+
+<p>which is 10.189.24.127 in dotted decimal notation. The highest IP address that can be assigned to a host in the network is 10.189.24.126 (1 less than the broadcast address). The smallest IP address that can be assigned to a host in the network is 10.189.24.1 (1 more than the network address), and by convention this will be assigned to the gateway. That leaves the range 10.189.24.2-10.189.24.126 for other hosts in the network.</p>
+
+<p>Next, we'll turn our attention to LAN B, which must support 10 hosts. We've already used up some of our IP address space, so we are now left with the range 10.189.24.128-10.189.24.255 to work with. The address at the lower end of this range 10.189.24.128, will be the network address for the next subnet. In binary, this is:</p>
+
+<pre><code>00001010.10111101.00011000.10000000  
+</code></pre>
+
+<p>We've already determined that the subnet mask for LAN B should be 255.255.255.240. Next, we'll compute the broadcast address for the subnet. This is the bitwise OR of the network address and the inverse of the subnet mask:</p>
+
+<pre><code>00001010.10111101.00011000.10000000  
+00000000.00000000.00000000.00001111  
+-----------------------------------
+00001010.10111101.00011000.10001111  
+</code></pre>
+
+<p>or 10.89.124.143 in dotted decimal notation. The highest IP address that can be assigned to a host in the network is 10.189.24.142 (1 less than the broadcast address). The smallest IP address that can be assigned to a host in the network is 10.189.24.129 (1 more than the network address), and by convention this will be assigned to the gateway. That leaves the range 10.189.24.130-10.189.24.142 for other hosts in the network.</p>
+
+<p>Last, we will allocate addresses for LAN A. We've used up the lower part of our allocated address space, through 10.189.24.143, so we are now left with the range 10.189.24.144-10.189.24.255 to work with. The address at the lower end of this range 10.189.24.144, will be the network address for the next subnet. In binary, this is:</p>
+
+<pre><code>00001010.10111101.00011000.10001000  
+</code></pre>
+
+<p>We've already determined that the subnet mask for LAN A should be 255.255.255.240. Next, we'll compute the broadcast address for the subnet. This is the bitwise OR of the network address and the inverse of the subnet mask:</p>
+
+<pre><code>00001010.10111101.00011000.10010000  
+00000000.00000000.00000000.00001111  
+-----------------------------------
+00001010.10111101.00011000.10011111  
+</code></pre>
+
+<p>or 10.89.124.159 in dotted decimal notation. The highest IP address that can be assigned to a host in the network is 10.189.24.158 (1 less than the broadcast address). The smallest IP address that can be assigned to a host in the network is 10.189.24.145 (1 more than the network address), and by convention this will be assigned to the gateway. That leaves the range 10.189.24.146-10.189.24.158 for other hosts in the network.</p>
+
+<p>The following diagram shows our overall network design:</p>
+
+<p><img src="./Designing subnets_files/subnet-design-example.svg" alt=""></p>
+
+<p>(we assume the routers all have a second interface connected to a routing network, 10.10.100.0/24, as in the <a href="https://witestlab.poly.edu/blog/designing-subnets/#runmyexperiment">experiment</a> below.)</p>
+
+<p>We use <code>ifconfig</code> to assign IP addresses and netmasks to each host and router on a GENI topology that mimics this setup:</p>
+
+<div class="fluid-width-video-wrapper" style="padding-top: 56.25%;"><iframe src="./Designing subnets_files/4t5uFYdryzE.html" frameborder="0" allowfullscreen="" id="fitvid786983"></iframe></div>
+
+<p>After setting up these interfaces, hosts within the same LAN can reach one another, but not between LANs. To enable connectivity between LANs, we added routes as follows, and verified that a host in LAN A can reach all of the other hosts:</p>
+
+<div class="fluid-width-video-wrapper" style="padding-top: 56.25%;"><iframe src="./Designing subnets_files/HFemrqbwwjA.html" frameborder="0" allowfullscreen="" id="fitvid614535"></iframe></div>
+
+<h2 id="runmyexperiment">Run my experiment</h2>
+
+<p>For this experiment, you will reserve a topology that includes three routers (A, B, and C) and two hosts connected to each router. The routers will already be configured with IP addresses (in the 10.10.100.0/24 subnet) on the link that connects the routers to one another. However, it will be up to you to design subnets for the small LAN connected to each router.</p>
+
+<p>Follow the instructions for the testbed you are using (GENI or Cloudlab) to reserve the resources and log in to each of the hosts in this experiment. </p>
+
+<div style="border-color:#FB8C00; border-style:solid; padding: 15px;">
+
+<h4 style="color:#FB8C00;"> GENI-specific instructions: Reserve resources</h4>
+
+<p>To reserve these resources on GENI, create a new slice on GENI. Click on “Add Resources”, and load the RSpec from the following URL:</p>
+
+<p><a href="https://git.io/Jthun">https://git.io/Jthun</a></p>
+
+<p>This will load the following topology onto your canvas:</p>
+
+<img src="./Designing subnets_files/subnet-design-topology.png" width="100%">
+
+
+<p>Then, select an InstaGENI site to bind to, and reserve your resources.</p>
+
+<p>Your topology may have some red warning indicators on the LANs. This is not a problem - it's just a warning that some IP addresses are duplicated in the topology. In this case, that's intentional (these interfaces are assigned an address of "0.0.0.0", which results in them having no IPv4 address.) </p>
+
+<p>Click on "Site 1" and choose an InstaGENI site to bind to, then reserve your resources. Wait for your nodes to boot up (they will turn green in the canvas display on your slice page in the GENI portal when they are ready). Then, use the details given in the GENI Portal to SSH into each node.</p>
+
+<p>When you have logged in to each node, continue to the <a href="https://witestlab.poly.edu/blog/designing-subnets/#challengedesignsubnets">Challenge: design subnets</a> section.</p>
+
+</div>
+
+<p><br></p>
+
+<div style="border-color:#5e8a90; border-style:solid; padding: 15px;">
+
+<h4 style="color:#5e8a90;"> Cloudlab-specific instructions: Reserve resources</h4>
+
+<p>To reserve resources on Cloudlab, open this profile page: </p>
+
+<p><a href="https://www.cloudlab.us/p/nyunetworks/education?refspec=refs/heads/design_subnets">https://www.cloudlab.us/p/nyunetworks/education?refspec=refs/heads/design_subnets</a></p>
+
+<p>This profile instantiates the following topology:</p>
+
+<img src="./Designing subnets_files/subnet-design-topology.png" width="100%">
+
+<p>Click "next", then select the Cloudlab project that you are part of and a Cloudlab cluster with available resources. (This experiment is compatible with any of the Cloudlab clusters.) Then click "next", and "finish".</p>
+
+<p>Wait until all of the sources have turned green and have a small check mark in the top right corner of the "topology view" tab, indicating that they are fully configured and ready to log in. Then, click on "list view" to get SSH login details for the client, router, and server hosts. Use these details to SSH into each.</p>
+
+<p>When you have logged in to each node, continue to the <a href="https://witestlab.poly.edu/blog/designing-subnets/#challengedesignsubnets">Challenge: design subnets</a> section.</p>  
+</div>  
+
+<p><br></p>
+
+<h3 id="challengedesignsubnets">Challenge: design subnets</h3>
+
+<p>Your challenge is to design subnets for these LANs, with the following design constraints:</p>
+
+<ul>
+<li>The available IP address space is the range 10.10.172.0-10.10.172.255. You may only assign IP addresses in this range.</li>
+<li>The LAN connected to router A must be able to support at least 50 hosts.</li>
+<li>The LAN connected to router B must be able to support at least 75 hosts.</li>
+<li>The LAN connected to router C must be able to support at least 20 hosts.</li>
+</ul>
+
+<p>You must design and set up subnets to accommodate these requirements. </p>
+
+<p>For each subnet, you should identify:</p>
+
+<ul>
+<li>the subnet mask. </li>
+<li>the network address. This will be the bitwise AND of the IP address of any host on the network, and the subnet mask.</li>
+<li>the smallest IP address that may be assigned to a host in the subnet (host number 1). This is the network address, plus 1.</li>
+<li>the broadcast address for the subnet. This is the bitwise OR of the network address and the inverse of the subnet mask.</li>
+<li>the highest IP address that may be assigned to a host in the subnet. This is the broadcast address, minus 1.</li>
+</ul>
+
+<p>There is more than one correct solution - any solution that satisfies the requirements above is acceptable! Once you have made your design decisions, complete the following table:</p>
+
+<table>  
+<thead>  
+  <tr>
+    <th>Hosts</th>
+    <th>Subnet mask</th>
+    <th>Network address</th>
+    <th>Smallest host address<br></th>
+    <th>Highest host address</th>
+    <th>Broadcast address</th>
+    <th>Notes</th>
+  </tr>
+</thead>  
+<tbody>  
+  <tr>
+    <td>LAN A: romeo and juliet</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td>Should support at least 50 hosts </td>
+  </tr>
+  <tr>
+    <td>LAN B: othello and desdemona</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td>Should support at least 75 hosts</td>
+  </tr>
+  <tr>
+    <td>LAN C: hamlet and ophelia</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td>Should support at least 20 hosts</td>
+  </tr>
+</tbody>  
+</table>
+
+<h3 id="implementyourdesignoneachlan">Implement your design on each LAN</h3>
+
+<p>Next, you are going to configure the network interface on each host and router on each of the three LANs, to implement the design that you described above. </p>
+
+<p>In each LAN, assign an IP address and subnet mask to every host interface connected to the LAN. Assign the lowest IP address in the subnet (host number 1) to the LAN-facing interface of the router (this is a common convention); assign the highest IP address in the subnet to one host, and any other IP address in the subnet to the other host.</p>
+
+<p>To assign an IP address and subnet mask on a host, use the following command:</p>
+
+<pre>sudo ifconfig <b>IFACE</b> <b>IP</b> netmask <b>NETMASK</b>
+</pre>
+
+<p>substituting an IP and NETMASK in dotted decimal notation, and an interface name (e.g. <code>eth1</code> or <code>eth2</code>) for IFACE.</p>
+
+<p>At this point, each host in a LAN should be able to reach every other host in the <em>same</em> LAN. You can run</p>
+
+<pre>ping -c 5 <b>IP</b>
+</pre>
+
+<p>(substituting the destination IP address of the other host) to verify this. However, you will not be able to send and receive traffic between different LANs - for this, you'll need to add routing rules.</p>
+
+<h3 id="addroutingrules">Add routing rules</h3>
+
+<p>On each host, add one or more routing rules to describe how to reach the other two LANs. </p>
+
+<p>One way to do this is to add a route for <em>each</em> destination LAN, that looks something like this</p>
+
+<pre>sudo route add -net <b>ADDRESS</b> netmask <b>NETMASK</b> gw <b>GATEWAY</b>
+</pre>
+
+<p>where:</p>
+
+<ul>
+<li>ADDRESS is the network address of the <em>destination</em> LAN, in dotted decimal notation</li>
+<li>NETMASK is the subnet mask of the <em>destination</em> LAN, in dotted decimal notation</li>
+<li>GATEWAY is the IP address of the LAN-facing interface of the router on the <em>source</em> LAN, also in dotted decimal notation.</li>
+</ul>
+
+<p>For example, if adding a rule on a host in LAN A to enable it to reach hosts on LAN C, you would use the network address of LAN C for ADDRESS, the netmask of LAN C for NETMASK, and the IP address of the LAN-facing interface of router A for GATEWAY.</p>
+
+<p>As an alternative, you can take advantage of the <em>longest prefix matching</em> rule, and add just one route on each host for <em>all</em> traffic to the other two LANs:</p>
+
+<pre>sudo route add -net 10.10.172.0 netmask 255.255.255.0 gw <b>GATEWAY</b>
+</pre>
+
+<p>where GATEWAY is the IP address of the LAN-facing interface of the router on the <em>source</em> LAN, in dotted decimal notation.</p>
+
+<p>In addition to adding rules on every host, you will also need to add a rule on each router. For these rules, the GATEWAY address should be the IP address of the router for the <em>destination</em> LAN (on the WAN that connects the routers). For example, if setting up a rule on router A for routing to the C LAN, I will use the IP address 10.10.100.3 as the GATEWAY, since it is the IP address of router C on the WAN that connects the three routers.</p>
+
+<p>If you make a mistake, you can delete a rule using the same syntax as when you added it, but replace the <code>add</code> with <code>del</code>. To see the rules that are already in place, use </p>
+
+<pre><code>route -n  
+</code></pre>
+
+<p>When you've set up these rules correctly, every host in every LAN should be able to <code>ping</code> every host in every <em>other</em> LAN in your topology. You can also run</p>
+
+<pre>traceroute <b>IP</b>
+</pre>
+
+<p>or </p>
+
+<pre>mtr --report --no-dns <b>IP</b>
+</pre>
+
+<p>on any host to see the path it uses to reach a destination IP address.</p>
+
+<p>Your <code>traceroute</code> or <code>mtr</code> will be unable to reach the intermediate routers because there are no routing rules set up for the 10.10.100.0/24 network. It will show those hops as <code>????</code> or <code>****</code>. If you'd like it to show the addresses of intermediate routers, you can add another rule on each (non-router) host:</p>
+
+<pre>sudo route add -net 10.10.100.0 netmask 255.255.255.0 gw <b>GATEWAY</b>
+</pre>
+
+<p>substituting the LAN-facing IP address of the router on the <em>same</em> LAN where it says GATEWAY. Then, you'll be able to see the intermediate hops on the router network (10.10.100.0/24) in your <code>traceroute</code> output.</p>
+
+<h3 id="cleanupyourresources">Clean up your resources</h3>
+
+<p>When you've finished, delete your resources on the GENI Portal to free them for other experimenters.</p>
+
+<h2 id="notes">Notes</h2>
+
+<h3 id="exercise">Exercise</h3>
+
+<p><strong>Table of design choices</strong>: Complete the following table with the subnet design choices for your network:</p>
+
+<table>  
+<thead>  
+  <tr>
+    <th>Hosts</th>
+    <th>Subnet mask</th>
+    <th>Network address</th>
+    <th>Smallest host address<br></th>
+    <th>Highest host address</th>
+    <th>Broadcast address</th>
+    <th>Notes</th>
+  </tr>
+</thead>  
+<tbody>  
+  <tr>
+    <td>LAN A: romeo and juliet</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td>Should support at least 50 hosts </td>
+  </tr>
+  <tr>
+    <td>LAN B: othello and desdemona</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td>Should support at least 75 hosts</td>
+  </tr>
+  <tr>
+    <td>LAN C: hamlet and ophelia</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td></td>
+    <td></td>
+    <td>Should support at least 20 hosts</td>
+  </tr>
+</tbody>  
+</table>
+
+<p><strong>Network interface configuration</strong>: After you have configured the network interfaces and routes according to your subnet design, show the network interface configuration as follows:</p>
+
+<ul>
+<li>On each of the six hosts - romeo, juliet, hamlet, ophelia, othello, desdemona - show the output of <code>ifconfig eth1</code>.</li>
+<li>On each of the routers, show the output of <code>ifconfig</code>.</li>
+</ul>
+
+<p><strong>Routing within and between subnets</strong>: After you have configured the network interfaces and routes according to your subnet design, show the output of <code>route -n</code> on the "romeo" host. Annotate the output to indicate:</p>
+
+<ol>
+<li>which rule will apply to traffic from romeo to juliet  </li>
+<li>which rule will apply to traffic from romeo to hamlet  </li>
+<li>which rule will apply to traffic from romeo to ophelia  </li>
+<li>which rule will apply to traffic from romeo to othello  </li>
+<li>which rule will apply to traffic from romeo to desdemona</li>
+</ol>
+
+<p>If there are multiple matching rules, indicate the <em>one</em> that applies in each case according to the longest prefix matching rule.</p>
+
+<p>Also, show the output of <code>traceroute</code> or <code>mtr</code> <em>from</em> "romeo" to <em>each</em> of the five other hosts (i.e. run the <code>traceroute</code> or <code>mtr</code> command five times, with a different destination IP address each time, and save the output each time). Please indicate which host is the destination in each case.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="https://witestlab.poly.edu/blog/author/ffund/" style="background-image: url(/blog/content/images/2016/01/head.jpg)"><span class="hidden">Fraida Fund's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="https://witestlab.poly.edu/blog/author/ffund/">Fraida Fund</a></h4>
+
+                    <p>Read <a href="https://witestlab.poly.edu/blog/author/ffund/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Brooklyn, NY</span>
+                    <span class="author-link icon-link"><a href="http://witestlab.poly.edu/~ffund/">http://witestlab.poly.edu/~ffund/</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Designing%20subnets&amp;url=https://witestlab.poly.edu/blog/designing-subnets/" onclick="window.open(this.href, &#39;twitter-share&#39;, &#39;width=550,height=235&#39;);return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://witestlab.poly.edu/blog/designing-subnets/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://witestlab.poly.edu/blog/designing-subnets/" onclick="window.open(this.href, &#39;google-plus-share&#39;, &#39;width=490,height=530&#39;);return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+<p>Did you reproduce this experiment? Have useful information to share with other intrepid researchers?
+Post it here! Comments are posted following moderation.</p>
+<script id="dsq-count-scr" src="./Designing subnets_files/count.js.download" async=""></script>
+<div id="disqus_thread"><iframe id="dsq-app6851" name="dsq-app6851" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Designing subnets_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 376px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script>
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+/*
+var disqus_config = function () {
+this.page.url = https://witestlab.poly.edu/blog/designing-subnets/; // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = ''; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+
+s.src = '//witestlab.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story " style="background-image: url(/blog/content/images/2017/04/tcp-one-1.svg)" href="https://witestlab.poly.edu/blog/tcp-congestion-control-basics/">
+        <section class="post">
+            <h2>TCP congestion control</h2>
+            <p>This experiment shows the basic behavior of TCP congestion control. You'll see the classic "sawtooth" pattern in a TCP…</p>
+        </section>
+    </a>
+    <a class="read-next-story prev " style="background-image: url(/blog/content/images/2017/03/gateway-typical-1.svg)" href="https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/">
+        <section class="post">
+            <h2>Basic home gateway services: DHCP, DNS, NAT</h2>
+            <p>Most Internet-connected homes use a home network gateway to connect a local area network (LAN) in the home, to…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="./Designing subnets_files/88x31.png"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</section>
+
+            <section class="poweredby">Proudly published with <a href="https://ghost.org/">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="./Designing subnets_files/jquery-1.12.0.min.js.download"></script>
+    
+    <script type="text/javascript" src="./Designing subnets_files/jquery.fitvids.js.download"></script>
+    <script type="text/javascript" src="./Designing subnets_files/index.js.download"></script><iframe style="display: none;" src="./Designing subnets_files/saved_resource(1).html"></iframe>
+
+
+
+</body></html>

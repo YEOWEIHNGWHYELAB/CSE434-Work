@@ -1,0 +1,16 @@
+Firstly, connect all the 4 PC to a single switch.
+
+Example of a network config: ifconfig p2p1 10.0.1.12 netmask 255.255.255.0 broadcast 10.0.1.255
+
+For our case, our redhat Linux system, someone changed the network script to an incorrect IP 
+at the directory: /etc/sysconfig/network-scripts
+
+For exercise 2, these are the command for configuration we needed:
+ifconfig 128.143.71.201 netmask 255.255.0.0  broadcast 128.143.0.255
+ifconfig 128.143.71.21 netmask 255.255.255.0 broadcast 128.143.71.255
+ifconfig 128.143.137.144 netmask 255.255.255.192 broadcast 128.143.137.255
+ifconfig 128.143.137.32 netmask 255.255.255.192 broadcast 128.143.137.255
+
+Example of a ping command for exercise 2: ping -c 5 128.143.137.144
+
+Please check exercise 2 part d as we are unable to ping.

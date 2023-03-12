@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)https://teaching-on-testbeds.github.io/hello-cloudlab/index -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    
+    
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Hello, CloudLab | This is a first, simple experiment on CloudLab useful for familiarizing new experimenters with the platform.</title>
+<meta name="generator" content="Jekyll v3.9.2">
+<meta property="og:title" content="Hello, CloudLab">
+<meta name="author" content="Fraida Fund">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="This is a first, simple experiment on CloudLab useful for familiarizing new experimenters with the platform.">
+<meta property="og:description" content="This is a first, simple experiment on CloudLab useful for familiarizing new experimenters with the platform.">
+<link rel="canonical" href="https://teaching-on-testbeds.github.io/hello-cloudlab/">
+<meta property="og:url" content="https://teaching-on-testbeds.github.io/hello-cloudlab/">
+<meta property="og:site_name" content="Hello, CloudLab">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Hello, CloudLab">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"Fraida Fund"},"description":"This is a first, simple experiment on CloudLab useful for familiarizing new experimenters with the platform.","headline":"Hello, CloudLab","name":"Hello, CloudLab","url":"https://teaching-on-testbeds.github.io/hello-cloudlab/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link rel="preload" href="./Hello, CloudLab_files/css" as="style" type="text/css" crossorigin="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="./Hello, CloudLab_files/style.css">
+  </head>
+  <body>
+
+    <main id="content" class="main-content" role="main">
+      <h1 id="hello-cloudlab">Hello, CloudLab</h1>
+
+<p>In this tutorial, you will learn how to use CloudLab to run experiments in computer networks or cloud computing. It should take you about 60-90 minutes of <em>active</em> time to work through this tutorial.</p>
+
+<blockquote>
+  <p><strong>Note</strong>
+This process has a “human in the loop” approval stage - you’ll need to wait for your instructor or research advisor to approve your request to join their project. Be prepared to start the tutorial, wait for this approval, and then continue.</p>
+</blockquote>
+
+<p>CloudLab is a “virtual lab” for experiments on networking, cloud computing, and distributed systems. It allows experimenters to set up real (not simulated!) end hosts and links at one or more CloudLab host sites located around the United States. Experimenters can then log in to the hosts associated with their experiment and install software, run applications to generate traffic, and take network measurements.</p>
+
+<p>Before you can run lab experiments on CloudLab, you will need to set up an account. Once you have completed the steps on this page, you will have an account that you can use for future experiments.</p>
+
+<h2 id="prepare-your-workstation">Prepare your workstation</h2>
+
+<p>You’ll need to prepare your workstation (the laptop or PC you are going to use for your experiments) with a suitable terminal application.</p>
+
+<h3 id="terminal-software">Terminal software</h3>
+
+<p>To use CloudLab, the primary software application you’ll need is a terminal, which you will use to log in to remote hosts over SSH and carry out various exercises.</p>
+
+<p>You may have a terminal application already on your workstation, but it may not be ideal for this purpose. When you run experiments on remote hosts, you will often have to run and monitor the output of multiple commands in several independent terminal sessions. It is therefore recommended to use a terminal that lets you split one terminal window into multiple panes - for example,</p>
+
+<ul>
+  <li><a href="https://cmder.app/">cmder</a> for Windows. (Get the full version, not the mini version.)</li>
+  <li><a href="https://www.iterm2.com/">iTerm2</a> for Mac</li>
+  <li><a href="https://launchpad.net/terminator">terminator</a> for Linux</li>
+</ul>
+
+<p>Once you have downloaded and installed your terminal application, open it up and practice using it. Make sure you know:</p>
+
+<ul>
+  <li>How to split the pane in your terminal.</li>
+  <li>How to copy text from your terminal and paste into another application. This will be helpful when you need to save some terminal output for your lab report.</li>
+  <li>How to copy text from another application and paste into your terminal. This will be helpful when you need to copy a command from the lab instructions into your terminal, in order to run it.</li>
+</ul>
+
+<h4 id="cmder-on-windows">cmder on Windows</h4>
+
+<p>If you are using cmder on Windows, you can split the pane as follows:</p>
+
+<ol>
+  <li>Click on the green + symbol near the bottom right side of the window. This will open a “Create new console” dialog.</li>
+  <li>Where it says “New console split”, choose “to bottom” or “to right”. You can leave other options at their default settings.</li>
+  <li>Click “Start”.</li>
+</ol>
+
+<p>Note that if you need to split more than once, click on the pane that you want to split (so that it is the active pane) before using the green + symbol to split it again.</p>
+
+<p>To copy text from the terminal, select the text you want to copy. It will be automatically copied to your clipboard, and you can then paste it into any other application.</p>
+
+<p>To paste text into the terminal, place your cursor where you want to paste, and right click.</p>
+
+<h4 id="iterm2-on-mac">iTerm2 on Mac</h4>
+
+<p>If you are using iTerm2 on Mac, you can split the pane as follows:</p>
+
+<ol>
+  <li>To create a new vertical pane, use ⌘+D</li>
+  <li>To create a new horizontal pane, use ⌘+Shift+D</li>
+</ol>
+
+<p>To copy text from the terminal, select the text you want to copy and use ⌘+C to copy.</p>
+
+<p>To paste text into the terminal, place your cursor where you want to paste, and use ⌘+V to paste.</p>
+
+<h4 id="terminator-on-linux">Terminator on Linux</h4>
+
+<p>If you are using <code class="language-plaintext highlighter-rouge">terminator</code> on Linux, you can split the pane either vertically or horizontally as follows:</p>
+
+<ol>
+  <li>Right-click anywhere inside the terminal window</li>
+  <li>Choose “Split pane horizontally” or “Split pane vertically”</li>
+  <li>You can resize panes by dragging the divider between panes</li>
+</ol>
+
+<p>To copy text from the terminal, select the text you want to copy and either</p>
+
+<ul>
+  <li>right-click, and choose Copy, or</li>
+  <li>use Ctrl+shift+C to copy</li>
+</ul>
+
+<p>To paste text into the terminal, place your cursor where you want to paste, and either</p>
+
+<ul>
+  <li>right-click, and choose Paste, or</li>
+  <li>use Ctrl+shift+P to paste</li>
+</ul>
+
+<h3 id="wireshark">Wireshark</h3>
+
+<p>Wireshark is a software application for capturing, viewing, and analyzing network packets. This experiment doesn’t use Wireshark, but you may need it in future experiments.</p>
+
+<p>Download Wireshark from <a href="https://www.wireshark.org/download.html">the Wireshark website</a>.</p>
+
+<p>Then, follow the instructions to install for your system:</p>
+
+<ul>
+  <li><a href="https://www.wireshark.org/docs/wsug_html_chunked/ChBuildInstallWinInstall.html">Instructions for installing Wireshark on Windows</a>. (Note: you only need Wireshark, not the extra components that are bundled along with it.)</li>
+  <li><a href="https://www.wireshark.org/docs/wsug_html_chunked/ChBuildInstallOSXInstall.html">Instructions for installing Wireshark on Mac</a>.</li>
+  <li><a href="https://www.wireshark.org/docs/wsug_html_chunked/ChBuildInstallUnixInstallBins.html">Instructions for installing Wireshark on Linux</a>.</li>
+</ul>
+
+<h2 id="set-up-your-account-on-cloudlab">Set up your account on CloudLab</h2>
+
+<p>Now that you have the software you need, you are ready to set up an account on CloudLab.</p>
+
+<h3 id="exercise---set-up-ssh-keys">Exercise - Set up SSH keys</h3>
+
+<p>In this exercise, you will set up a pair of SSH keys with which you will access resources on CloudLab. (If you have previously used SSH keys, and have a public and private key ready to use, you can skip to the next exercise.)</p>
+
+<p>CloudLab users access resources using <em>public key authentication</em>. Using SSH public-key authentication to connect to a remote system is a more secure alternative to logging in with an account password.</p>
+
+<p>SSH public-key authentication uses a pair of separate keys (i.e., a key pair): one “private” key, which you keep a secret, and the other “public”. A key pair has a special property: any message that is encrypted with your private key can only be decrypted with your public key, and any message that is encrypted with your public key can only be decrypted with your private key.</p>
+
+<p>This property can be exploited for authenticating login to a remote machine. First, you upload the public key to a special location on the remote machine. Then, when you want to log in to the machine:</p>
+
+<ol>
+  <li>You use a special argument with your SSH command to let your SSH application know that you are going to use a key, and the location of your private key. If the private key is protected by a passphrase, you may be prompted to enter the passphrase (this is not a password for the remote machine, though).</li>
+  <li>The machine you are logging in to will ask your SSH client to “prove” that it owns the (secret) private key that matches an authorized public key. To do this, the machine will send a random message to you.</li>
+  <li>Your SSH client will encrypt the random message with the private key and send it back to the remote machine.</li>
+  <li>The remote machine will decrypt the message with your public key. If the decrypted message matches the message it sent you, it has “proof” that you are in possession of the private key for that key pair, and will grant you access (without using an account password on the remote machine.)</li>
+</ol>
+
+<p>(Of course, this relies on you keeping your private key a secret.)</p>
+
+<p>On your laptop, you’re going to generate a key pair and upload the public key to the CloudLab portal. Then, you’ll use that key from now on to log in to CloudLab resources. Open a Bash terminal (such as <code class="language-plaintext highlighter-rouge">cmder</code> in Windows, or the built-in terminal in Mac or Linux).</p>
+
+<p>Generate a key with:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen -t rsa
+</code></pre></div></div>
+
+<p>and follow the prompts to generate and save the key pair. The output should look something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/users/ffund01/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /users/ffund01/.ssh/id_rsa.
+Your public key has been saved in /users/ffund01/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:z1W/psy05g1kyOTL37HzYimECvOtzYdtZcK+8jEGirA ffund01@example.com
+The key's randomart image is:
++---[RSA 2048]----+
+|                 |
+|                 |
+|           .  .  |
+|          + .. . |
+|    .   S .*.o  .|
+|     oo. +ooB o .|
+|    E .+.ooB+* = |
+|        oo+.@+@.o|
+|        ..o==@ =+|
++----[SHA256]-----+
+</code></pre></div></div>
+
+<p>In a safe place, make a note of:</p>
+
+<ul>
+  <li>The passphrase you used,</li>
+  <li>The full path to your private key (<code class="language-plaintext highlighter-rouge">/users/ffund01/.ssh/id_rsa</code> in the example above) - copy and paste this from your terminal output,</li>
+  <li>The full path to your public key, which has the same name as your private key but with a <code class="language-plaintext highlighter-rouge">.pub</code> extension (<code class="language-plaintext highlighter-rouge">/users/ffund01/.ssh/id_rsa.pub</code> in the example above) - copy and paste this from your terminal output.</li>
+</ul>
+
+<p>If you forget these, you won’t be able to access resources on CloudLab from your terminal - so hold on to this information!</p>
+
+<h3 id="exercise---create-an-account">Exercise - Create an account</h3>
+
+<blockquote>
+  <p><strong>Note</strong> 
+To complete this step, you’ll need to know the <strong>Project Name</strong> of the project that you will join. Your instructor or research advisor will tell you the project name to use.</p>
+</blockquote>
+
+<p>First, go to <a href="https://cloudlab.us/">https://cloudlab.us</a> and click on “Request an Account”.  You will see a form, like this one:</p>
+
+<p><img src="./Hello, CloudLab_files/join-project.png" alt="Creating an account and joining a project on CloudLab."></p>
+
+<p>You will fill in:</p>
+
+<ul>
+  <li>your desired username (by convention, this should be lowercase, and have no spaces or special characters),</li>
+  <li>your full name, school email address, and country, state, and city.</li>
+  <li>For “Institutional Affiliation”, you will use the name of your college or university (your instructor may specify the exact text you should use).</li>
+</ul>
+
+<p>Click on the “Choose File” button in the <em>SSH Public Key file</em> section, and upload your public key from the previous step. Your public key is the one with the <code class="language-plaintext highlighter-rouge">.pub</code> file extension.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: If you are having trouble uploading your public key to the portal because you aren’t able to find it in the file browser, you can copy it to a more convenient location and upload it from there.</p>
+
+  <ul>
+    <li>Open a terminal.</li>
+    <li>Run <code class="language-plaintext highlighter-rouge">cp /path/to/key.pub /path/to/new/location</code> but substituting the path to your key and the path to a more convenient location (e.g. your Desktop) for the two arguments.</li>
+    <li>Upload the public key from the new location.</li>
+    <li>You can delete the copy of the public key from the new location (the original key is still located at the original location).</li>
+  </ul>
+</blockquote>
+
+<p>In the “Password” field, enter the password you want to use to log in to the CloudLab web portal. Then, in the “Confirm Password” field, enter the same password again.</p>
+
+<p>In the Project Information section, select “Join Existing Project”. Then, in the “Project Name” field, enter the project name that your instructor or research advisor gave you.</p>
+
+<p>Keep an eye on your email inbox (including the Spam folder!) for:</p>
+
+<ul>
+  <li>an email asking you to confirm your account registration. You’ll need to click on a link in this email to continue setting up your account.</li>
+  <li>an email letting you know that your instructor or research advisor approved your request to join their project.</li>
+</ul>
+
+<p>Now you have a CloudLab account - you’re ready to log in and use it to get experiment resources! There’s one setting you should change first, though. Our lab experiments assume that you will be using a <code class="language-plaintext highlighter-rouge">bash</code> shell on CloudLab. Click on your username in the top right of the CloudLab web portal, and “Manage Account”. Then set the “Default Shell” to <code class="language-plaintext highlighter-rouge">bash</code> and click “Save” to apply the setting:</p>
+
+<p><img src="./Hello, CloudLab_files/bash-shell.png" alt="Setting the default shell."></p>
+
+<h2 id="reserve-and-log-in-to-resources-on-cloudlab">Reserve and log in to resources on CloudLab</h2>
+
+<p>Whenever you run an experiment on CloudLab, you will</p>
+
+<ol>
+  <li>Open the <em>profile</em> - a description of the experiment resources (hosts and network links) that your experiment will use. Submit a request to “instantiate” that configuration for use in your experiment.</li>
+  <li>Wait until the resources in your experiment are ready to log in.</li>
+  <li>Log in to the resources and run your experiment.</li>
+</ol>
+
+<p>Also, when you finish an experiment and have saved all the data somewhere safe, you will <em>delete</em> the resources in your experiment to free them for use by other experimenters.</p>
+
+<h3 id="exercise---open-and-instantiate-a-profile">Exercise - Open and instantiate a profile</h3>
+
+<p>For this experiment, we will use the CloudLab profile available at the following link: <a href="https://www.cloudlab.us/p/cl-education/hello-cloudlab">https://www.cloudlab.us/p/cl-education/hello-cloudlab</a></p>
+
+<p>You’ll see a brief description of the profile:</p>
+
+<p><img src="./Hello, CloudLab_files/profile-1.png" alt="Description of profile."></p>
+
+<p>Click “Next”. On the following page, you’ll see a diagram of your experiment topology (on the right - in this case, a single host named “romeo”),
+and on the left you’ll be asked to select the “Cluster” on which you want your experiment to run:</p>
+
+<p><img src="./Hello, CloudLab_files/profile-3.png" alt="Cluster selection."></p>
+
+<p>Unless otherwise specified, these experiments can run on any cluster. However, since CloudLab is a shared resource, on some occasions the cluster you select might not have enough available resources to support your experiment. The status indicator next to each cluster tells you roughly how heavily utilized it is at the moment - green indicates that there are not many users, orange means heavy load, and red means that it is almost fully utilized. You are more likely to be successful if you choose a cluster with a green indicator.</p>
+
+<p>After you select a cluster, you can leave the “Name” field blank, or give your experiment a name - it’s your choice. Also make sure your “Project” is selected. Then, click “Next”.</p>
+
+<p><img src="./Hello, CloudLab_files/profile-4.png" alt="Set experiment duration."></p>
+
+<p>On the last page, you’ll be asked to set the duration of your experiment. At the end of this duration, your resources will be deleted automatically - so make sure to give yourself enough time to finish.</p>
+
+<p>You can leave the start date/time on this page blank if you are ready to work on the experiment right now.</p>
+
+<p>When you have made all your choices, click “Finish” to ask CloudLab to reserve resources according to your configuration.</p>
+
+<h3 id="exercise---wait-for-resources-to-be-ready">Exercise - Wait for resources to be ready</h3>
+
+<p>Once you have successfully instantiated a profile, it will still take some time before your resources are ready for you to log in.</p>
+
+<p>As your resources come online, you’ll see their progress on the CloudLab experiment page:</p>
+
+<p><img src="./Hello, CloudLab_files/instantiate-0.png" alt="Instantiation progress."></p>
+
+<p>As time passes, you will see a diagram of your experiment, but initially the hosts in the experiment will be colored yellow - this indicates that they’re not ready to use yet. There’s also a small “⊝” icon in the top right corner of the host - this indicates that it is not yet fully configured.</p>
+
+<p><img src="./Hello, CloudLab_files/instantiate-1.png" alt="Instantiation progress."></p>
+
+<p>It can take a while for hosts to boot up and load their configurations - you may want to step away or work on something else for 15-20 minutes and then check back.</p>
+
+<p>At some point, the host will turn green, but it may have a “⊙” icon in the top right - this indicates that it is still being configured.</p>
+
+<p><img src="./Hello, CloudLab_files/instantiate-2.png" alt="Instantiation progress."></p>
+
+<p>Eventually, the host will be “green” with a “✓” icon in the top right corner. This shows that it is ready to use, and you can go on to the next step.</p>
+
+<p><img src="./Hello, CloudLab_files/instantiate-3.png" alt="Instantiation complete."></p>
+
+<blockquote>
+  <p><strong>What if it fails?</strong> If the CloudLab site is unable to bring up the resources you requested, the hosts will turn red instead of green. If this happens, delete the resources (use the red “Terminate” button). Then, try to reserve your resources again - you may want to try a different cluster, in case the problem was with the specific cluster that you used.</p>
+</blockquote>
+
+<h3 id="exercise---log-in-to-resources">Exercise - Log in to resources</h3>
+
+<p>Once the host in your experiment is “green” and has a “✓” icon in the top right corner, it is ready for you to log in! In this exercise, you’ll practice accessing the host three ways:</p>
+
+<ul>
+  <li>Using the terminal in the CloudLab web portal</li>
+  <li>Using your own terminal application</li>
+  <li>Using VNC (for a graphical interface)</li>
+</ul>
+
+<h4 id="using-the-terminal-in-the-cloudlab-web-portal">Using the terminal in the CloudLab web portal</h4>
+
+<p>The CloudLab web interface includes a terminal utility with which you can access a “shell” and run commands on any host in your experiment. To access it, click on the host and choose “Shell” from the menu:</p>
+
+<p><img src="./Hello, CloudLab_files/cl-shell.png" alt="Open a shell on a CloudLab host."></p>
+
+<p>This will open a new “tab” in the CloudLab experiment page, with the same name as the hostname. At this tab, you’ll have an interactive terminal session on the host. You can type commands into this terminal session and see the output.</p>
+
+<p><img src="./Hello, CloudLab_files/cl-shell-open.png" alt="A shell on a remote host."></p>
+
+<p>Try typing</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "Hello world"
+</code></pre></div></div>
+
+<p>in this terminal shell, and observe the output.</p>
+
+<p><img src="./Hello, CloudLab_files/cl-shell-cmd.png" alt="Command and output."></p>
+
+<p>It’s helpful to know how to copy and paste from/to this terminal. (For some experiments, you may want to copy commands from the instructions and paste them directly into the terminal. You may also want to copy command output from the terminal into your notes or a lab report.)</p>
+
+<ul>
+  <li>Try selecting the <code class="language-plaintext highlighter-rouge">echo</code> command above and copying it. Then, right click in the shell you have open on the “romeo” host and select “Paste”.</li>
+  <li>Try selecting a few lines of text in the shell, then right click and select “Copy”. Open a text editor or document editor, and paste the text you have copied.</li>
+</ul>
+
+<p>When you are done using this shell, you can close it using the “x” icon on the tab:</p>
+
+<p><img src="./Hello, CloudLab_files/cl-shell-close.png" alt="Closing a terminal."></p>
+
+<h4 id="using-your-own-terminal-application">Using your own terminal application</h4>
+
+<p>The terminal in the CloudLab web portal is handy, but you may find it more convenient to use your own terminal.</p>
+
+<p>Click on the “List view” tab, and note the line corresponding to the host you want to access - in this case, the host named “romeo”.  Copy the text in the “SSH” command section:</p>
+
+<p><img src="./Hello, CloudLab_files/native-shell.png" alt="Get SSH details."></p>
+
+<p>Note that this text is a hyperlink, and will prompt you to open an application if you click on it. <em>Don’t</em> click on it - just select it and copy it.</p>
+
+<p>Open the terminal you installed earlier, and paste this SSH command into the terminal window, but don’t run it yet!</p>
+
+<p><img src="./Hello, CloudLab_files/terminal-cmd-0.png" alt="SSH command."></p>
+
+<p>If you have saved your SSH key in the default location, this command will work directly. But if you specified a non-default location for your SSH key, you’ll need to modify the command to include the path to your own SSH key. (You should have noted this path in “Exercise - Set up SSH keys.”)</p>
+
+<p>In your terminal, add a <code class="language-plaintext highlighter-rouge">-i</code> and then the path to your SSH key just after the word <code class="language-plaintext highlighter-rouge">ssh</code> in the command. For example, if my key was located in, <code class="language-plaintext highlighter-rouge">~/.ssh/id_rsa</code>, I would use</p>
+
+<p><img src="./Hello, CloudLab_files/terminal-cmd-1.png" alt="SSH command with key path."></p>
+
+<p>Then, hit Enter to run the command.</p>
+
+<p>The first time you log in to each new host, your computer may display a warning similar to the following:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The authenticity of host '[amd101.utah.cloudlab.us]:25107 ([206.196.180.202]:25107)' can't be established.
+RSA key fingerprint is SHA256:FUNco2udT/ur2rNb2NnZnUc8s2v6xvNdOFhFFxcWGYA.
+Are you sure you want to continue connecting (yes/no)?
+</code></pre></div></div>
+
+<p>and you will have to type the word <code class="language-plaintext highlighter-rouge">yes</code> and hit Enter to continue. If you have specified your key path and other details correctly, it won’t ask you for a password when you log in to the node. (It may ask for the <em>passphrase</em> for your private key if you’ve set one.)</p>
+
+<p>Try typing</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "Hello world"
+</code></pre></div></div>
+
+<p>in this terminal shell, and observe the output. Then, you can type</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>exit
+</code></pre></div></div>
+
+<p>to close the terminal session.</p>
+
+<h4 id="using-vnc">Using VNC</h4>
+
+<p>Finally, you can also get a graphical user interface on the remote host using a remote access protocol called VNC.</p>
+
+<p>In the “Topology view” tab, click on the host again, and choose the option to “Open VNC Window”.</p>
+
+<p><img src="./Hello, CloudLab_files/vnc-0.png" alt="Open a VNC session."></p>
+
+<blockquote>
+  <p><strong>Note</strong>
+The availability of this option depends on the experiment topology and configuration - some CloudLab experiments will have the VNC option, but some will not.</p>
+</blockquote>
+
+<p>This will open a new window with a graphical user interface running on the remote host:</p>
+
+<p><img src="./Hello, CloudLab_files/vnc-1.png" alt="A VNC session on the remote host."></p>
+
+<p>At first, you’ll just see a terminal. But you can install and run graphical applications here, too. For example, type</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>firefox
+</code></pre></div></div>
+
+<p>at the terminal inside the VNC window, to open a browser <em>running on the remote host</em>.</p>
+
+<p><img src="./Hello, CloudLab_files/vnc-2.png" alt="Running a browser on the remote host."></p>
+
+<p>When you are done with your VNC session, you can just close the application window.</p>
+
+<h3 id="release-resources">Release resources</h3>
+
+<p>Part of being a good CloudLab citizen is releasing resources when you’re not using them anymore. When you have finished everything you need to do in an experiment and retrieved all data from your remote hosts, use the “Terminate” button  to delete your resources and free them for other experimenters.</p>
+
+<p><img src="./Hello, CloudLab_files/delete-resources.png" alt="Terminate experiment."></p>
+
+<p>Once you delete your resources, you will no longer have access to them, and any data on them will be deleted. You will have to make sure that you have saved <em>everything</em> before you delete your resources.</p>
+
+<h2 id="appendix---view-edit-or-add-keys-on-cloudlab">Appendix - view, edit, or add keys on CloudLab</h2>
+
+<p>The SSH keys you have set up in this tutorial will allow you to access CloudLab resources from only one device - the device that your key is on. If you need to access CloudLab resources from another PC or laptop, you’ll need to generate additional keypairs and associate them with your CloudLab account.</p>
+
+<p>To set up a key pair on another device:</p>
+
+<ul>
+  <li>Follow the instructions in the section titled “Exercise - Set up SSH keys” to generate a key pair on this new device.</li>
+  <li>Log in to the CloudLab web portal, and open the <a href="https://www.cloudlab.us/ssh-keys.php">Manage SSH Keys</a> page from the user menu. Scroll to the “Add Key” section of this page:</li>
+</ul>
+
+<p><img src="./Hello, CloudLab_files/add-key.png" alt="Add a key to your CloudLab account."></p>
+
+<p>Select “Load from file” and in the file browser, select the public part of your key pair (it has a <code class="language-plaintext highlighter-rouge">.pub</code> extension.) The text of your public key will appear in the “Key” section. Click “Add Key”.</p>
+
+<p>Note that if you need to use CloudLab from more than one device, you can have multiple keys associated with your account! You don’t have to delete your other keys.</p>
+
+<p>Once your key is in the CloudLab web portal, every time you reserve CloudLab resources, your key will automatically be placed in the “authorized keys” list so that you can access the resource.</p>
+
+<hr>
+
+<p><small>Questions about this material? Contact Fraida Fund</small></p>
+
+<hr>
+
+<p><small>This material is based upon work supported by the National Science Foundation under Grant No. 2231984.</small>
+<small>Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.</small></p>
+
+
+    </main>
+  
+
+</body></html>

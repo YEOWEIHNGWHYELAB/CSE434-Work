@@ -1,0 +1,3 @@
+[root@hostD Desktop]# ping -c 3 128.143.71.201
+connect: Network is unreachable
+

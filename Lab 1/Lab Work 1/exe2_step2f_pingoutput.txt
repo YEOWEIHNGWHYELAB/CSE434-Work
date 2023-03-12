@@ -1,0 +1,3 @@
+[root@hostB ~]# ping -c 3 128.143.137.144
+connect: Network is unreachable
+

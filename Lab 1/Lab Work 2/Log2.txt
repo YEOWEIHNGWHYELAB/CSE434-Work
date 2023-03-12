@@ -1,0 +1,90 @@
+##Change Username##
+
+To change get your username key in (You will need a space at the end if not input text will be right next to your username)
+Command: export PS1="username " 
+
+If you are using cloud lab, you will need to go to manage account and changee default shell to bash first.
+But if you did not do that then you can enter "bash" into the terminal before entering "export PS1="username "".
+
+##Exercise 2##
+
+You actually no need to specify the broadcast address as its computed for you automatically.
+
+ip route
+
+Is subnet mask network mask?
+
+You can also change the terminal user name, refer to the dicusssion.
+
+##Exercise 4##
+
+Always start with the network that needs the largest size first.
+
+##Exercise 5##
+
+Router supposed to be: eth2
+Host supposed to be: eth1
+The eth0 is for the management and if you try to change it, you will crash the host and will need to reboot.
+Router ip is set to the default gateway.
+If you try to ping say from romeo to othello, you should not be able to reach since theres no routing route entered yet.
+
+router-a:  sudo ifconfig eth2 10.10.172.129 netmask 255.255.255.192 broadcast 10.10.172.191
+romeo:     sudo ifconfig eth1 10.10.172.130 netmask 255.255.255.192 broadcast 10.10.172.191
+juliet:    sudo ifconfig eth1 10.10.172.131 netmask 255.255.255.192 broadcast 10.10.172.191
+
+router-b:  sudo ifconfig eth2 10.10.172.1 netmask 255.255.255.128 broadcast 10.10.172.127
+othello :  sudo ifconfig eth1 10.10.172.2 netmask 255.255.255.128 broadcast 10.10.172.127
+desdemona: sudo ifconfig eth1 10.10.172.3 netmask 255.255.255.128 broadcast 10.10.172.127
+
+router-c:  sudo ifconfig eth2 10.10.172.193 netmask 255.255.255.224 broadcast 10.10.172.223
+ophelia:   sudo ifconfig eth1 10.10.172.194 netmask 255.255.255.224 broadcast 10.10.172.223
+hamlet:    sudo ifconfig eth1 10.10.172.195 netmask 255.255.255.224 broadcast 10.10.172.223
+
+##Exercise 6##
+
+Note that the router IP is the eth1 and that is what you will use for gateway when adding routes.
+
+router-a
+
+(a-b): sudo route add -net 10.10.172.0 netmask 255.255.255.128 gw 10.10.100.2
+(a-c): sudo route add -net 10.10.172.192 netmask 255.255.255.224 gw 10.10.100.3
+
+romeo
+
+(romeo - b): sudo route add -net 10.10.172.0 netmask 255.255.255.128 gw 10.10.172.129
+(romeo - c): sudo route add -net 10.10.172.192 netmask 255.255.255.224 gw 10.10.172.129
+
+juliet
+
+(juliet - b): sudo route add -net 10.10.172.0 netmask 255.255.255.128 gw 10.10.172.129
+(juliet - c): sudo route add -net 10.10.172.192 netmask 255.255.255.224 gw 10.10.172.129
+
+router-b
+
+(b-a): sudo route add -net 10.10.172.128 netmask 255.255.255.192 gw 10.10.100.1
+(b-c): sudo route add -net 10.10.172.192 netmask 255.255.255.224 gw 10.10.100.3
+
+othello
+
+(desdemona - a): sudo route add -net 10.10.172.128 netmask 255.255.255.192 gw 10.10.172.1
+(desdemona - c): sudo route add -net 10.10.172.192 netmask 255.255.255.224 gw 10.10.172.1
+
+desdemona
+
+(desdemona - a): sudo route add -net 10.10.172.128 netmask 255.255.255.192 gw 10.10.172.1
+(desdemona - c): sudo route add -net 10.10.172.192 netmask 255.255.255.224 gw 10.10.172.1
+
+router-c
+
+(c-a): sudo route add -net 10.10.172.128 netmask 255.255.255.192 gw 10.10.100.1
+(c-b): sudo route add -net 10.10.172.0 netmask 255.255.255.128 gw 10.10.100.2
+
+ophelia
+
+(ophelia - a): sudo route add -net 10.10.172.128 netmask 255.255.255.192 gw 10.10.172.193
+(ophelia - b): sudo route add -net 10.10.172.0 netmask 255.255.255.128 gw 10.10.172.193
+
+hamlet
+
+(ophelia - a): sudo route add -net 10.10.172.128 netmask 255.255.255.192 gw 10.10.172.193
+(ophelia - b): sudo route add -net 10.10.172.0 netmask 255.255.255.128 gw 10.10.172.193
