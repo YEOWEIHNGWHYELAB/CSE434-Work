@@ -1,0 +1,32 @@
+whyelab@client-1:~$ dig aptvm071-1.apt.emulab.net
+
+; <<>> DiG 9.11.3-1ubuntu1.16-Ubuntu <<>> aptvm071-1.apt.emulab.net
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 10486
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 4
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: bf65452a6d33983ea0d8cd7a63620f139d769bf2bdd4d2db (good)
+;; QUESTION SECTION:
+;aptvm071-1.apt.emulab.net.     IN      A
+
+;; ANSWER SECTION:
+aptvm071-1.apt.emulab.net. 30   IN      A       128.110.97.128
+
+;; AUTHORITY SECTION:
+apt.emulab.net.         30      IN      NS      ns5.emulab.net.
+apt.emulab.net.         30      IN      NS      ns.emulab.net.
+apt.emulab.net.         30      IN      NS      boss.apt.emulab.net.
+
+;; ADDITIONAL SECTION:
+ns.emulab.net.          30      IN      A       155.98.32.70
+ns5.emulab.net.         30      IN      A       155.99.144.4
+boss.apt.emulab.net.    30      IN      A       128.110.100.4
+
+;; Query time: 64 msec
+;; SERVER: 192.168.100.1#53(192.168.100.1)
+;; WHEN: Wed Nov 02 02:32:51 EDT 2022
+;; MSG SIZE  rcvd: 200
+

@@ -1,0 +1,12 @@
+whyelab@client-2:~$ wget -qO- http://ipinfo.io/  
+{
+  "ip": "130.127.132.207",
+  "city": "Clemson",
+  "region": "South Carolina",
+  "country": "US",
+  "loc": "34.6834,-82.8374",
+  "org": "AS12148 Clemson University",
+  "postal": "29632",
+  "timezone": "America/New_York",
+  "readme": "https://ipinfo.io/missingauth"
+}whyelab@client-2:~$ 

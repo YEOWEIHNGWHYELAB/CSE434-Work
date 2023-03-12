@@ -1,0 +1,56 @@
+whyelab@client-1:~$ wget -qO- https://git.io/JTjLB | bash  
+dhclient: no process found
+127.0.0.1     localhost
+sudo: unable to resolve host client-1
+127.0.0.1     client-1
+whyelab@client-1:~$ sudo dhclient -d eth1 
+Internet Systems Consortium DHCP Client 4.3.5
+Copyright 2004-2016 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+
+Listening on LPF/eth1/02:a1:98:cf:ca:d0
+Sending on   LPF/eth1/02:a1:98:cf:ca:d0
+Sending on   Socket/fallback
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 3 (xid=0x61ee16d)
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 5 (xid=0x61ee16d)
+DHCPREQUEST of 192.168.100.160 on eth1 to 255.255.255.255 port 67 (xid=0x6de11e06)
+DHCPOFFER of 192.168.100.160 from 192.168.100.1
+DHCPACK of 192.168.100.160 from 192.168.100.1
+bound to 192.168.100.160 -- renewal in 5432 seconds.
+
+whyelab@client-1:~$ ifconfig eth1  
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.100.160  netmask 255.255.255.0  broadcast 192.168.100.255
+        ether 02:a1:98:cf:ca:d0  txqueuelen 1000  (Ethernet)
+        RX packets 64  bytes 5643 (5.6 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 49  bytes 4183 (4.1 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+whyelab@client-1:~$ cat /etc/resolv.conf
+# This file is managed by man:systemd-resolved(8). Do not edit.
+#
+# This is a dynamic resolv.conf file for connecting local clients directly to
+# all known uplink DNS servers. This file lists all configured search domains.
+#
+# Third party programs must not access this file directly, but only through the
+# symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a different way,
+# replace this symlink by a static file or a different symlink.
+#
+# See man:systemd-resolved.service(8) for details about the supported modes of
+# operation for /etc/resolv.conf.
+
+nameserver 192.168.100.1
+nameserver 130.127.132.51
+search clemson.cloudlab.us
+
+whyelab@client-1:~$ route -n  
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.100.1   0.0.0.0         UG    0      0        0 eth1
+130.127.132.0   0.0.0.0         255.255.252.0   U     0      0        0 eth0
+130.127.132.1   0.0.0.0         255.255.255.255 UH    1024   0        0 eth0
+155.98.33.0     130.127.132.1   255.255.255.0   UG    0      0        0 eth0
+155.98.33.74    130.127.132.1   255.255.255.255 UGH   0      0        0 eth0
+192.168.100.0   0.0.0.0         255.255.255.0   U     0      0        0 eth1

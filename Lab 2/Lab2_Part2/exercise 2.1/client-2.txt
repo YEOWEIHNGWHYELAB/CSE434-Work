@@ -1,0 +1,15 @@
+whyelab@client-2:~$ sudo dhclient -d eth1
+Internet Systems Consortium DHCP Client 4.3.5
+Copyright 2004-2016 Internet Systems Consortium.
+All rights reserved.
+For info, please visit https://www.isc.org/software/dhcp/
+
+Listening on LPF/eth1/02:68:46:54:62:10
+Sending on   LPF/eth1/02:68:46:54:62:10
+Sending on   Socket/fallback
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 3 (xid=0x1def591b)
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 5 (xid=0x1def591b)
+DHCPREQUEST of 192.168.100.146 on eth1 to 255.255.255.255 port 67 (xid=0x1b59ef1d)
+DHCPOFFER of 192.168.100.146 from 192.168.100.1
+DHCPACK of 192.168.100.146 from 192.168.100.1
+bound to 192.168.100.146 -- renewal in 5700 seconds.

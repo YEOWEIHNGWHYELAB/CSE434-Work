@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Basic home gateway services: DHCP, DNS, NAT</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="https://witestlab.poly.edu/blog/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="./Basic home gateway services_ DHCP, DNS, NAT_files/screen.css">
+    <link rel="stylesheet" type="text/css" href="./Basic home gateway services_ DHCP, DNS, NAT_files/css">
+
+    <link rel="canonical" href="http://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/amp/">
+    
+    <meta property="og:site_name" content="Run my testbed experiment">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Basic home gateway services: DHCP, DNS, NAT">
+    <meta property="og:description" content="Most Internet-connected homes use a home network gateway to connect a local area network (LAN) in the home, to a wide area network (WAN) such as the Internet. In this experiment, we will look at some of the services that are always or often included on these gateways: routing between">
+    <meta property="og:url" content="http://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/">
+    <meta property="og:image" content="http://witestlab.poly.edu/blog/content/images/2017/03/gateway-typical-1.svg">
+    <meta property="article:published_time" content="2017-03-31T00:34:16.000Z">
+    <meta property="article:modified_time" content="2022-10-27T13:41:55.000Z">
+    <meta property="article:tag" content="education">
+    <meta property="article:tag" content="dhcp">
+    <meta property="article:tag" content="dns">
+    <meta property="article:tag" content="nat">
+    <meta property="article:tag" content="routing">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Basic home gateway services: DHCP, DNS, NAT">
+    <meta name="twitter:description" content="Most Internet-connected homes use a home network gateway to connect a local area network (LAN) in the home, to a wide area network (WAN) such as the Internet. In this experiment, we will look at some of the services that are always or often included on these gateways: routing between">
+    <meta name="twitter:url" content="http://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/">
+    <meta name="twitter:image" content="http://witestlab.poly.edu/blog/content/images/2017/03/gateway-typical-1.svg">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Fraida Fund">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="education, dhcp, dns, nat, routing">
+    
+    <script async="" src="./Basic home gateway services_ DHCP, DNS, NAT_files/analytics.js.download"></script><script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Run my testbed experiment",
+        "logo": "http://witestlab.poly.edu/blog/ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Fraida Fund",
+        "image": "http://witestlab.poly.edu/blog/content/images/2016/01/head.jpg",
+        "url": "http://witestlab.poly.edu/blog/author/ffund/",
+        "sameAs": [
+            "http://witestlab.poly.edu/~ffund/"
+        ]
+    },
+    "headline": "Basic home gateway services: DHCP, DNS, NAT",
+    "url": "https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/",
+    "datePublished": "2017-03-31T00:34:16.000Z",
+    "dateModified": "2022-10-27T13:41:55.000Z",
+    "image": "http://witestlab.poly.edu/blog/content/images/2017/03/gateway-typical-1.svg",
+    "keywords": "education, dhcp, dns, nat, routing",
+    "description": "Most Internet-connected homes use a home network gateway to connect a local area network (LAN) in the home, to a wide area network (WAN) such as the Internet. In this experiment, we will look at some of the services that are always or often included on these gateways: routing between",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://witestlab.poly.edu/blog"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.10">
+    <link rel="alternate" type="application/rss+xml" title="Run my testbed experiment" href="https://witestlab.poly.edu/blog/rss/">
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-25309460-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<link href="./Basic home gateway services_ DHCP, DNS, NAT_files/css(1)" rel="stylesheet" type="text/css">
+<link href="./Basic home gateway services_ DHCP, DNS, NAT_files/css(2)" rel="stylesheet" type="text/css">
+<style>
+body,
+h1, h2, h3, h4, h5, h6,
+.main-nav a,
+.subscribe-button,
+.page-title,
+.post-meta,
+.read-next-story .post:before,
+.pagination,
+.site-footer {
+    font-family:"Fira Sans", sans-serif; /* Replace with your own font */
+}
+    
+.site-footer{
+    font-size: 1.2rem;
+}
+.main-header {
+   background-color:#0e7d8e!important; /*Replace with your own 6-digit hex color */
+}
+    
+ .nav {
+   background-color:#816c5d!important; /*Replace with your own 6-digit hex color */
+}
+    
+ .nav-opened .menu-button {
+	opacity: 0;
+   }
+h1, h2, h3{
+	color:#818790;
+}
+    
+ .post-title{
+     color:#4A4A4A;
+     margin-top: 20px;
+ }
+  .st-alert code{border:none;background:rgba(0,0,0,0.2);}.st-alert a{color:#2f8cde;}.st-alert-info a,.st-alert-info a:visited,.st-alert-info a:hover{color:#fff}
+.st-alert{padding:20px 30px;margin-bottom:20px;ttext-shadow:0 1px 0 rgba(255,255,255,0.3);background-color:#F4CCCC;position:relative;color:#484019;-webkit-border-radius:1px;-moz-border-radius:1px;border-radius:1px;}.st-alert-success{background-color:#0e7d8e;color:#445028;}.st-alert-danger,.st-alert-error{background-color:#0e7d8e;color:#fff;}.st-alert-info{background-color:#0e7d8e;color:#fff;}.st-alert span{position:absolute;left:0;top:0;padding:2px 8px;color:#fff;font-size:13px;background:rgba(0,0,0,0.2);-webkit-border-radius:1px 0 1px 0;-moz-border-radius:1px 0 1px 0;border-radius:1px 0 1px 0;}.st-alert.with_title{padding:40px 25px 30px 60px;}
+
+ .geni-specific {
+  border-color:#FB8C00; 
+  border-style:solid; 
+  padding: 15px;
+}
+h4.geni-specific {
+  color:#FB8C00; 
+  border-style: none; 
+  padding: 0px;
+
+}
+.cloudlab-specific {
+  border-color:#5e8a90; 
+  border-style:solid; 
+  padding: 15px;
+}
+h4.cloudlab-specific {
+  color:#5e8a90; 
+  border-style: none; 
+  padding: 0px;
+
+}
+.fabric-specific {
+  border-color:#47aae1; 
+  border-style:solid; 
+  padding: 15px;
+}
+h4.fabric-specific {
+  color:#47aae1; 
+  border-style: none; 
+  padding: 0px;
+
+}
+
+
+</style>
+
+<link href="./Basic home gateway services_ DHCP, DNS, NAT_files/prism.css" rel="stylesheet">
+<script src="./Basic home gateway services_ DHCP, DNS, NAT_files/prism.js.download"></script>
+
+
+<script type="text/javascript" async="" src="./Basic home gateway services_ DHCP, DNS, NAT_files/MathJax.js.download">
+</script>
+<script src="./Basic home gateway services_ DHCP, DNS, NAT_files/embed.js.download" data-timestamp="1668556393472"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.a6de6ea97286e24f0dd4753382b1e015.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.a0092a9b6d9c06bf965e6c41a81f2c09.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.5a2e28d99014bd8296f13769d50defae.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.mjx-chtml {display: inline-block; line-height: 0; text-indent: 0; text-align: left; text-transform: none; font-style: normal; font-weight: normal; font-size: 100%; font-size-adjust: none; letter-spacing: normal; word-wrap: normal; word-spacing: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; margin: 0; padding: 1px 0}
+.MJXc-display {display: block; text-align: center; margin: 1em 0; padding: 0}
+.mjx-chtml[tabindex]:focus, body :focus .mjx-chtml[tabindex] {display: inline-table}
+.mjx-math {display: inline-block; border-collapse: separate; border-spacing: 0}
+.mjx-math * {display: inline-block; text-align: left}
+.mjx-numerator {display: block; text-align: center}
+.mjx-denominator {display: block; text-align: center}
+.MJXc-stacked {height: 0; position: relative}
+.MJXc-stacked > * {position: absolute}
+.MJXc-bevelled > * {display: inline-block}
+.mjx-stack {display: inline-block}
+.mjx-op {display: block}
+.mjx-under {display: table-cell}
+.mjx-over {display: block}
+.mjx-over > * {padding-left: 0px!important; padding-right: 0px!important}
+.mjx-under > * {padding-left: 0px!important; padding-right: 0px!important}
+.mjx-stack > .mjx-sup {display: block}
+.mjx-stack > .mjx-sub {display: block}
+.mjx-prestack > .mjx-presup {display: block}
+.mjx-prestack > .mjx-presub {display: block}
+.mjx-delim-h > .mjx-char {display: inline-block}
+.mjx-surd {vertical-align: top}
+.mjx-mphantom * {visibility: hidden}
+.mjx-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 2px 3px; font-style: normal; font-size: 90%}
+.mjx-annotation-xml {line-height: normal}
+.mjx-menclose > svg {fill: none; stroke: currentColor}
+.mjx-mtr {display: table-row}
+.mjx-mlabeledtr {display: table-row}
+.mjx-mtd {display: table-cell; text-align: center}
+.mjx-label {display: block}
+.mjx-box {display: inline-block}
+.mjx-block {display: block}
+.mjx-span {display: span}
+.mjx-char {display: block; white-space: pre}
+.mjx-itable {display: inline-table}
+.mjx-row {display: table-row}
+.mjx-cell {display: table-cell}
+.mjx-table {display: table; width: 100%}
+.mjx-line {display: block; height: 0}
+.mjx-strut {width: 0; padding-top: 1em}
+.mjx-vsize {width: 0}
+.MJXc-space1 {margin-left: .167em}
+.MJXc-space2 {margin-left: .222em}
+.MJXc-space3 {margin-left: .278em}
+.mjx-chartest {display: block; visibility: hidden; position: absolute; top: 0; line-height: normal; font-size: 500%}
+.mjx-chartest .mjx-char {display: inline}
+.mjx-chartest .mjx-box {padding-top: 1000px}
+.MJXc-processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MJXc-processed {display: none}
+.mjx-test {display: block; font-style: normal; font-weight: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow: hidden; height: 1px}
+.mjx-ex-box-test {position: absolute; width: 1px; height: 60ex}
+#MathJax_CHTML_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.mjx-chtml .mjx-noError {line-height: 1.2; vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+.MJXc-TeX-unknown-R {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: normal; font-weight: normal}
+.MJXc-TeX-unknown-I {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: italic; font-weight: normal}
+.MJXc-TeX-unknown-B {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: normal; font-weight: bold}
+.MJXc-TeX-unknown-BI {font-family: STIXGeneral,'Cambria Math','Arial Unicode MS',serif; font-style: italic; font-weight: bold}
+.MJXc-TeX-ams-R {font-family: MJXc-TeX-ams-R,MJXc-TeX-ams-Rw}
+.MJXc-TeX-cal-B {font-family: MJXc-TeX-cal-B,MJXc-TeX-cal-Bx,MJXc-TeX-cal-Bw}
+.MJXc-TeX-frak-R {font-family: MJXc-TeX-frak-R,MJXc-TeX-frak-Rw}
+.MJXc-TeX-frak-B {font-family: MJXc-TeX-frak-B,MJXc-TeX-frak-Bx,MJXc-TeX-frak-Bw}
+.MJXc-TeX-math-BI {font-family: MJXc-TeX-math-BI,MJXc-TeX-math-BIx,MJXc-TeX-math-BIw}
+.MJXc-TeX-sans-R {font-family: MJXc-TeX-sans-R,MJXc-TeX-sans-Rw}
+.MJXc-TeX-sans-B {font-family: MJXc-TeX-sans-B,MJXc-TeX-sans-Bx,MJXc-TeX-sans-Bw}
+.MJXc-TeX-sans-I {font-family: MJXc-TeX-sans-I,MJXc-TeX-sans-Ix,MJXc-TeX-sans-Iw}
+.MJXc-TeX-script-R {font-family: MJXc-TeX-script-R,MJXc-TeX-script-Rw}
+.MJXc-TeX-type-R {font-family: MJXc-TeX-type-R,MJXc-TeX-type-Rw}
+.MJXc-TeX-cal-R {font-family: MJXc-TeX-cal-R,MJXc-TeX-cal-Rw}
+.MJXc-TeX-main-B {font-family: MJXc-TeX-main-B,MJXc-TeX-main-Bx,MJXc-TeX-main-Bw}
+.MJXc-TeX-main-I {font-family: MJXc-TeX-main-I,MJXc-TeX-main-Ix,MJXc-TeX-main-Iw}
+.MJXc-TeX-main-R {font-family: MJXc-TeX-main-R,MJXc-TeX-main-Rw}
+.MJXc-TeX-math-I {font-family: MJXc-TeX-math-I,MJXc-TeX-math-Ix,MJXc-TeX-math-Iw}
+.MJXc-TeX-size1-R {font-family: MJXc-TeX-size1-R,MJXc-TeX-size1-Rw}
+.MJXc-TeX-size2-R {font-family: MJXc-TeX-size2-R,MJXc-TeX-size2-Rw}
+.MJXc-TeX-size3-R {font-family: MJXc-TeX-size3-R,MJXc-TeX-size3-Rw}
+.MJXc-TeX-size4-R {font-family: MJXc-TeX-size4-R,MJXc-TeX-size4-Rw}
+@font-face {font-family: MJXc-TeX-ams-R; src: local('MathJax_AMS'), local('MathJax_AMS-Regular')}
+@font-face {font-family: MJXc-TeX-ams-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_AMS-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_AMS-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_AMS-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-cal-B; src: local('MathJax_Caligraphic Bold'), local('MathJax_Caligraphic-Bold')}
+@font-face {font-family: MJXc-TeX-cal-Bx; src: local('MathJax_Caligraphic'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-cal-Bw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Caligraphic-Bold.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Bold.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-frak-R; src: local('MathJax_Fraktur'), local('MathJax_Fraktur-Regular')}
+@font-face {font-family: MJXc-TeX-frak-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Fraktur-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Fraktur-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-frak-B; src: local('MathJax_Fraktur Bold'), local('MathJax_Fraktur-Bold')}
+@font-face {font-family: MJXc-TeX-frak-Bx; src: local('MathJax_Fraktur'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-frak-Bw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Fraktur-Bold.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Fraktur-Bold.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Fraktur-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-math-BI; src: local('MathJax_Math BoldItalic'), local('MathJax_Math-BoldItalic')}
+@font-face {font-family: MJXc-TeX-math-BIx; src: local('MathJax_Math'); font-weight: bold; font-style: italic}
+@font-face {font-family: MJXc-TeX-math-BIw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Math-BoldItalic.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Math-BoldItalic.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Math-BoldItalic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-R; src: local('MathJax_SansSerif'), local('MathJax_SansSerif-Regular')}
+@font-face {font-family: MJXc-TeX-sans-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-B; src: local('MathJax_SansSerif Bold'), local('MathJax_SansSerif-Bold')}
+@font-face {font-family: MJXc-TeX-sans-Bx; src: local('MathJax_SansSerif'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-sans-Bw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Bold.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Bold.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-sans-I; src: local('MathJax_SansSerif Italic'), local('MathJax_SansSerif-Italic')}
+@font-face {font-family: MJXc-TeX-sans-Ix; src: local('MathJax_SansSerif'); font-style: italic}
+@font-face {font-family: MJXc-TeX-sans-Iw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_SansSerif-Italic.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_SansSerif-Italic.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_SansSerif-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-script-R; src: local('MathJax_Script'), local('MathJax_Script-Regular')}
+@font-face {font-family: MJXc-TeX-script-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Script-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Script-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Script-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-type-R; src: local('MathJax_Typewriter'), local('MathJax_Typewriter-Regular')}
+@font-face {font-family: MJXc-TeX-type-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Typewriter-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Typewriter-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Typewriter-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-cal-R; src: local('MathJax_Caligraphic'), local('MathJax_Caligraphic-Regular')}
+@font-face {font-family: MJXc-TeX-cal-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Caligraphic-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-B; src: local('MathJax_Main Bold'), local('MathJax_Main-Bold')}
+@font-face {font-family: MJXc-TeX-main-Bx; src: local('MathJax_Main'); font-weight: bold}
+@font-face {font-family: MJXc-TeX-main-Bw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Main-Bold.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-I; src: local('MathJax_Main Italic'), local('MathJax_Main-Italic')}
+@font-face {font-family: MJXc-TeX-main-Ix; src: local('MathJax_Main'); font-style: italic}
+@font-face {font-family: MJXc-TeX-main-Iw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Main-Italic.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-main-R; src: local('MathJax_Main'), local('MathJax_Main-Regular')}
+@font-face {font-family: MJXc-TeX-main-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Main-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-math-I; src: local('MathJax_Math Italic'), local('MathJax_Math-Italic')}
+@font-face {font-family: MJXc-TeX-math-Ix; src: local('MathJax_Math'); font-style: italic}
+@font-face {font-family: MJXc-TeX-math-Iw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Math-Italic.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size1-R; src: local('MathJax_Size1'), local('MathJax_Size1-Regular')}
+@font-face {font-family: MJXc-TeX-size1-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Size1-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size2-R; src: local('MathJax_Size2'), local('MathJax_Size2-Regular')}
+@font-face {font-family: MJXc-TeX-size2-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Size2-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size3-R; src: local('MathJax_Size3'), local('MathJax_Size3-Regular')}
+@font-face {font-family: MJXc-TeX-size3-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Size3-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf') format('opentype')}
+@font-face {font-family: MJXc-TeX-size4-R; src: local('MathJax_Size4'), local('MathJax_Size4-Regular')}
+@font-face {font-family: MJXc-TeX-size4-Rw; src /*1*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/eot/MathJax_Size4-Regular.eot'); src /*2*/: url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff') format('woff'), url('https://witestlab.poly.edu/libs/js/MathJax-master/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf') format('opentype')}
+</style><script src="./Basic home gateway services_ DHCP, DNS, NAT_files/alfie_v4.63f1ab6d6b9d5807dc0c94ef3fe0b851.js.download" async="" charset="UTF-8"></script></head>
+<body class="post-template tag-education tag-dhcp tag-dns tag-nat tag-routing nav-closed"><div id="MathJax_Message" style="display: none;"></div>
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="https://witestlab.poly.edu/blog/">Home</a></li>
+            <li class="nav-about" role="presentation"><a href="https://witestlab.poly.edu/blog/about">About</a></li>
+            <li class="nav-topics" role="presentation"><a href="https://witestlab.poly.edu/blog/topics">Topics</a></li>
+    </ul>
+        <a class="subscribe-button icon-feed" href="https://witestlab.poly.edu/blog/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head " style="background-image: url(/blog/content/images/2017/03/gateway-typical-1.svg)">
+    <nav class="main-nav overlay clearfix">
+        
+            <a class="menu-button icon-menu" href="https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post tag-education tag-dhcp tag-dns tag-nat tag-routing">
+
+        <header class="post-header">
+            <h1 class="post-title">Basic home gateway services: DHCP, DNS, NAT</h1>
+            <section class="post-meta">
+                    <a href="https://witestlab.poly.edu/blog/author/ffund/">Fraida Fund</a>
+                <br>
+                <time class="post-date" datetime="2017-03-30">30 March 2017</time>  on <a href="https://witestlab.poly.edu/blog/tag/education/">education</a>, <a href="https://witestlab.poly.edu/blog/tag/dhcp/">dhcp</a>, <a href="https://witestlab.poly.edu/blog/tag/dns/">dns</a>, <a href="https://witestlab.poly.edu/blog/tag/nat/">nat</a>, <a href="https://witestlab.poly.edu/blog/tag/routing/">routing</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>Most Internet-connected homes use a home network gateway to connect a local area network (LAN) in the home, to a wide area network (WAN) such as the Internet. In this experiment, we will look at some of the services that are always or often included on these gateways:</p>
+
+<ul>
+<li>routing between the LAN and WAN, </li>
+<li>DHCP, to provide hosts in the home network with IP addresses,</li>
+<li>DNS, to respond to name resolution queries from hosts in the home network,</li>
+<li>NAT (Network Address Translation), to map one public IPv4 address to internal (private) IP addresses assigned to hosts on the home network.</li>
+</ul>
+
+<p>It should take about 120-180 minutes to run this experiment.</p>
+
+<p>This experiment runs on either the GENI or CloudLab testbed! Whenever there are testbed-specific instructions, follow the ones for the testbed <em>you</em> are using.</p>
+
+<div class="geni-specific">  
+<h4 class="geni-specific"> GENI-specific instructions: Prerequisites</h4>
+
+To reproduce this experiment on GENI, you will need an account on the <a href="http://groups.geni.net/geni/wiki/SignMeUp">GENI Portal</a>, and you will need to have <a href="http://groups.geni.net/geni/wiki/JoinAProject">joined a project</a>. You should have already <a href="http://groups.geni.net/geni/wiki/HowTo/LoginToNodes">uploaded your SSH keys to the portal and know how to log in to a node with those keys</a>.
+
+</div>  
+
+<p><br></p>
+
+<div class="cloudlab-specific">  
+<h4 class="cloudlab-specific"> Cloudlab-specific instructions: Prerequisites</h4>
+
+To reproduce this experiment on Cloudlab, you will need an account on <a href="https://cloudlab.us/">Cloudlab</a>, you will need to have <a href="https://docs.cloudlab.us/users.html#%28part._join-project%29">joined a project</a>, and you will need to have <a href="https://docs.cloudlab.us/users.html#%28part._ssh-access%29">set up SSH access</a>. You may want to try <a href="https://teaching-on-testbeds.github.io/hello-cloudlab/">Hello, CloudLab</a> if you have not yet completed those steps.
+
+</div>  
+
+<p><br></p>
+
+<ul>
+<li>Skip to <a href="https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/#results">Results</a></li>
+<li>Skip to <a href="https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/#runmyexperiment">Run my experiment</a></li>
+</ul>
+
+<h2 id="background">Background</h2>
+
+<p>A home or residential gateway is a device that sits between a local area network (LAN) in a home, and a wide area network (WAN) such as the Internet.</p>
+
+<p><img src="./Basic home gateway services_ DHCP, DNS, NAT_files/gateway-typical.svg" alt=""></p>
+
+<p>At a minimum, it routes traffic between the LAN and the WAN. In many cases, it provides <em>additional</em> services that are useful for a home LAN, including three that are the subject of this experiment:</p>
+
+<ul>
+<li>DHCP, to provide hosts in the home network with IP addresses,</li>
+<li>DNS, to respond to name resolution queries from hosts in the home network,</li>
+<li>NAT (Network Address Translation), to map one public IPv4 address to internal (private) IP addresses assigned to hosts on the home network.</li>
+</ul>
+
+<h4 id="dhcp">DHCP</h4>
+
+<p>The Dynamic Host Configuration Protocol (DHCP) is a protocol for dynamically distributing IP addresses to hosts in a network. This eliminates the need for a user or network administrator to configure IP address settings manually on every host. It also allows a "pool" of IP addresses to be shared among many hosts; if a host leaves the network, the IP address it was using can be reassigned to someone else just entering the network.</p>
+
+<p>The process for getting an IP address with DHCP involves four phases known as DORA - discovery, offer, request, and acknowledgement - as shown in the following figure:</p>
+
+<p><img src="./Basic home gateway services_ DHCP, DNS, NAT_files/dhcp-transaction.svg" alt=""></p>
+
+<ol>
+<li>First, the client broadcasts a DHCP DISCOVER message.  </li>
+<li>Local DHCP server(s) receive this message, and can respond with a DHCP OFFER that is unicast to the client. This OFFER message "offers" an available IP address to the client. It may also include other "options", such as the address of a gateway or nameserver that the client should use. The client may receive multiple offers, if there are multiple DHCP servers on the LAN.  </li>
+<li>The client responds to <em>one</em> offer with a REQUEST for the IP address that was offered to the client. This REQUEST message is broadcast on the LAN, so if another DHCP server also sent an OFFER, it will receive this REQUEST message and consider it as notification that the client has declined that server's offer.  </li>
+<li>The DHCP server whose OFFER was followed up with a REQUEST will acknowledge the client with an ACK. </li>
+</ol>
+
+<p>After these four stages, the client is configured with an IP address. As long as it is still using that IP address, it will renew it at regular intervals (when the "lease" expires), using a REQUEST+ACK. If the client leaves the network, it can send a RELEASE message to alert the DHCP server that it is relinquishing the address, and it may be assigned to someone else.</p>
+
+<p>A typical home gateway will come with a DHCP server built-in, and allow you to select the range of IP addresses it distributes, as well as other DHCP options, e.g.:</p>
+
+<p><img src="./Basic home gateway services_ DHCP, DNS, NAT_files/dhcp-settings.png" alt=""></p>
+
+<h3 id="dns">DNS</h3>
+
+<p>For web browsing and similar use cases, hosts on the Internet are referred to by human-readable names, rather than by their IP addresses. The Domain Name System (DNS) is a system that stores records mapping those names to the corresponding IP address, and allows those records to be queried (name resolution).</p>
+
+<p>Many gateways also act as a DNS server, i.e. they can initiate and sequence the queries that ultimately lead to the resolution of a hostname into an IP address. </p>
+
+<p>A DNS server may follow an iterative query procedure, in which it queries a chain of DNS servers. Each server in the chain refers server that initiates the query to the next server in the chain, until it reaches one that can fully resolve the requested name.</p>
+
+<p>For example, consider a DNS server that wants to resolve the name</p>
+
+<pre><code>witestlab.poly.edu.  
+</code></pre>
+
+<p>(Note: all "full" DNS domain names have a dot at the end, although DNS resolvers will still work if you omit the dot. <a href="http://webmasters.stackexchange.com/a/73946">This answer</a> explains why.) </p>
+
+<p>Suppose the DNS server does not know the IP address associated with this name, and also does not know the address of a DNS server that <em>does</em> know the address associated with this name. The following figure describes the iterative procedure it will follow: </p>
+
+<p><img src="./Basic home gateway services_ DHCP, DNS, NAT_files/dns-iterative-messages.svg" alt=""></p>
+
+<ul>
+<li>It will start to query other name servers iteratively, starting with the name servers responsible for the rightmost part of the name, the <code>.</code>. (All DNS servers know the address of some name servers responsible for <code>.</code>, called <em>root</em> domain servers.) </li>
+<li>A root server won't know the address of <code>witestlab.poly.edu.</code>, but it will respond with a list of name servers that are responsible for <code>.edu.</code>, which is a <em>top level</em> domain.</li>
+<li>A <code>.edu.</code> name server also won't know the address of <code>witestlab.poly.edu.</code>, but it will respond with a list of name servers that are responsible for <code>poly.edu.</code> (a <em>second level</em> domain).</li>
+<li>Finally, a name server that is responsible for <code>poly.edu.</code> is likely to know the address of <code>witestlab.poly.edu.</code>, a <em>subdomain</em> and will respond with an address record.</li>
+</ul>
+
+<p>Thus, any DNS server that knows the address of some root servers can eventually find out the IP address associated with any name.</p>
+
+<p>The hierarchy of the name servers in this example (and examples of other name servers at similar levels) is shown in the following figure:</p>
+
+<p><img src="./Basic home gateway services_ DHCP, DNS, NAT_files/dns-iterative-2.svg" alt=""></p>
+
+<h3 id="nat">NAT</h3>
+
+<p>Another common feature of residential gateways is NAT, Network Address Translation. This is a method of method of remapping one IP address space into another by modifying source and destination IP addresses in packet headers as they pass through the gateway. </p>
+
+<p>Publicly routable IPv4 addresses, which are scarce, are not generally assigned to every host in a home network. Instead, the Internet Service Provider will provide <em>one</em> IP address, which is assigned to the Internet-facing interface of the gateway. Within the LAN, hosts will use a private IP address space, such as the 192.168.0.0/16 space. However, those addresses are not routable on the Internet. Thus, a common NAT use case is to map between private addresses used on a home LAN and the public address associated with the router, so that traffic can be routed between the LAN and the Internet.</p>
+
+<p>The following figure shows how a NAT gateway in this scenario will rewrite the headers of packets that traverse it:</p>
+
+<p><img src="./Basic home gateway services_ DHCP, DNS, NAT_files/gateway-nat-2.svg" alt=""></p>
+
+<ol>
+<li>A host on the LAN initiates a connection to a host outside the LAN, sending a packet through the NAT gateway. The packet has as its source address the private IP address of the host.  </li>
+<li>The NAT gateway will add a new entry to a translation table, in which it notes the internal IP address and TCP port number associated with the connection (from the packet header). Then, it assigns this connection a port number. (In the diagram, it says that the WAN port will be randomly selected. This is sometimes, but not always, the case. If the source port number in the packet header is available at the NAT, and not already in use for another connection, it may use that port number. Otherwise, it will assign it a new one from a list of available port numbers.)  </li>
+<li>The NAT gateway rewrites the source IP address and possibly the port number in the packet header according to the translation table, then forwards it on the WAN.  </li>
+<li>When a response arrives at the NAT gateway from outside the LAN, the NAT gateway looks at the destination port in the packet header. Then, it finds the entry in the translation table that has this port number in the "WAN Port" column.  </li>
+<li>The NAT gateway rewrites the destination IP address and possibly the port in the packet header according to the "LAN IP" and "LAN Port" in the relevant entry of the translation table, then forwards it on the LAN.</li>
+</ol>
+
+<p>An entry is added to the translation table only when a packet associated with a new connection arrives from the LAN. If a packet arrives at the NAT from the WAN whose destination port number does not match any "WAN Port" entry in the translation table, it will be dropped, because the NAT does not know how to translate it. Therefore, a device behind a NAT cannot accept connections from the WAN that it did not initiate. </p>
+
+<p>A workaround for this problem, <a href="https://en.wikipedia.org/wiki/Port_forwarding">port forwarding</a>, enables a home user to <em>proactively</em> map a port to a particular host on the home network. </p>
+
+<p>For example, consider the home gateway configuration in the following image. Suppose the gateway has 128.238.66.220 as a public IP address. Hosts on the WAN can initiate a connection to 128.238.66.220 on port 443. The NAT will look up the internal IP address in the port forwarding table, rewrite the destination in the packet header from IP 128.238.66.220 and port 443, to IP 192.168.1.2 and port 443, and then forward the packet on the LAN. Similarly, a packet arriving from the WAN with destination IP 128.238.66.220 and port 3389 will be translated to IP 192.168.1.145 and port 3389.</p>
+
+<p><img src="./Basic home gateway services_ DHCP, DNS, NAT_files/nat-port-forwarding-1.png" alt=""></p>
+
+<h2 id="results">Results</h2>
+
+<p>In this experiment, we set up a gateway with clients connected to it, and observe the behavior of DHCP, DNS, and NAT services.</p>
+
+<h3 id="dhcp">DHCP</h3>
+
+<p>We see a client requesting and receiving an IP address from DHCP:</p>
+
+<pre>15:15:26.554336 02:eb:60:57:10:ad &gt; ff:ff:ff:ff:ff:ff, ethertype IPv4 (0x0800), length 342: (tos 0x10, ttl 128, id 0, offset 0, flags [none], proto UDP (17), length 328)
+    0.0.0.0.68 &gt; 255.255.255.255.67: BOOTP/DHCP, Request from 02:eb:60:57:10:ad, length 300, xid 0xc0902a0f, Flags [none]
+      Client-Ethernet-Address 02:eb:60:57:10:ad
+      Vendor-rfc1048 Extensions
+        Magic Cookie 0x63825363
+        DHCP-Message Option 53, length 1: <b>Discover</b>
+        Hostname Option 12, length 10: "<hostname>"
+        Parameter-Request Option 55, length 13: 
+          Subnet-Mask, BR, Time-Zone, Default-Gateway
+          Domain-Name, Domain-Name-Server, Option 119, Hostname
+          Netbios-Name-Server, Netbios-Scope, MTU, Classless-Static-Route
+          NTP
+</hostname></pre>
+
+<pre>15:15:29.058621 02:e6:fb:b7:f3:a5 &gt; 02:eb:60:57:10:ad, ethertype IPv4 (0x0800), length 342: (tos 0xc0, ttl 64, id 37575, offset 0, flags [none], proto UDP (17), length 328)
+    192.168.100.1.67 &gt; 192.168.100.157.68: BOOTP/DHCP, Reply, length 300, xid 0xc0902a0f, Flags [none]
+      Your-IP 192.168.100.157
+      Server-IP 192.168.100.1
+      Client-Ethernet-Address 02:eb:60:57:10:ad
+      Vendor-rfc1048 Extensions
+        Magic Cookie 0x63825363
+        DHCP-Message Option 53, length 1: <b>Offer</b>
+        Server-ID Option 54, length 4: 192.168.100.1
+        Lease-Time Option 51, length 4: 14400
+        RN Option 58, length 4: 7200
+        RB Option 59, length 4: 12600
+        Subnet-Mask Option 1, length 4: 255.255.255.0
+        BR Option 28, length 4: 192.168.100.255
+        Domain-Name-Server Option 6, length 4: 192.168.100.1
+        Default-Gateway Option 3, length 4: 192.168.100.1
+</pre>
+
+<pre>15:15:29.060208 02:eb:60:57:10:ad &gt; ff:ff:ff:ff:ff:ff, ethertype IPv4 (0x0800), length 342: (tos 0x10, ttl 128, id 0, offset 0, flags [none], proto UDP (17), length 328)
+    0.0.0.0.68 &gt; 255.255.255.255.67: BOOTP/DHCP, Request from 02:eb:60:57:10:ad, length 300, xid 0xc0902a0f, Flags [none]
+      Client-Ethernet-Address 02:eb:60:57:10:ad
+      Vendor-rfc1048 Extensions
+        Magic Cookie 0x63825363
+        DHCP-Message Option 53, length 1: <b>Request</b>
+        Server-ID Option 54, length 4: 192.168.100.1
+        Requested-IP Option 50, length 4: 192.168.100.157
+        Hostname Option 12, length 10: "<hostname>"
+        Parameter-Request Option 55, length 13: 
+          Subnet-Mask, BR, Time-Zone, Default-Gateway
+          Domain-Name, Domain-Name-Server, Option 119, Hostname
+          Netbios-Name-Server, Netbios-Scope, MTU, Classless-Static-Route
+          NTP
+</hostname></pre>
+
+<pre>15:15:29.090184 02:e6:fb:b7:f3:a5 &gt; 02:eb:60:57:10:ad, ethertype IPv4 (0x0800), length 342: (tos 0xc0, ttl 64, id 37576, offset 0, flags [none], proto UDP (17), length 328)
+    192.168.100.1.67 &gt; 192.168.100.157.68: BOOTP/DHCP, Reply, length 300, xid 0xc0902a0f, Flags [none]
+      Your-IP 192.168.100.157
+      Server-IP 192.168.100.1
+      Client-Ethernet-Address 02:eb:60:57:10:ad
+      Vendor-rfc1048 Extensions
+        Magic Cookie 0x63825363
+        DHCP-Message Option 53, length 1: <b>ACK</b>
+        Server-ID Option 54, length 4: 192.168.100.1
+        Lease-Time Option 51, length 4: 14400
+        RN Option 58, length 4: 7200
+        RB Option 59, length 4: 12600
+        Subnet-Mask Option 1, length 4: 255.255.255.0
+        BR Option 28, length 4: 192.168.100.255
+        Domain-Name-Server Option 6, length 4: 192.168.100.1
+        Default-Gateway Option 3, length 4: 192.168.100.1
+</pre>
+
+<h3 id="dns">DNS</h3>
+
+<p>We see an iterative name resolution with DNS, for the address "website.nat.ch-geni-net.instageni.research.umich.edu" (in this example).  First, the DNS server returns a list of root name servers:</p>
+
+<pre>.            77637   IN  NS  e.root-servers.net.
+.            77637   IN  NS  a.root-servers.net.
+.            77637   IN  NS  h.root-servers.net.
+.            77637   IN  NS  j.root-servers.net.
+.            77637   IN  NS  b.root-servers.net.
+.            77637   IN  NS  m.root-servers.net.
+<b>.            77637   IN  NS  c.root-servers.net.</b>
+.            77637   IN  NS  i.root-servers.net.
+.            77637   IN  NS  g.root-servers.net.
+.            77637   IN  NS  l.root-servers.net.
+.            77637   IN  NS  f.root-servers.net.
+.            77637   IN  NS  d.root-servers.net.
+.            77637   IN  NS  k.root-servers.net.
+.            518071  IN  RRSIG   NS 8 0 518400 20170411170000 20170329160000 61045 . EhdIynzhYoqVrNs2csvZwCDUhQbDyUs8EujQ+XVKeQ02S2u0ZN39GY9h pBa7XpOyFAlNfYWNvWVLi1nkpJ7JKS+s4Gg/fU0Nw1MXc2hsbtdsduMs x9tNRjq5RduDfGBZLvNEikIoBndMU4esREkLtbSXrXp0TuvRpl3g5w5j +km7IImfv7KrfhZ16w6kKV8O1ye3yrQr9ow7/XBvUlvDnkcLXUphbfE3 M8vOF+5ABzb7KQp28S5WeI6mrC412jZQgGmdkdCVZArJtc+tKBOoLr64 0mwCMM+phVrLTkx9vdnZpnx9QBB7eqdSOqG9x09R7FiHVyaikueWedNs txIotQ==
+;; Received 1097 bytes from 127.0.0.1#53(127.0.0.1) in 19 ms
+</pre>
+
+<p>Then it queries one of the root name servers ("c.root-servers.net" in this example), and <em>that</em> returns a list of <code>.edu.</code> servers:</p>
+
+<pre>edu.            172800  IN  NS  f.edu-servers.net.
+<b>edu.            172800  IN  NS  c.edu-servers.net.</b>
+edu.            172800  IN  NS  g.edu-servers.net.
+edu.            172800  IN  NS  d.edu-servers.net.
+edu.            172800  IN  NS  l.edu-servers.net.
+edu.            172800  IN  NS  a.edu-servers.net.
+edu.            86400   IN  DS  28065 8 2 4172496CDE85534E51129040355BD04B1FCFEBAE996DFDDE652006F6 F8B2CE76
+edu.            86400   IN  RRSIG   DS 8 1 86400 20170411170000 20170329160000 61045 . RrZnh2YskIX8cXI1YuiVY9mBh79izFT8HuEc0dxU9B8fKbC5ddQZNPrw d2z0Rn/Bhym6yAAbY0u+5j1+RPXNMLcW2qAcktyw4i3wp4UiGowIcQIa dd5PMODvNrFc8IJpahPhwWcCbK8okgyP1AL9dNtWGcgv7+2zVB1e5vWN n5bOVtthU4p8/X4JI5zRZTyP9Mwz7hPkNFTeeAumjm+hlHJkRAQ211Bz 92f5nRgaJyyIfTq1w9AXRJjE9gnbYRVm32Bh0uEPh1wUddmsN788dYmc xzbbNjZDnAksPoopkupQinhvgSBO9Zf9d21dtR3WQLt1w2YoX46likoO rUJnNQ==
+;; Received 651 bytes from 192.33.4.12#53(<b>c.root-servers.net</b>) in 43 ms
+</pre>
+
+<p>Next, the "c.edu-servers.net." name server returns a list of name servers for the <code>umich.edu.</code> domain:</p>
+
+<pre>umich.edu.        172800  IN  NS  dns.cs.wisc.edu.
+<b>umich.edu.        172800  IN  NS  dns2.itd.umich.edu.</b>
+umich.edu.        172800  IN  NS  dns1.itd.umich.edu.
+9DHS4EP5G85PF9NUFK06HEK0O48QGK77.edu. 86400 IN NSEC3 1 1 0 - 9N4FQMDDEN9N9I8F7VUF86JHJF574LHS NS SOA RRSIG DNSKEY NSEC3PARAM
+9DHS4EP5G85PF9NUFK06HEK0O48QGK77.edu. 86400 IN RRSIG NSEC3 8 2 86400 20170405183649 20170329172649 43544 edu. unQy39EYi/666eEaXxmUQcsEgE/FtqxKCMVuODd4o8NhWp8gaTkukJNS OM1xfxo916xtQyVD2lXaoZ6pJCSENtYo8AUGja7Uvx2zGLpmH2a3gAWK gvZqHpkLchFQrlFcP3Qg6dqm6OJbjBBHDIcWyl8Q4ic5aYM1F15ewzA0 Y0Q=
+NOS8G1ANJ5QIKT46L3QM4OLBQD9V72K5.edu. 86400 IN NSEC3 1 1 0 - O9PNA7OPKKO436OEO034N6ANUNH47GJ5 NS DS RRSIG
+NOS8G1ANJ5QIKT46L3QM4OLBQD9V72K5.edu. 86400 IN RRSIG NSEC3 8 2 86400 20170405172140 20170329161140 43544 edu. ReOneHxFyyuuqcHaFrBftXfW5VCLGa0XCKWZAan1zW6vlQ3OtATJ0UHr +gR6UDb8nH8C+KAQCCdxanZM5feAOCsEDxl1X6D36nuMfVb86k3q8UZ/ jWy7OqDL2PMzRNjGI0Sdwl49BUx7VhGXjIt9ev87dFa1zHprJJHf8KCe mgU=
+;; Received 682 bytes from 192.26.92.30#53(<b>c.edu-servers.net</b>) in 30 ms
+</pre>
+
+<p>And then "dns2.itd.umich.edu" returns name servers for the subdomain <code>instageni.research.umich.edu.</code>:</p>
+
+<pre>instageni.research.umich.edu. 300 IN    NS  ns.instageni.research.umich.edu.
+<b>instageni.research.umich.edu. 300 IN    NS  ns.emulab.net.</b>
+;; Received 141 bytes from 192.12.80.222#53(<b>dns2.itd.umich.edu</b>) in 43 ms
+</pre>
+
+<p>Finally, from "ns.emulab.net" we get the address of <code>website.nat.ch-geni-net.instageni.research.umich.edu.</code>:</p>
+
+<pre><b>website.nat.ch-geni-net.instageni.research.umich.edu. 1    IN CNAME pcvm2-8.instageni.research.umich.edu.
+pcvm2-8.instageni.research.umich.edu. 30 IN A    192.41.233.62</b>
+instageni.research.umich.edu. 30 IN    NS  ns.emulab.net.
+instageni.research.umich.edu. 30 IN    NS  ns.instageni.research.umich.edu.
+;; Received 195 bytes from 155.98.32.70#53(<b>ns.emulab.net</b>) in 39 ms
+</pre>
+
+<h3 id="nat">NAT</h3>
+
+<p>We see NAT rewriting packet headers. Here are the packets in the LAN:</p>
+
+<pre>16:53:13.663719 IP <b>192.168.100.157</b>.57962 &gt; 192.41.233.62.80: Flags [S], seq 3245904370, win 29200, options [mss 1460,sackOK,TS val 1688452 ecr 0,nop,wscale 7], length 0
+16:53:14.231939 IP 192.41.233.62.80 &gt; <b>192.168.100.157</b>.57962: Flags [S.], seq 3992044697, ack 3245904371, win 28960, options [mss 1460,sackOK,TS val 1691466 ecr 1688452,nop,wscale 7], length 0
+16:53:14.232738 IP <b>192.168.100.157</b>.57962 &gt; 192.41.233.62.80: Flags [.], ack 1, win 229, options [nop,nop,TS val 1688595 ecr 1691466], length 0
+</pre>
+
+<p>And here are the same packets on the WAN:</p>
+
+<pre>16:53:14.032389 IP <b>172.17.3.4</b>.57962 &gt; 192.41.233.62.80: Flags [S], seq 3245904370, win 29200, options [mss 1460,sackOK,TS val 1688452 ecr 0,nop,wscale 7], length 0
+16:53:14.032440 IP 192.41.233.62.80 &gt; <b>172.17.3.4</b>.57962: Flags [S.], seq 3992044697, ack 3245904371, win 28960, options [mss 1460,sackOK,TS val 1691466 ecr 1688452,nop,wscale 7], length 0
+16:53:14.299903 IP <b>172.17.3.4</b>.57962 &gt; 192.41.233.62.80: Flags [.], ack 1, win 229, options [nop,nop,TS val 1688595 ecr 1691466], length 0
+</pre>
+
+<h2 id="runmyexperiment">Run my experiment</h2>
+
+<p>First, you will need to reserve resources for your experiment.</p>
+
+<div class="geni-specific">  
+<h4 class="geni-specific"> GENI-specific instructions: Reserve resources</h4>
+
+<p>In the GENI Portal, create a new slice, then click "Add Resources". Scroll down to where it says "Choose RSpec" and select the "URL" option, the load the RSpec from the URL: <a href="https://git.io/JThp3">https://git.io/JThp3</a>.</p>
+
+<p>This should load a topology onto your canvas with:</p>
+
+<ul>  
+<li>Two "client" nodes, connected to a LAN, and a "gateway" node also connected to the LAN. The "gateway" node has IP address 192.168.100.1 on the interface that is connected to the LAN; the clients have no IP address on this interface. (You can safely ignore the red "!" that alerts you to this.)</li>  
+<li>A "website" node. In the RSpec, we request a "Publicly Routable IP" for this node.</li>  
+</ul>
+
+<p>Click on "Site 1" and choose an InstaGENI site to bind to, then reserve your resources. Wait for your nodes to boot up (they will turn green in the canvas display on your slice page in the GENI portal when they are ready) and then log in to each node.</p>
+
+<p>Wait for all of your nodes to become ready to log in (they will turn green on the canvas). Then, use the details given in the GENI Portal to SSH into each node, in four terminal windows.</p>
+
+</div>  
+
+<p><br></p>
+
+<div class="cloudlab-specific">  
+<h4 class="cloudlab-specific"> Cloudlab-specific instructions: Reserve resources</h4>
+
+<p>For this experiment, we will use the CloudLab profile available at the following link: <a href="https://www.cloudlab.us/p/cl-education/home-gateway">https://www.cloudlab.us/p/cl-education/home-gateway</a>.</p>
+
+<p>If you visit this link, you’ll see a brief description of the profile. Click “Next”. On the following page, you’ll see a diagram of your experiment topology, and on the left you’ll be asked to select the “Cluster” on which you want your experiment to run. For this experiment, you'll be asked to select <b>two</b> clusters, and they should be two <b>different</b> ones! The website host will be on one cluster, and the rest of the hosts will be on the other.</p>
+
+<p>This experiment can run on any pair of two different clusters. However, since CloudLab is a shared resource, on some occasions the cluster you select might not have enough available resources to support your experiment. The status indicator next to each cluster tells you roughly how heavily utilized it is at the moment - green indicates that there are not many users, orange means heavy load, and red means that it is almost fully utilized. You are more likely to be successful if you choose a cluster with a green indicator.</p>
+
+<p>After you select two clusters, you can leave the "Name" field blank, or give your experiment a name - it’s your choice. Also make sure your "Project" is selected. Then, click "Next".</p>
+
+<p>On the last page, you’ll be asked to set the duration of your experiment. At the end of this duration, your resources will be deleted automatically - so make sure to give yourself enough time to finish.</p>
+
+<p>You can leave the start date/time on this page blank if you are ready to work on the experiment right now.</p>
+
+<p>When you have made all your choices, click "Finish" to ask CloudLab to reserve resources according to your configuration.</p>
+
+<p>Once you have successfully instantiated a profile, it will still take some time before your resources are ready for you to log in.</p>
+
+<p>As your resources come online, you’ll see their progress on the CloudLab experiment page. Once each host in your experiment is "green" and has a "✓" icon in the top right corner, it is ready for you to log in!</p>
+
+<p>For <i>most</i> CloudLab experiments, you can log in with the terminal in the CloudLab web portal or using a terminal application that is installed on your laptop or PC. For this experiment, however, you should use the terminal in the CloudLab web portal. Right-click on each node in your topology, and open a shell on the CloudLab web portal.</p>
+
+</div>  
+
+<p><br></p>
+
+<h3 id="resetconfigurationontheclients">Reset configuration on the clients</h3>
+
+<p>This experiment mimics clients connecting to a residential gateway and using the network services provided by that gateway (DHCP, DNS, NAT, for example). However, the clients in our experiment are <em>already</em> set up to use a university gateway for those services. (Otherwise, they would not have a functional network connection and we would not be able to get in to them over SSH!) To run this experiment, we will tell the clients <em>not</em> to use the university gateway for anything except our SSH session. </p>
+
+<div class="geni-specific">  
+<h4 class="geni-specific"> GENI-specific instructions: Removing route via university gateway</h4>
+
+On GENI, once you remove the route via university gateway, <b>you should plan to finish the rest of the experiment involving these resources in the same SSH session</b>. Otherwise, if you stop and then resume the experiment from a new SSH session in a new location, you won't be able to access the clients anymore. 
+
+</div>  
+
+<p><br></p>
+
+<div class="cloudlab-specific">  
+<h4 class="cloudlab-specific"> CloudLab-specific instructions: Removing route via university gateway</h4>
+
+On CloudLab, once you remove the route via university gateway, you will only be able to log in to these client nodes using the shell in the CloudLab web portal. You won't be able to access them using the terminal application on your laptop or PC anymore.
+
+</div>  
+
+<p><br></p>
+
+<p>When you're ready, on each of the two "client" nodes (and <em>only</em> on the client nodes), run</p>
+
+<pre><code>wget -qO- https://git.io/JTjLB | bash  
+</code></pre>
+
+<p>to download and run a <a href="https://gist.github.com/ffund/ebfa8f9eabbedd2bc4f26ee7f38ae2bd">script</a> that removes most of the network settings on the client that involve the university gateway.</p>
+
+<p>(The output will look something like:</p>
+
+<pre><code>dhclient: no process found  
+127.0.0.1     localhost  
+sudo: unable to resolve host client-1  
+127.0.0.1     client-1  
+</code></pre>
+
+<p>)</p>
+
+<div class="geni-specific">  
+<h4 class="geni-specific"> GENI-specific instructions: If you lose access to resources</h4>
+
+<p><b>Note:</b> as mentioned above, if your own IP address changes, you may lose connectivity to your client nodes. Here's how to access your client nodes <i>if</i> that happens!</p>
+
+<ol>  
+<li>If you are on Windows, first enable and start the SSH agent: Open Services (Start Menu &gt; Services), then select OpenSSH Authentication Agent, then set StartupType to Automatic.</li>  
+<li>If you are using Windows or Mac OS X: run <tt>ssh-add</tt> to start the SSH agent.</li>  
+<li>Use SSH to log in to the "gateway" node, but add the <tt>-A</tt> argument to the SSH command. Also specify the path to your private key with <tt>-i</tt>, if you normally do so when using SSH to log in to GENI hosts. </li>  
+<li>From the terminal on the "gateway" node, use the SSH command in the GENI Portal to log on to the "client" node. Do <i>not</i> use the <tt>-i</tt> argument and do not specify a path to a key, even if you normally do so when using SSH to log in to GENI hosts.</li>
+
+For example: <blockquote>
+
+<pre>ffund@laptop:~$ ssh <b>-A</b> ffund01@pc1.instageni.metrodatacenter.com -p 25812
+ffund01@gateway:~$ ssh ffund01@pc1.instageni.metrodatacenter.com -p 25810
+ffund01@client-1:~$
+</pre>  
+</blockquote>
+
+
+</ol></div>  
+
+<p><br></p>
+
+<h3 id="setupgateway">Set up gateway</h3>
+
+<p>Now we'll set up the "gateway" node:</p>
+
+<p>First, make sure packet forwarding is enabled, so that it can route traffic between the LAN and WAN. On the "gateway" node, run:</p>
+
+<pre><code>sudo sysctl -w net.ipv4.ip_forward=1  
+</code></pre>
+
+<p>Next, we will install <code>dnsmasq</code>, a lightweight DNS and DHCP server. On the "gateway" node, run:</p>
+
+<pre>echo "deb http://us.archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+
+sudo apt-get update
+sudo apt-get -y install dnsmasq dnsmasq-base
+</pre>
+
+<p>Don't worry if you see an error message in the output that says:</p>
+
+<pre><code>failed to create listening socket for port 53: Address already in use  
+</code></pre>
+
+<p>we'll fix that in a moment with a new configuration file!</p>
+
+<p>We will now configure <code>dnsmasq</code>. On "gateway", run</p>
+
+<pre><code>sudo wget -O /etc/dnsmasq.conf https://git.io/JThhR  
+</code></pre>
+
+<p>to download a <a href="https://gist.github.com/ffund/ae43447629c3c5b9da9eb54962f93adf">config file</a> into "/etc/dnsmasq.conf". The contents of the config file are:</p>
+
+<pre><code>interface=eth1  
+dhcp-range=192.168.100.100,192.168.100.199,4h  
+dhcp-option=3,192.168.100.1  
+dhcp-option=6,192.168.100.1  
+bind-interfaces  
+</code></pre>
+
+<p>This tells <code>dnsmasq</code> </p>
+
+<ul>
+<li>to accept incoming requests on the experiment interface, <code>eth1</code>, </li>
+<li>to give out IP addresses in the range 192.168.100.100-192.168.100.199, and</li>
+<li>to also notify clients to use it (192.168.100.1) as a default gateway (DHCP option 3),</li>
+<li>to also notify clients to use it (192.168.100.1) as the nameserver for DNS queries (DHCP option 6).</li>
+<li>to only bind to the interface on which it is listening for incoming connections (<code>eth1</code>)</li>
+</ul>
+
+<p>Restart the <code>dnsmasq</code> service to load the new configuration:</p>
+
+<pre><code>sudo service dnsmasq restart  
+</code></pre>
+
+<p>Now that both the gateway and the clients are set up, we will observe what happens when clients use some typical residential gateway services.</p>
+
+<h3 id="observeadhcprequestandresponse">Observe a DHCP request and response</h3>
+
+<p>We will use <code>tcpdump</code> to capture traffic involving DHCP on the LAN. On "gateway", run</p>
+
+<pre><code>sudo tcpdump -i eth1 -n -e -v "udp port 67 or udp port 68"  
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>-i eth1</code> sets the interface to listen on </li>
+<li><code>-n</code> says to show numerical addresses, rather than trying to resolve them to hostnames in the output,</li>
+<li><code>-e</code> says to shoe MAC addresses, </li>
+<li><code>-v</code> says to show verbose output (including details about the DHCP packets), and</li>
+<li><code>"udp port 67 or udp port 68"</code> is a filter that says to only show traffic using the DHCP ports (UDP port 67 for the DHCP server, UDP port 68 for the DHCP client).</li>
+</ul>
+
+<p>Now, from one of the client nodes, run:</p>
+
+<pre><code>sudo dhclient -d eth1  
+</code></pre>
+
+<p>to initiate a request for an address from DHCP. (The <code>-d</code> argument is to specify debug mode; it keeps the <code>dhclient</code> process in the foreground, and lets us see its output.)</p>
+
+<p>In this terminal you should see something like:</p>
+
+<pre><code>DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 3 (xid=0xf2a90c0)  
+DHCPREQUEST of 192.168.100.157 on eth1 to 255.255.255.255 port 67 (xid=0xf2a90c0)  
+DHCPOFFER of 192.168.100.157 from 192.168.100.1  
+DHCPACK of 192.168.100.157 from 192.168.100.1  
+bound to 192.168.100.157 -- renewal in 5679 seconds.  
+</code></pre>
+
+<p>Meanwhile, in the <code>tcpdump</code> output, you should see each of those messages. </p>
+
+<p>First, the client sends a "discover" request to try and find DHCP servers on the LAN. The client does not have an IP address yet, so this message has "0.0.0.0" (an invalid address) as the source IP address. Also, the client does not know the address of the DHCP server, so it uses the broadcast IP address "255.255.255.255" and the broadcast MAC address "ff:ff:ff:ff:ff:ff" in the destination fields of the Layer 2 and Layer 3 headers:</p>
+
+<pre>15:15:26.554336 02:eb:60:57:10:ad &gt; ff:ff:ff:ff:ff:ff ethertype IPv4 (0x0800), length 342: (tos 0x10, ttl 128, id 0, offset 0, flags [none], proto UDP (17), length 328)
+    0.0.0.0.68 &gt; 255.255.255.255.67: BOOTP/DHCP, Request from 02:eb:60:57:10:ad, length 300, xid 0xc0902a0f, Flags [none]
+      Client-Ethernet-Address 02:eb:60:57:10:ad
+      Vendor-rfc1048 Extensions
+        Magic Cookie 0x63825363
+        DHCP-Message Option 53, length 1: <b>Discover</b>
+        Hostname Option 12, length 10: "<hostname>"
+        Parameter-Request Option 55, length 13: 
+          Subnet-Mask, BR, Time-Zone, Default-Gateway
+          Domain-Name, Domain-Name-Server, Option 119, Hostname
+          Netbios-Name-Server, Netbios-Scope, MTU, Classless-Static-Route
+          NTP
+</hostname></pre>
+
+<p>Next, a DHCP server that receives this request (in this case: our gateway at 192.168.100.1), responds with an offer. In the example below, it offers the IP address "192.168.100.157":</p>
+
+<pre>15:15:29.058621 02:e6:fb:b7:f3:a5 &gt; 02:eb:60:57:10:ad, ethertype IPv4 (0x0800), length 342: (tos 0xc0, ttl 64, id 37575, offset 0, flags [none], proto UDP (17), length 328)
+    192.168.100.1.67 &gt; 192.168.100.157.68: BOOTP/DHCP, Reply, length 300, xid 0xc0902a0f, Flags [none]
+      <b>Your-IP 192.168.100.157
+      Server-IP 192.168.100.1</b>
+      Client-Ethernet-Address 02:eb:60:57:10:ad
+      Vendor-rfc1048 Extensions
+        Magic Cookie 0x63825363
+        DHCP-Message Option 53, length 1: <b>Offer</b>
+        Server-ID Option 54, length 4: 192.168.100.1
+        Lease-Time Option 51, length 4: 14400
+        RN Option 58, length 4: 7200
+        RB Option 59, length 4: 12600
+        Subnet-Mask Option 1, length 4: 255.255.255.0
+        BR Option 28, length 4: 192.168.100.255
+        <b>Domain-Name-Server Option 6, length 4: 192.168.100.1
+        Default-Gateway Option 3, length 4: 192.168.100.1</b>
+</pre>
+
+<p>The server also includes other DHCP options in the message -in this case, it informs the client of the default gateway to use (option 3) and the name server to use (option 6).</p>
+
+<p>The client responds with a request for the IP address that was just offered. In case multiple DHCP servers respond to the "Discover" message with an "Offer", the client will put in a "Request" for only one of them, from one DHCP server. The other DHCP servers will notice the request (since it is sent to the broadcast address, they will all receive it) and understand that the client does not accept their offer:</p>
+
+<pre>15:15:29.060208 02:eb:60:57:10:ad &gt; ff:ff:ff:ff:ff:ff, ethertype IPv4 (0x0800), length 342: (tos 0x10, ttl 128, id 0, offset 0, flags [none], proto UDP (17), length 328)
+    0.0.0.0.68 &gt; 255.255.255.255.67: BOOTP/DHCP, Request from 02:eb:60:57:10:ad, length 300, xid 0xc0902a0f, Flags [none]
+      Client-Ethernet-Address 02:eb:60:57:10:ad
+      Vendor-rfc1048 Extensions
+        Magic Cookie 0x63825363
+        DHCP-Message Option 53, length 1: <b>Request</b>
+        <b>Server-ID Option 54, length 4: 192.168.100.1
+        Requested-IP Option 50, length 4: 192.168.100.157</b>
+        Hostname Option 12, length 10: "<hostname>"
+        Parameter-Request Option 55, length 13: 
+          Subnet-Mask, BR, Time-Zone, Default-Gateway
+          Domain-Name, Domain-Name-Server, Option 119, Hostname
+          Netbios-Name-Server, Netbios-Scope, MTU, Classless-Static-Route
+          NTP
+</hostname></pre>
+
+<p>Finally, the server acknowledges the request, completing the process:</p>
+
+<pre>15:15:29.090184 02:e6:fb:b7:f3:a5 &gt; 02:eb:60:57:10:ad, ethertype IPv4 (0x0800), length 342: (tos 0xc0, ttl 64, id 37576, offset 0, flags [none], proto UDP (17), length 328)
+    192.168.100.1.67 &gt; 192.168.100.157.68: BOOTP/DHCP, Reply, length 300, xid 0xc0902a0f, Flags [none]
+      Your-IP 192.168.100.157
+      Server-IP 192.168.100.1
+      Client-Ethernet-Address 02:eb:60:57:10:ad
+      Vendor-rfc1048 Extensions
+        Magic Cookie 0x63825363
+        DHCP-Message Option 53, length 1: <b>ACK</b>
+        Server-ID Option 54, length 4: 192.168.100.1
+        Lease-Time Option 51, length 4: 14400
+        RN Option 58, length 4: 7200
+        RB Option 59, length 4: 12600
+        Subnet-Mask Option 1, length 4: 255.255.255.0
+        BR Option 28, length 4: 192.168.100.255
+        Domain-Name-Server Option 6, length 4: 192.168.100.1
+        Default-Gateway Option 3, length 4: 192.168.100.1
+</pre>
+
+<p>If you run </p>
+
+<pre><code>ifconfig eth1  
+</code></pre>
+
+<p>on the client (you can use Ctrl+C to stop the running <code>dhclient</code> instance), you should observe that it is now using the IP address assigned to it by DHCP, e.g.:</p>
+
+<pre>eth1      Link encap:Ethernet  HWaddr 02:eb:60:57:10:ad  
+          inet addr:<b>192.168.100.157</b>  Bcast:192.168.100.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:67 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:40 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:6314 (6.3 KB)  TX bytes:3941 (3.9 KB)
+</pre>
+
+<div class="cloudlab-specific">  
+<h4 class="cloudlab-specific"> Cloudlab-specific instructions: Updating DNS configuration</h4>
+
+<p>If you are using CloudLab, you should run </p>
+
+
+
+<pre>sudo /lib/systemd/systemd-resolved &amp;</pre>
+
+<p>on the client after running <tt>dhclient</tt>, to allow the system's name resolution configuration to be updated by the DHCP client. Hit Enter a few times to return to your regular terminal prompt.</p>
+
+</div><br>
+
+You can also see that the client has been configured to use the gateway as the name server, as specified in the DHCP options. On the client, run
+
+
+<pre><code>cat /etc/resolv.conf  
+</code></pre>
+
+
+
+to see the address of the name server it uses. You should see:
+
+
+<pre><code>nameserver 192.168.100.1  
+</code></pre>
+
+
+
+(You may also see some secondary nameservers from the host testbed site; that's OK!)
+
+Finally, we can see that the client uses the gateway as the default gateway for routing purposes. On the client, run
+
+
+<pre><code>route -n  
+</code></pre>
+
+
+
+to see routing rules. We should see two rules associated with the interface connected to the LAN:
+
+
+<pre><code>0.0.0.0         192.168.100.1   0.0.0.0         UG    0      0        0 eth1  
+192.168.100.0   0.0.0.0         255.255.255.0   U     0      0        0 eth1  
+</code></pre>
+
+
+
+The first rule says to use "192.168.100.1" as the next hop for any traffic whose destination address does not meet any more specific rule, i.e. as the default rule. The second rule says to send traffic for the 192.168.100.0/24 subnet out of the <span class="MathJax_Preview" style="color: inherit;"></span><span id="MathJax-Element-1-Frame" class="mjx-chtml MathJax_CHTML" tabindex="0" style="font-size: 119%; position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mstyle displaystyle=&quot;true&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mstyle&gt;&lt;/math&gt;" role="presentation"><span id="MJXc-Node-1" class="mjx-math" role="math" aria-hidden="true"><span id="MJXc-Node-2" class="mjx-mrow"><span id="MJXc-Node-3" class="mjx-mstyle"><span id="MJXc-Node-4" class="mjx-mrow"><span id="MJXc-Node-5" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.236em; padding-bottom: 0.282em;">e</span></span><span id="MJXc-Node-6" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.423em; padding-bottom: 0.282em;">t</span></span><span id="MJXc-Node-7" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I" style="padding-top: 0.469em; padding-bottom: 0.282em;">h</span></span><span id="MJXc-Node-8" class="mjx-mn"><span class="mjx-char MJXc-TeX-main-R" style="padding-top: 0.376em; padding-bottom: 0.329em;">1</span></span></span></span></span></span><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="true"><mi>e</mi><mi>t</mi><mi>h</mi><mn>1</mn></mstyle></math></span></span><script type="math/asciimath" id="MathJax-Element-1">eth1</script> interface, which is connected to the LAN.
+
+On the second client node, use 
+
+
+<pre><code>sudo dhclient -d eth1  
+</code></pre>
+
+
+
+to get an IP address on this node as well.
+
+<br>  
+<div class="cloudlab-specific">  
+<h4 class="cloudlab-specific"> Cloudlab-specific instructions: Updating DNS configuration</h4>
+
+<p>If you are using CloudLab, you should run </p>
+
+
+
+<pre>sudo /lib/systemd/systemd-resolved &amp;</pre>
+
+<p>on the second client also, after running <tt>dhclient</tt>, to allow the system's name resolution configuration to be updated by the DHCP client. Hit Enter a few times to return to your regular terminal prompt.</p>
+
+</div><br>
+
+<div>  
+</div>
+
+<h3 id="observeadnsqueryandresponse">Observe a DNS query and response</h3>
+
+<p>Next, we'll observe a DNS query and response. We can use a DNS lookup utility called <a href="https://linux.die.net/man/1/dig"><code>dig</code></a>.</p>
+
+<p>On the "gateway", run <code>tcpdump</code> to monitor traffic on UDP port 53, the DNS port:</p>
+
+<pre><code>sudo tcpdump -i eth1 -n -v "udp port 53"  
+</code></pre>
+
+<p>On a client, we are going to look up the IP address associated with the "website" node in our topology. </p>
+
+<div class="geni-specific">  
+<h4 class="geni-specific"> GENI-specific instructions: Find website hostname</h4>
+
+In the GENI Portal, click "Details" on your slice page and find the hostname associated with the "website" node. In my slice, it is "website.nat.ch-geni-net.instageni.research.umich.edu":
+
+<img width="100%" src="./Basic home gateway services_ DHCP, DNS, NAT_files/gateway-hostname.png">
+
+</div><br>
+
+<div class="cloudlab-specific">  
+<h4 class="cloudlab-specific"> Cloudlab-specific instructions: Find website hostname</h4>
+
+<p>In the CloudLab Portal, click the "List View" tab on your experiment page and find the hostname associated with the "website" node.  In my experiment, it is "aptvm068-1.apt.emulab.net":</p>
+
+
+<img width="100%" src="./Basic home gateway services_ DHCP, DNS, NAT_files/cloudlab-hostname.png">
+
+</div><br>  
+<div>  
+</div>
+
+<p>Then, on a client node, run</p>
+
+<pre>dig <b>website.nat.ch-geni-net.instageni.research.umich.edu</b>
+</pre>
+
+<p>substituting <em>your</em> hostname in place of mine in the command above.</p>
+
+<p>The output should look something like this:</p>
+
+<pre>; &lt;&lt;&gt;&gt; DiG 9.9.5-3ubuntu0.2-Ubuntu &lt;&lt;&gt;&gt; website.nat.ch-geni-net.instageni.research.umich.edu
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 29901
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 3
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+<b>;; QUESTION SECTION:
+;website.nat.ch-geni-net.instageni.research.umich.edu. IN A</b>
+
+<b>;; ANSWER SECTION:
+website.nat.ch-geni-net.instageni.research.umich.edu. 1    IN CNAME pcvm2-8.instageni.research.umich.edu.
+pcvm2-8.instageni.research.umich.edu. 30 IN A    192.41.233.62</b>
+
+<b>;; AUTHORITY SECTION:
+instageni.research.umich.edu. 30 IN    NS  ns.emulab.net.
+instageni.research.umich.edu. 30 IN    NS  ns.instageni.research.umich.edu.
+
+;; ADDITIONAL SECTION:
+ns.emulab.net.        7238    IN  A   155.98.32.70
+ns.instageni.research.umich.edu. 30 IN    A   192.41.233.4</b>
+
+;; Query time: 7 msec
+;; SERVER: 192.168.100.1#53(192.168.100.1)
+;; WHEN: Wed Mar 29 15:53:33 EDT 2017
+;; MSG SIZE  rcvd: 195
+</pre>
+
+<p>In particular, note:</p>
+
+<ul>
+<li>the QUESTION section describes the query: we are seeking an address ("A" <a href="https://en.wikipedia.org/wiki/List_of_DNS_record_types">record type</a>) for the name <code>website.nat.ch-geni-net.instageni.research.umich.edu.</code>.</li>
+<li>the ANSWER section gives the address of the name that was the subject of the query. In this instance, it informs us (through a CNAME <a href="https://en.wikipedia.org/wiki/List_of_DNS_record_types">record type</a>) that the name <code>website.nat.ch-geni-net.instageni.research.umich.edu.</code> is an alias for the host with "canonical name" <code>pcvm2-8.instageni.research.umich.edu.</code>, and then returns the address ("A" record) for <code>pcvm2-8.instageni.research.umich.edu.</code>.</li>
+<li>the AUTHORITY section lists the DNS servers that are authoritative for answering queries about the name, and the ADDITIONAL section lists their addresses. Specifically, it lists "ns.emulab.net." at 155.98.32.70 and "ns.instageni.research.umich.edu." at 192.41.233.4 as authoritative name servers for any name ending in <code>instageni.research.umich.edu.</code>. (An authoritative nameserver is one that holds the actual records for a particular domain or address; if queried, it marks its response for that address as an authoritative response. Other non-authoritative nameservers may relay the information from a cache or from another nameserver.)</li>
+</ul>
+
+<p>You should also see the DNS traffic in your <code>tcpdump</code> output on the gateway. First the query from the client to the gateway, seeking the address of "website.nat.ch-geni-net.instageni.research.umich.edu.":</p>
+
+<pre>15:56:51.703460 IP (tos 0x0, ttl 64, id 40389, offset 0, flags [none], proto UDP (17), length 109)
+    192.168.100.157.52370 &gt; 192.168.100.1.53: 52641+ [1au] <b>A? website.nat.ch-geni-net.instageni.research.umich.edu</b>. (81)
+</pre>
+
+<p>and then the response from the gateway, that gives the address as "192.41.233.62" in my example:</p>
+
+<pre>15:56:51.704291 IP (tos 0x0, ttl 64, id 37703, offset 0, flags [DF], proto UDP (17), length 223)
+    192.168.100.1.53 &gt; 192.168.100.157.52370: 52641* 2/2/3 website.nat.ch-geni-net.instageni.research.umich.edu. CNAME pcvm2-8.instageni.research.umich.edu., pcvm2-8.instageni.research.umich.edu. <b>A 192.41.233.62</b> (195)
+</pre>
+
+<p>With the addition of the <code>+trace</code> option, <code>dig</code> will show you each successive hierarchical step that the query takes, until it reaches the name server that is authoritative for the name. </p>
+
+<p>Let's try it! We can't run hierarchical query on a client node in our experiment, because at this point, the client nodes don't have access to the Internet to query DNS servers. (The client won't have Internet access until the next section, when we set up NAT.) Therefore, we will try this on the gateway node.</p>
+
+<p><strong>On the "gateway"</strong>, run:</p>
+
+<pre>dig +trace <b>website.nat.ch-geni-net.instageni.research.umich.edu</b>
+</pre>
+
+<p>again, substituting your own "website" node's hostname. This time, you'll see much more output.</p>
+
+<p>First, the DNS server returns a list of root name servers:</p>
+
+<pre>.            77637   IN  NS  e.root-servers.net.
+.            77637   IN  NS  a.root-servers.net.
+.            77637   IN  NS  h.root-servers.net.
+.            77637   IN  NS  j.root-servers.net.
+.            77637   IN  NS  b.root-servers.net.
+.            77637   IN  NS  m.root-servers.net.
+<b>.            77637   IN  NS  c.root-servers.net.</b>
+.            77637   IN  NS  i.root-servers.net.
+.            77637   IN  NS  g.root-servers.net.
+.            77637   IN  NS  l.root-servers.net.
+.            77637   IN  NS  f.root-servers.net.
+.            77637   IN  NS  d.root-servers.net.
+.            77637   IN  NS  k.root-servers.net.
+.            518071  IN  RRSIG   NS 8 0 518400 20170411170000 20170329160000 61045 . EhdIynzhYoqVrNs2csvZwCDUhQbDyUs8EujQ+XVKeQ02S2u0ZN39GY9h pBa7XpOyFAlNfYWNvWVLi1nkpJ7JKS+s4Gg/fU0Nw1MXc2hsbtdsduMs x9tNRjq5RduDfGBZLvNEikIoBndMU4esREkLtbSXrXp0TuvRpl3g5w5j +km7IImfv7KrfhZ16w6kKV8O1ye3yrQr9ow7/XBvUlvDnkcLXUphbfE3 M8vOF+5ABzb7KQp28S5WeI6mrC412jZQgGmdkdCVZArJtc+tKBOoLr64 0mwCMM+phVrLTkx9vdnZpnx9QBB7eqdSOqG9x09R7FiHVyaikueWedNs txIotQ==
+;; Received 1097 bytes from 127.0.0.1#53(127.0.0.1) in 19 ms
+</pre>
+
+<p>Then it queries one of the root name servers ("c.root-servers.net" in this example), and <em>that</em> returns a list of <code>.edu.</code> servers:</p>
+
+<pre>edu.            172800  IN  NS  f.edu-servers.net.
+<b>edu.            172800  IN  NS  c.edu-servers.net.</b>
+edu.            172800  IN  NS  g.edu-servers.net.
+edu.            172800  IN  NS  d.edu-servers.net.
+edu.            172800  IN  NS  l.edu-servers.net.
+edu.            172800  IN  NS  a.edu-servers.net.
+edu.            86400   IN  DS  28065 8 2 4172496CDE85534E51129040355BD04B1FCFEBAE996DFDDE652006F6 F8B2CE76
+edu.            86400   IN  RRSIG   DS 8 1 86400 20170411170000 20170329160000 61045 . RrZnh2YskIX8cXI1YuiVY9mBh79izFT8HuEc0dxU9B8fKbC5ddQZNPrw d2z0Rn/Bhym6yAAbY0u+5j1+RPXNMLcW2qAcktyw4i3wp4UiGowIcQIa dd5PMODvNrFc8IJpahPhwWcCbK8okgyP1AL9dNtWGcgv7+2zVB1e5vWN n5bOVtthU4p8/X4JI5zRZTyP9Mwz7hPkNFTeeAumjm+hlHJkRAQ211Bz 92f5nRgaJyyIfTq1w9AXRJjE9gnbYRVm32Bh0uEPh1wUddmsN788dYmc xzbbNjZDnAksPoopkupQinhvgSBO9Zf9d21dtR3WQLt1w2YoX46likoO rUJnNQ==
+;; Received 651 bytes from 192.33.4.12#53(<b>c.root-servers.net</b>) in 43 ms
+</pre>
+
+<p>Next, the "c.edu-servers.net." name server returns a list of name servers for the <code>umich.edu.</code> domain:</p>
+
+<pre>umich.edu.        172800  IN  NS  dns.cs.wisc.edu.
+<b>umich.edu.        172800  IN  NS  dns2.itd.umich.edu.</b>
+umich.edu.        172800  IN  NS  dns1.itd.umich.edu.
+9DHS4EP5G85PF9NUFK06HEK0O48QGK77.edu. 86400 IN NSEC3 1 1 0 - 9N4FQMDDEN9N9I8F7VUF86JHJF574LHS NS SOA RRSIG DNSKEY NSEC3PARAM
+9DHS4EP5G85PF9NUFK06HEK0O48QGK77.edu. 86400 IN RRSIG NSEC3 8 2 86400 20170405183649 20170329172649 43544 edu. unQy39EYi/666eEaXxmUQcsEgE/FtqxKCMVuODd4o8NhWp8gaTkukJNS OM1xfxo916xtQyVD2lXaoZ6pJCSENtYo8AUGja7Uvx2zGLpmH2a3gAWK gvZqHpkLchFQrlFcP3Qg6dqm6OJbjBBHDIcWyl8Q4ic5aYM1F15ewzA0 Y0Q=
+NOS8G1ANJ5QIKT46L3QM4OLBQD9V72K5.edu. 86400 IN NSEC3 1 1 0 - O9PNA7OPKKO436OEO034N6ANUNH47GJ5 NS DS RRSIG
+NOS8G1ANJ5QIKT46L3QM4OLBQD9V72K5.edu. 86400 IN RRSIG NSEC3 8 2 86400 20170405172140 20170329161140 43544 edu. ReOneHxFyyuuqcHaFrBftXfW5VCLGa0XCKWZAan1zW6vlQ3OtATJ0UHr +gR6UDb8nH8C+KAQCCdxanZM5feAOCsEDxl1X6D36nuMfVb86k3q8UZ/ jWy7OqDL2PMzRNjGI0Sdwl49BUx7VhGXjIt9ev87dFa1zHprJJHf8KCe mgU=
+;; Received 682 bytes from 192.26.92.30#53(<b>c.edu-servers.net</b>) in 30 ms
+</pre>
+
+<p>And then "dns2.itd.umich.edu" returns name servers for the subdomain <code>instageni.research.umich.edu.</code>:</p>
+
+<pre>instageni.research.umich.edu. 300 IN    NS  ns.instageni.research.umich.edu.
+<b>instageni.research.umich.edu. 300 IN    NS  ns.emulab.net.</b>
+;; Received 141 bytes from 192.12.80.222#53(<b>dns2.itd.umich.edu</b>) in 43 ms
+</pre>
+
+<p>Finally, from "ns.emulab.net" we get the address of <code>website.nat.ch-geni-net.instageni.research.umich.edu.</code>:</p>
+
+<pre><b>website.nat.ch-geni-net.instageni.research.umich.edu. 1    IN CNAME pcvm2-8.instageni.research.umich.edu.
+pcvm2-8.instageni.research.umich.edu. 30 IN A    192.41.233.62</b>
+instageni.research.umich.edu. 30 IN    NS  ns.emulab.net.
+instageni.research.umich.edu. 30 IN    NS  ns.instageni.research.umich.edu.
+;; Received 195 bytes from 155.98.32.70#53(<b>ns.emulab.net</b>) in 39 ms
+</pre>
+
+<h3 id="usenat">Use NAT</h3>
+
+<p>Next, we will set up our gateway to use NAT. On the gateway, run</p>
+
+<pre>sudo iptables -A FORWARD -o eth0 -i eth1 -s 192.168.100.0/24 -m conntrack --ctstate NEW -j ACCEPT
+sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -t nat -F POSTROUTING
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+</pre>
+
+<p>Here,</p>
+
+<ul>
+<li>The first rule tracks connections involving the 192.168.100.0/24 network, and makes sure that packets initiating a new connection are forwarded from the LAN to the WAN. </li>
+<li>The second rule allows forwarding of packets that are part of an established connection.</li>
+<li>The third and fourth rules actually do the network address translation. They will rewrite the source IP address in the Layer 3 header of packets forwarded out on the WAN interface. Also, when packets are received from the WAN, it identifies the connection that they belong to, rewrites the destination IP address in the Layer 3 headers, and forwards them on the LAN.</li>
+</ul>
+
+<p>Find out the public IP address of the NAT node. On the "gateway" device, run </p>
+
+<pre><code>wget -qO- http://ipinfo.io/  
+</code></pre>
+
+<p>and find out the public IP address associated with yours, e.g. </p>
+
+<pre>{
+  "ip": "<b>192.41.233.23</b>",
+  "hostname": "No Hostname",
+  "city": "Ann Arbor",
+  "region": "Michigan",
+  "country": "US",
+  "loc": "42.2734,-83.7133",
+  "org": "AS36375 University of Michigan",
+  "postal": "48104"
+}
+</pre>
+
+<p>With NAT, to the rest of the Internet, all of the hosts in our "home" network will appear as if they are coming from that IP address. On the client nodes, run</p>
+
+<pre><code>wget -qO- http://ipinfo.io/  
+</code></pre>
+
+<p>Note that this connection will go to the Internet via the gateway, using interface <code>eth1</code> which has a private IP address in the range 192.168.100.0/24. Despite this, you should see that the client, too, appears to be coming from the IP address belonging to the NAT:</p>
+
+<pre>{
+  "ip": "<b>192.41.233.23</b>",
+  "hostname": "No Hostname",
+  "city": "Ann Arbor",
+  "region": "Michigan",
+  "country": "US",
+  "loc": "42.2734,-83.7133",
+  "org": "AS36375 University of Michigan",
+  "postal": "48104"
+}
+</pre>
+
+<p>To further explore our NAT functionality, we'll configure a web server, then access it from one of our client hosts and observe what IP address the client appears to be connecting from.</p>
+
+<p>SSH into the "website" node and install the <a href="https://en.wikipedia.org/wiki/Apache_HTTP_Server">Apache</a> web server application on it:</p>
+
+<pre><code>sudo apt-get update  
+sudo apt-get -y install apache2  
+</code></pre>
+
+<div class="geni-specific">  
+<h4 class="geni-specific"> GENI-specific instructions: Open website in a web browser</h4>
+
+<p>On the client node, install a basic terminal-based web browser with:</p>
+
+
+
+<pre>sudo apt-get update
+sudo apt-get -y install lynx
+</pre>
+
+<p>We'll monitor traffic to and from the web server (which operates on TCP port 80) using tcpdump. We will monitor it in two places, on the LAN and on the WAN.</p>
+
+<p>On the "gateway" node, monitor traffic to and from the LAN:</p>
+
+
+
+<pre>sudo tcpdump -i <b>eth1</b> -n "tcp port 80"
+</pre>
+
+<p>and on the "website" node, monitor traffic to and from the WAN:</p>
+
+
+
+<pre>sudo tcpdump -i <b>eth0</b> -n "tcp port 80"
+</pre>
+
+<p>Then, on the client, run </p>
+
+
+
+<pre>lynx http://<b>website.nat.ch-geni-net.instageni.research.umich.edu</b>/
+</pre>
+
+<p>(substituting the hostname of <i>your</i> "website" node in the URL above). You should see the website load in the terminal: </p>
+
+<img src="./Basic home gateway services_ DHCP, DNS, NAT_files/lynx-apache2.png" width="100%">
+
+</div>  
+
+<p><br></p>
+
+<div class="cloudlab-specific">  
+<h4 class="cloudlab-specific"> CloudLab-specific instructions: Open website in a web browser</h4>
+
+<p>On the client node, install a web browser with:</p>
+
+
+
+<pre>sudo apt-get update
+sudo apt-get -y install firefox lynx
+</pre>
+
+
+<p>We'll monitor traffic to and from the web server (which operates on TCP port 80) using tcpdump. We will monitor it in two places, on the LAN and on the WAN.</p>
+
+<p>On the "gateway" node, monitor traffic to and from the LAN:</p>
+
+
+
+<pre>sudo tcpdump -i <b>eth1</b> -n "tcp port 80"
+</pre>
+
+<p>and on the "website" node, monitor traffic to and from the WAN:</p>
+
+
+
+<pre>sudo tcpdump -i <b>eth0</b> -n "tcp port 80"
+</pre>
+<p>Firefox is a graphical web browser, so to use it, you will need a VNC session. Open a VNC session on the client, and run</p>
+
+
+
+<pre>firefox
+</pre>
+
+<p>Then, inside your Firefox session, put the URL http://<b>aptvm068-1.apt.emulab.net</b>/ in the address bar (substituting the hostname of _your_ "website" node in the URL) and hit Enter. You should see the website load in the browser.</p>
+
+<p>As a fallback, in case your VNC session doesn't work out (it can be a little bit flaky), that's OK: we have also installed a terminal-based web browser that you can use inside your shell session. To try the terminal-based option, in a terminal session on the client run </p>
+
+
+
+<pre>lynx http://<b>aptvm068-1.apt.emulab.net</b>/
+</pre>
+
+<p>(substituting the hostname of <i>your</i> "website" node in the URL above). You should see the website load in the terminal.</p>
+
+</div>  
+
+<p><br></p>
+
+<p>Meanwhile, in the <code>tcpdump</code> output you can see how the IP addresses are rewritten in the packet headers. On the LAN (the <code>tcpdump</code> running on the "gateway" interface facing the LAN), the Layer 3 packet header shows the connection between 192.168.100.157 (port 57962) and 192.41.233.62 (port 80):</p>
+
+<pre>16:53:13.663719 IP <b>192.168.100.157</b>.57962 &gt; 192.41.233.62.80: Flags [S], seq 3245904370, win 29200, options [mss 1460,sackOK,TS val 1688452 ecr 0,nop,wscale 7], length 0
+16:53:14.231939 IP 192.41.233.62.80 &gt; <b>192.168.100.157</b>.57962: Flags [S.], seq 3992044697, ack 3245904371, win 28960, options [mss 1460,sackOK,TS val 1691466 ecr 1688452,nop,wscale 7], length 0
+16:53:14.232738 IP <b>192.168.100.157</b>.57962 &gt; 192.41.233.62.80: Flags [.], ack 1, win 229, options [nop,nop,TS val 1688595 ecr 1691466], length 0
+</pre>
+
+<p>However, for the <em>same</em> packets, the <code>tcpdump</code> running on the "website" node (on the WAN) shows the connection as being between 172.17.3.4 (port 57962) and 192.41.233.62 (port 80):</p>
+
+<pre>16:53:14.032389 IP <b>172.17.3.4</b>.57962 &gt; 192.41.233.62.80: Flags [S], seq 3245904370, win 29200, options [mss 1460,sackOK,TS val 1688452 ecr 0,nop,wscale 7], length 0
+16:53:14.032440 IP 192.41.233.62.80 &gt; <b>172.17.3.4</b>.57962: Flags [S.], seq 3992044697, ack 3245904371, win 28960, options [mss 1460,sackOK,TS val 1691466 ecr 1688452,nop,wscale 7], length 0
+16:53:14.299903 IP <b>172.17.3.4</b>.57962 &gt; 192.41.233.62.80: Flags [.], ack 1, win 229, options [nop,nop,TS val 1688595 ecr 1691466], length 0
+</pre>
+
+<p>confirming that the packet headers are rewritten in the NAT gateway.</p>
+
+<p><strong>Note</strong>: your "gateway" node may itself be located behind a NAT! So the WAN-facing IP address on the gateway may not be the same as the address you observe on the "website" node, and either or both of these addresses may not be the "public" IP address you identified previously.</p>
+
+<h2 id="notes">Notes</h2>
+
+<p>Updated September 2022: Added CloudLab instructions.</p>
+
+<p>Updated November 2020: Thanks to Devesh Yadav and Professor Violet Syrotiuk at Arizona State University for corrections.</p>
+
+<h3 id="exercise">Exercise</h3>
+
+<h4 id="dhcp">DHCP</h4>
+
+<ul>
+<li>Show the "Discover" packet sent by the client to try and find DHCP servers on the LAN. What are the source and destination IP addresses in this request? Why are these addresses used?</li>
+<li>Show the "Offer" packet sent by the server. What IP address does the server offer in this example? What is the range of addresses that the server in our experiment may offer? (You can refer to the <code>dnsmasq</code> configuration file.)</li>
+<li>Show the "Request" packet sent by the client. What is the destination address in this request? Why?</li>
+<li>Show the DHCP ACK sent by the server to complete the process. </li>
+<li>What command would you run at the client to verify each of the following? Take screenshots showing the command <em>and</em> the output for each of these, and annotate your screenshots by drawing a circle or a box around the configuration suggested by the server in the DHCP Offer/ACK.
+<ul><li>That the <code>eth1</code> interface will use the newly acquired IP address, and the   <code>Subnet-Mask</code> suggested by the server?</li>
+<li>That the client uses the <code>Domain-Name-Server</code> suggested by the server?</li>
+<li>That the client uses the <code>Default-Gateway</code> suggested by the server?</li></ul></li>
+</ul>
+
+<h4 id="dns">DNS</h4>
+
+<ul>
+<li>For the basic DNS resolution (not the one with <code>+trace</code>!) show the <code>dig</code> command and its output. Also show the DNS query and response from the <code>tcpdump</code> output. Answer the following questions using the <code>dig</code> output. No explanation is required - just copy and paste the relevant word from the <code>dig</code> output for each answer.
+<ul><li>What is the hostname that you tried to resolve?</li>
+<li>What is the DNS record <em>type</em> that your query relates to? (<a href="https://en.wikipedia.org/wiki/List_of_DNS_record_types">Here is a list of DNS record types</a>.)</li>
+<li>What is the <em>address</em> for the hostname you asked to resolve?</li>
+<li>Give the name of the first "authoritative" server listed for this name, and the IP address of that "authoritative" server.</li>
+<li>What is the IP address of the server that the DNS response is from?</li></ul></li>
+<li>For the hierarchical DNS resolution with <code>+trace</code>, show the <code>dig</code> command and its output. Draw a diagram showing how the hostname was resolved recursively, starting from the implied <code>.</code> at the end and moving toward the beginning.
+<ul><li>At the top, show the nameservers for the root domain. Highlight the one that you queried for the top-level domain (as shown in the <code>dig +trace</code> output).</li>
+<li>At the next level, show the nameservers for the top-level domain. Highlight the one that you queried for the second-level domain.</li>
+<li>At the next level, show the nameservers for the second-level domain. Highlight the one that you queried for the subdomain.</li>
+<li>Repeat until you have shown how the complete hostname is resolved.</li></ul></li>
+</ul>
+
+<h4 id="nat">NAT</h4>
+
+<ul>
+<li>Show the three-way TCP handshake for a connection between client and website as seen by <code>tcpdump</code> at the website, and as seen by <code>tcpdump</code> at the gateway (on the LAN). Make sure you can see the IP addresses and port numbers used in the connection!</li>
+<li>Draw a diagram showing how NAT is used between client and website, similar to <a href="./Basic home gateway services_ DHCP, DNS, NAT_files/gateway-nat-2.svg">this diagram</a> but with the IP addresses, hostnames, and ports from <em>your</em> experiment.</li>
+</ul>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="https://witestlab.poly.edu/blog/author/ffund/" style="background-image: url(/blog/content/images/2016/01/head.jpg)"><span class="hidden">Fraida Fund's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="https://witestlab.poly.edu/blog/author/ffund/">Fraida Fund</a></h4>
+
+                    <p>Read <a href="https://witestlab.poly.edu/blog/author/ffund/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    <span class="author-location icon-location">Brooklyn, NY</span>
+                    <span class="author-link icon-link"><a href="http://witestlab.poly.edu/~ffund/">http://witestlab.poly.edu/~ffund/</a></span>
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Basic%20home%20gateway%20services%3A%20DHCP%2C%20DNS%2C%20NAT&amp;url=https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/" onclick="window.open(this.href, &#39;twitter-share&#39;, &#39;width=550,height=235&#39;);return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/" onclick="window.open(this.href, &#39;google-plus-share&#39;, &#39;width=490,height=530&#39;);return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+<p>Did you reproduce this experiment? Have useful information to share with other intrepid researchers?
+Post it here! Comments are posted following moderation.</p>
+<script id="dsq-count-scr" src="./Basic home gateway services_ DHCP, DNS, NAT_files/count.js.download" async=""></script>
+<div id="disqus_thread"><iframe id="dsq-app6303" name="dsq-app6303" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Basic home gateway services_ DHCP, DNS, NAT_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 1502px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script>
+/**
+* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+*/
+/*
+var disqus_config = function () {
+this.page.url = https://witestlab.poly.edu/blog/basic-home-gateway-services-dhcp-dns-nat/; // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = ''; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+
+s.src = '//witestlab.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story " style="background-image: url(/blog/content/images/2017/03/subnet-topology-2.svg)" href="https://witestlab.poly.edu/blog/designing-subnets/">
+        <section class="post">
+            <h2>Designing subnets</h2>
+            <p>Your task in this experiment is to set up subnets in a few small LANs to meet given design…</p>
+        </section>
+    </a>
+    <a class="read-next-story prev " style="background-image: url(/blog/content/images/2017/03/dijkstra-topology-costs-1.svg)" href="https://witestlab.poly.edu/blog/dijkstras-shortest-path-algorithm/">
+        <section class="post">
+            <h2>Dijkstra's shortest path algorithm</h2>
+            <p>In this experiment, we will use Dijkstra's algorithm to find the shortest path from one node in a six-node…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="./Basic home gateway services_ DHCP, DNS, NAT_files/88x31.png"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</section>
+
+            <section class="poweredby">Proudly published with <a href="https://ghost.org/">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="./Basic home gateway services_ DHCP, DNS, NAT_files/jquery-1.12.0.min.js.download"></script>
+    
+    <script type="text/javascript" src="./Basic home gateway services_ DHCP, DNS, NAT_files/jquery.fitvids.js.download"></script>
+    <script type="text/javascript" src="./Basic home gateway services_ DHCP, DNS, NAT_files/index.js.download"></script>
+
+
+
+<iframe style="display: none;" src="./Basic home gateway services_ DHCP, DNS, NAT_files/saved_resource(1).html"></iframe></body></html>

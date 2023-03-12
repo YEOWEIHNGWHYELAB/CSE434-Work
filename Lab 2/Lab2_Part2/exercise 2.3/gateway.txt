@@ -1,0 +1,31 @@
+whyelab@gateway:~$ sudo iptables -A FORWARD -o eth0 -i eth1 -s 192.168.100.0/24 -m conntrack --ctstate NEW -j ACCEPT
+whyelab@gateway:~$ sudo iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+whyelab@gateway:~$ sudo iptables -t nat -F POSTROUTING
+whyelab@gateway:~$ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+whyelab@gateway:~$ wget -qO- http://ipinfo.io/  
+{
+  "ip": "130.127.132.207",
+  "city": "Clemson",
+  "region": "South Carolina",
+  "country": "US",
+  "loc": "34.6834,-82.8374",
+  "org": "AS12148 Clemson University",
+  "postal": "29632",
+  "timezone": "America/New_York",
+  "readme": "https://ipinfo.io/missingauth"
+}whyelab@gateway:~$ sudo tcpdump -i eth1 -n "tcp port 80"
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth1, link-type EN10MB (Ethernet), capture size 262144 bytes
+02:42:53.106410 IP 192.168.100.160.60340 > 128.110.97.128.80: Flags [S], seq 3054901198, win 64240, options [mss 1460,sackOK,TS val 2494888382 ecr 0,nop,wscale 7], length 0
+02:42:53.175761 IP 128.110.97.128.80 > 192.168.100.160.60340: Flags [S.], seq 2792255357, ack 3054901199, win 65160, options [mss 1460,sackOK,TS val 721239523 ecr 2494888382,nop,wscale 7], length 0
+02:42:53.176021 IP 192.168.100.160.60340 > 128.110.97.128.80: Flags [.], ack 1, win 502, options [nop,nop,TS val 2494888451 ecr 721239523], length 0
+02:42:53.176768 IP 192.168.100.160.60340 > 128.110.97.128.80: Flags [P.], seq 1:272, ack 1, win 502, options [nop,nop,TS val 2494888452 ecr 721239523], length 271: HTTP: GET / HTTP/1.0
+02:42:53.245781 IP 128.110.97.128.80 > 192.168.100.160.60340: Flags [.], ack 272, win 507, options [nop,nop,TS val 721239593 ecr 2494888452], length 0
+02:42:53.250198 IP 128.110.97.128.80 > 192.168.100.160.60340: Flags [.], seq 1:2897, ack 272, win 507, options [nop,nop,TS val 721239597 ecr 2494888452], length 2896: HTTP: HTTP/1.1 200 OK
+02:42:53.250231 IP 128.110.97.128.80 > 192.168.100.160.60340: Flags [P.], seq 2897:3441, ack 272, win 507, options [nop,nop,TS val 721239597 ecr 2494888452], length 544: HTTP
+02:42:53.250391 IP 128.110.97.128.80 > 192.168.100.160.60340: Flags [F.], seq 3441, ack 272, win 507, options [nop,nop,TS val 721239598 ecr 2494888452], length 0
+02:42:53.250532 IP 192.168.100.160.60340 > 128.110.97.128.80: Flags [.], ack 2897, win 491, options [nop,nop,TS val 2494888526 ecr 721239597], length 0
+02:42:53.250660 IP 192.168.100.160.60340 > 128.110.97.128.80: Flags [.], ack 3441, win 487, options [nop,nop,TS val 2494888526 ecr 721239597], length 0
+02:42:53.252073 IP 192.168.100.160.60340 > 128.110.97.128.80: Flags [F.], seq 272, ack 3442, win 501, options [nop,nop,TS val 2494888527 ecr 721239598], length 0
+02:42:53.320906 IP 128.110.97.128.80 > 192.168.100.160.60340: Flags [.], ack 273, win 507, options [nop,nop,TS val 721239668 ecr 2494888527], length 0
+02:43:18.414480 IP 130.127.132.205.80 > 159.65.169.200.53742: Flags [R.], seq 0, ack 3505134377, win 0, length 0
