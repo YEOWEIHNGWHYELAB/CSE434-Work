@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0084)https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+      GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup – GENI: geni
+    </title>
+      
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+          <link rel="search" href="https://groups.geni.net/geni/search">
+          <link rel="help" href="https://groups.geni.net/geni/wiki/TracGuide">
+          <link rel="alternate" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup?format=txt" type="text/x-trac-wiki" title="Plain Text">
+          <link rel="up" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS" title="View parent page">
+          <link rel="start" href="https://groups.geni.net/geni/wiki">
+          <link rel="stylesheet" href="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/trac.css" type="text/css">
+          <link rel="stylesheet" href="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/wiki.css" type="text/css">
+          <link rel="icon" href="https://groups.geni.net/geni/chrome/common/geni/geni.ico" type="image/x-icon">
+    
+      <link type="application/opensearchdescription+xml" rel="search" href="https://groups.geni.net/geni/search/opensearch" title="Search GENI: geni">
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/jquery.js.download"></script>
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/babel.js.download"></script>
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/trac.js.download"></script>
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/search.js.download"></script>
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/folding.js.download"></script>
+    <script type="text/javascript">
+      jQuery("#trac-noscript").remove();
+      jQuery(document).ready(function($) {
+        $(".trac-autofocus").focus();
+        $(".trac-target-new").attr("target", "_blank");
+        if ($.ui) { /* is jquery-ui added? */
+          $(".trac-datepicker:not([readonly])").prop("autocomplete", "off").datepicker();
+          $(".trac-datetimepicker:not([readonly])").prop("autocomplete", "off").datetimepicker();
+          $("#main").addClass("trac-nodatetimehint");
+        }
+        $(".trac-disable").disableSubmit(".trac-disable-determinant");
+        setTimeout(function() { $(".trac-scroll").scrollToTop() }, 1);
+        $(".trac-disable-on-submit").disableOnSubmit();
+      });
+    </script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://www.geni.net/"><img src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/header.gif" alt="GENI Wiki"></a>
+      </div>
+      <form id="search" action="https://groups.geni.net/geni/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="">
+          <input type="submit" value="Search">
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="https://groups.geni.net/geni/login">Login</a></li><li><a href="https://groups.geni.net/geni/prefs">Preferences</a></li><li><a href="https://groups.geni.net/geni/wiki/TracGuide">Help/Guide</a></li><li class="last"><a href="https://groups.geni.net/geni/about">About Trac</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="last first active"><a href="https://groups.geni.net/geni/wiki">Wiki</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="https://groups.geni.net/geni/wiki">wiki:</a><a class="pathentry" href="https://groups.geni.net/geni/wiki/GENIExperimenter" title="View GENIExperimenter">GENIExperimenter</a><span class="pathentry sep">/</span><a class="pathentry" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials" title="View GENIExperimenter/Tutorials">Tutorials</a><span class="pathentry sep">/</span><a class="pathentry" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS" title="View GENIExperimenter/Tutorials/OpenFlowOVS">OpenFlowOVS</a><span class="pathentry sep">/</span><a class="pathentry" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup" title="View GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup">DesignSetup</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+        <ul>
+          <li class="first"><a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS">Up</a></li><li><a href="https://groups.geni.net/geni/wiki/WikiStart">Start Page</a></li><li><a href="https://groups.geni.net/geni/wiki/TitleIndex">Index</a></li><li class="last"><a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup?action=history">History</a></li>
+        </ul>
+        <hr>
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          <div id="wikipage" class="trac-content"><hr>
+<p>
+<em>This tutorial is no longer actively maintained, see the <a class="wiki" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS-Floodlight">OpenFlow Tutorial with FloodLight Controller</a> tutorial for a up-to-date experiment</em>
+</p>
+<hr>
+<p>
+<strong><a class="wiki" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS">Intro to OpenFlow Tutorial (OVS) with POX Controller</a></strong>
+</p>
+
+<div style="text-align:center; width:495px; margin-left:auto; margin-right:auto">
+<img id="Image-Maps_5201305222028436" src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/Setup.jpg" usemap="#Image-Maps_5201305222028436" border="0" width="495" height="138" alt="">
+<map id="_Image-Maps_5201305222028436" name="Image-Maps_5201305222028436">
+<area shape="rect" coords="18,18,135,110" href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup" alt="" title="">
+<area shape="rect" coords="180,18,297,111" href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute" alt="" title="">
+<area shape="rect" coords="344,17,460,110" href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Finish" alt="" title="">
+<area shape="rect" coords="493,136,495,138" href="http://www.image-maps.com/index.php?aff=mapped_users_5201305222028436" alt="Image Map" title="Image Map">
+</map>
+</div>
+<p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <ol>
+      <li>
+        <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#Step1.Obtainresources">Step 1.  Obtain resources</a>
+      </li>
+      <li>
+        <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#Step2.ConfigureandInitialize">Step 2.  Configure and Initialize</a>
+        <ol>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#a2a.ConfiguretheSoftwareSwitchOVSWindow">2a. Configure  the Software Switch (OVS Window)</a>
+          </li>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#a2b.Pointyourswitchtoacontroller">2b. Point your switch to a controller</a>
+            <ol>
+              <li>
+                <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#a2c.standalonevssecuremode">2c. <code>standalone</code> vs <code>secure</code> mode</a>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#Prev:Introduction">Prev:  Introduction</a>
+  </li>
+  <li>
+    <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#Next:Execute">Next:  Execute</a>
+  </li>
+</ol>
+</div><p>
+</p>
+<table border="0">
+      <tbody><tr>
+       <td><b> Overview <br></b>
+     <i>In this tutorial we are going to use <a href="http://openvswitch.org/"> Open vSwitch (OVS) </a> as an OpenFlow switch connected to three hosts.
+OVS is a software switch running on a compute resource. The other three hosts can only communicate through the OVS switch. The experiment will need (the rspecs for this exercise are provided later in this section):
+           <ul>
+                <li>1 Xen VM with a public IP to run an OpenFlow controller</li>
+                <li> 1 Xen VM to be the OpenFlow switch </li>
+                <li> 3 Xen VMs as hosts</li>
+           </ul>
+</i>
+</td></tr></tbody></table>
+        
+        <img border="0" src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/SimpleSoftwareOVS.jpg" alt="Experiment Topology" height="250" title="Experiment Toplogy">
+       
+<h2 id="Step1.Obtainresources">Step 1.  Obtain resources<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#Step1.Obtainresources" title="Link to this section"> ¶</a></h2>
+<p>
+For the following two reservations you can use different aggregates and one slice (recommended) or same aggregate but two slices. We do this so that you can change your experiment topology (e.g. from software switches to hardware switches, but keep the same controller.
+</p>
+<table id="Table_01" border="0" cellpadding="5" cellspacing="0">
+  <tbody><tr>
+     <td> <img src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/4NotesIcon_512x512.png" width="40" alt="Note">  </td>
+     <td> You can use compute resources from any <b>InstaGENI rack</b> and any reservation tool (Portal, jFed, Omni, etc) For a list of available InstaGENI racks see the <a href="http://groups.geni.net/geni/wiki/GENIProduction">  GENI Production Resources </a> page.
+ </td>
+   </tr>
+</tbody></table>
+<ol class="loweralpha"><li><strong>Reserve a VM that runs your OpenFlow controller</strong>. <br>
+<em>RSpec:</em> In the Portal:  <em>XEN OpenFlow Controller</em>, url: <a class="ext-link" href="https://raw.githubusercontent.com/GENI-NSF/geni-tutorials/master/OldTutorials/OpenFlowOVS/xen-openflow-controller-rspec.xml"><span class="icon">​</span>https://raw.githubusercontent.com/GENI-NSF/geni-tutorials/master/OldTutorials/OpenFlowOVS/xen-openflow-controller-rspec.xml</a> 
+</li><li><strong>Reserve your network</strong>, that includes a VM with OVS installed.  <br>
+<em>RSpec</em>: In the Portal <em>OpenFlow OVS all XEN</em>, url: <a class="ext-link" href="https://raw.githubusercontent.com/GENI-NSF/geni-tutorials/master/OldTutorials/OpenFlowOVS/openflowovs-all-xen.rspec.xml"><span class="icon">​</span>https://raw.githubusercontent.com/GENI-NSF/geni-tutorials/master/OldTutorials/OpenFlowOVS/openflowovs-all-xen.rspec.xml</a>
+</li></ol><table id="Table_01" border="0" cellpadding="5" cellspacing="0">
+  <tbody><tr>
+     <td> <img src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/4NotesIcon_512x512.png" width="40" alt="Note">  </td>
+     <td> You will need SSH access to your nodes. If you don't know how to SSH to your reserved hosts learn <a href="http://groups.geni.net/geni/wiki/HowTo/LoginToNodes"> how to login </a></td>
+   </tr>
+</tbody></table>
+<h2 id="Step2.ConfigureandInitialize">Step 2.  Configure and Initialize<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#Step2.ConfigureandInitialize" title="Link to this section"> ¶</a></h2>
+<p>
+<strong>Overview: </strong>
+<em>Although OVS is installed and initialized on the host that is meant to act as a software switch, it has not been configured yet. 
+There are two main things that need to be configured: <br>
+</em></p>
+<blockquote>
+<p>
+<em>(1)  configure your software switch with the interfaces as ports</em> and <br>  <em> (2) point the switch to an OpenFlow controller</em>. <em>
+</em></p>
+</blockquote>
+<h3 id="a2a.ConfiguretheSoftwareSwitchOVSWindow">2a. Configure  the Software Switch (OVS Window)<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#a2a.ConfiguretheSoftwareSwitchOVSWindow" title="Link to this section"> ¶</a></h3>
+<ol class="lowerroman"><li>Login to the OVS host
+</li><li>Create an Ethernet bridge that will act as our software switch: 
+<pre class="wiki">sudo ovs-vsctl add-br br0
+</pre></li><li>Prepare the interfaces to be added as ports to the OVS switch
+<ul><li>Your OVS bridge will be a Layer 2 switch and your ports do not need IP addresses. Before we remove them let's keep some information
+<ul><li>Run  <code> ifconfig </code> 
+</li><li>Write down the interface names that correspond to the connections to your hosts. The correspondence is
+<ul><li>Interface with IP <em>10.10.1.11</em> to host1  - ethX
+</li><li>Interface with IP <em>10.10.1.12</em> to host2 - ethY
+</li><li> Interface with IP <em>10.10.1.13</em> to host3 - ethZ
+</li></ul></li></ul></li><li>Remove the IP from your data interfaces. <br>
+<a style="padding:0; border:none" href="https://groups.geni.net/geni/attachment/wiki/GENIExperimenter/Tutorials/Graphics/warning-icon-hi.png"><img width="2%" src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/warning-icon-hi.png"></a>  Be careful <strong>not to bring down eth0</strong>. This is the control interface, if you bring that interface down you <strong> won't be able to login</strong> to your host. For all interfaces other than <code>eth0</code> and <code> l0</code> (your interface names may vary) run : 
+<pre class="wiki">sudo ifconfig ethX 0  
+sudo ifconfig ethY 0 
+sudo ifconfig ethZ 0 
+</pre></li></ul></li><li>Add all the data interfaces to your switch (bridge). <br>
+<a style="padding:0; border:none" href="https://groups.geni.net/geni/attachment/wiki/GENIExperimenter/Tutorials/Graphics/warning-icon-hi.png"><img width="2%" src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/warning-icon-hi.png"></a>  Be careful <strong> not to add interface eth0</strong>. This is the control interface. The other three interfaces are your data interfaces. (Use the same interfaces as you used in the previous step.)
+<pre class="wiki">sudo  ovs-vsctl add-port br0 ethX 
+sudo  ovs-vsctl add-port br0 ethY 
+sudo  ovs-vsctl add-port br0 ethZ 
+</pre></li><li>Trust but verify. Congratulations! You have configured your software switch. To verify the three ports configured run:
+<pre class="wiki">sudo ovs-vsctl list-ports br0
+</pre></li></ol><h3 id="a2b.Pointyourswitchtoacontroller">2b. Point your switch to a controller<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#a2b.Pointyourswitchtoacontroller" title="Link to this section"> ¶</a></h3>
+<table id="Table_01" border="0" cellpadding="5" cellspacing="0">
+  <tbody><tr>
+     <td> <img src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/4NotesIcon_512x512.png" width="40" alt="Note">  </td>
+     <td>    <i>An OpenFlow switch will not forward any packet unless instructed by a controller. Basically the forwarding table is empty, until an external controller inserts forwarding rules. The OpenFlow controller communicates with the switch over the control network and it can be anywhere in the Internet as long as it is reachable by the OVS host. </i>
+ </td>
+   </tr>
+</tbody></table>
+<ol class="lowerroman"><li>Login to your controller
+</li><li> Find the control interface IP of your controller, use <em>ifconfig</em> and note down the IP address of <code>eth0</code>. 
+</li><li>In order to point our software OpenFlow switch to the controller, in the <em>ovs</em> terminal window, run:
+<pre class="wiki">sudo ovs-vsctl set-controller br0 tcp:&lt;controller_ip&gt;:6633
+</pre></li><li>Set your switch to <code>fail-safe-mode</code>. For more info read the <a class="wiki" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#standalonevssecuremode">standalone vs secure mode section</a>.  Run:
+<pre class="wiki">sudo ovs-vsctl set-fail-mode br0 secure
+</pre></li><li>Trust but verify. You can verify your OVS settings by issuing the following:
+<pre class="wiki">sudo ovs-vsctl show
+</pre></li></ol><h4 id="a2c.standalonevssecuremode">2c. <code>standalone</code> vs <code>secure</code> mode<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#a2c.standalonevssecuremode" title="Link to this section"> ¶</a></h4>
+<p>
+<em>The OpenFlow controller is responsible for setting up all flows on the switch, which means that when the controller is not running there should be no packet switching at all. Depending on the setup of your network, such a behavior might not be desired. It might be best that when the controller is down, the switch should default back to being a learning layer 2 switch. In other circumstances however this might be undesirable. In OVS this is a tunable parameter, called <code>fail-safe-mode</code> which can be set to the following parameters:</em>
+</p>
+<ul><li><code>standalone</code> <em>[default]: in this case OVS will take responsibility for forwarding the packets if the controller fails</em>
+</li><li><code>secure</code>: <em>in this case only the controller is responsible for forwarding packets, and if the controller is down all packets are dropped. </em>
+</li></ul><p>
+<em>In OVS when the parameter is not set it falls back to the <code>standalone</code> mode. For the purpose of this tutorial we will set the <code>fail-safe-mode</code> to <code>secure</code>, since we want to be the ones controlling the forwarding.</em>
+ 
+</p>
+<hr>
+<h1 id="Prev:Introduction"><a class="wiki" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS">Prev:  Introduction</a><a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#Prev:Introduction" title="Link to this section"> ¶</a></h1>
+<h1 id="Next:Execute"><a class="wiki" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute">Next:  Execute</a><a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup#Next:Execute" title="Link to this section"> ¶</a></h1>
+</div>
+          
+          <div class="trac-modifiedby">
+            <span><a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup?action=diff&amp;version=86" title="Version 86 by lnevers@bbn.com">Last modified</a> <a class="timeline" href="https://groups.geni.net/geni/timeline?from=2017-05-08T08%3A51%3A26-04%3A00&amp;precision=second" title="See timeline at 05/08/17 08:51:26">6 years ago</a></span>
+            <span class="trac-print">Last modified on 05/08/17 08:51:26</span>
+          </div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr>
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="./GENIExperimenter_Tutorials_OpenFlowOVS_DesignSetup – GENI_ geni_files/trac_logo_mini.png" height="30" width="107" alt="Trac Powered"></a>
+      <p class="left">Powered by <a href="https://groups.geni.net/geni/about"><strong>Trac 1.2.3</strong></a><br>
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">GENI Home Page<br><a href="http://www.geni.net/">http://www.geni.net/</a></p>
+    </div>
+  
+</body></html>

@@ -1,0 +1,90 @@
+16:00:14.723041 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 789353843:789353851, ack 1569805986, win 501, options [nop,nop,TS val 1733820647 ecr 1511517142], length 8: OpenFlow
+	version 1.0, type ECHO_REQUEST, length 8, xid 0x00000000
+16:00:14.759338 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 1:9, ack 8, win 501, options [nop,nop,TS val 1511522166 ecr 1733820647], length 8: OpenFlow
+	version 1.0, type ECHO_REPLY, length 8, xid 0x00000000
+16:00:14.760358 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [.], ack 9, win 501, options [nop,nop,TS val 1733820685 ecr 1511522166], length 0
+16:00:19.722352 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 8:16, ack 9, win 501, options [nop,nop,TS val 1733825646 ecr 1511522166], length 8: OpenFlow
+	version 1.0, type ECHO_REQUEST, length 8, xid 0x00000000
+16:00:19.728227 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 9:17, ack 16, win 501, options [nop,nop,TS val 1511527135 ecr 1733825646], length 8: OpenFlow
+	version 1.0, type ECHO_REPLY, length 8, xid 0x00000000
+16:00:19.729277 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [.], ack 17, win 501, options [nop,nop,TS val 1733825653 ecr 1511527135], length 0
+16:00:24.722322 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 16:24, ack 17, win 501, options [nop,nop,TS val 1733830646 ecr 1511527135], length 8: OpenFlow
+	version 1.0, type ECHO_REQUEST, length 8, xid 0x00000000
+16:00:24.747259 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 17:25, ack 24, win 501, options [nop,nop,TS val 1511532154 ecr 1733830646], length 8: OpenFlow
+	version 1.0, type ECHO_REPLY, length 8, xid 0x00000000
+16:00:24.748294 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [.], ack 25, win 501, options [nop,nop,TS val 1733830672 ecr 1511532154], length 0
+16:00:24.771840 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 24:140, ack 25, win 501, options [nop,nop,TS val 1733830696 ecr 1511532154], length 116: OpenFlow
+	version 1.0, type PACKET_IN, length 116, xid 0x00000000
+16:00:24.783300 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 25:235, ack 140, win 501, options [nop,nop,TS val 1511532190 ecr 1733830696], length 210: OpenFlow
+	version 1.0, type FLOW_MOD, length 80, xid 0x00000040
+	version 1.0, type BARRIER_REQUEST, length 8, xid 0x00000041
+	version 1.0, type PACKET_OUT, length 122, xid 0x00000042
+16:00:24.784544 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 140:148, ack 235, win 500, options [nop,nop,TS val 1733830709 ecr 1511532190], length 8: OpenFlow
+	version 1.0, type BARRIER_REPLY, length 8, xid 0x00000041
+16:00:24.787293 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 148:264, ack 235, win 501, options [nop,nop,TS val 1733830711 ecr 1511532190], length 116: OpenFlow
+	version 1.0, type PACKET_IN, length 116, xid 0x00000000
+16:00:24.788809 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 264, win 501, options [nop,nop,TS val 1511532196 ecr 1733830709], length 0
+16:00:24.790800 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 235:445, ack 264, win 501, options [nop,nop,TS val 1511532198 ecr 1733830709], length 210: OpenFlow
+	version 1.0, type FLOW_MOD, length 80, xid 0x00000043
+	version 1.0, type BARRIER_REQUEST, length 8, xid 0x00000044
+	version 1.0, type PACKET_OUT, length 122, xid 0x00000045
+16:00:24.791944 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 264:272, ack 445, win 500, options [nop,nop,TS val 1733830716 ecr 1511532198], length 8: OpenFlow
+	version 1.0, type BARRIER_REPLY, length 8, xid 0x00000044
+16:00:24.832229 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 272, win 501, options [nop,nop,TS val 1511532239 ecr 1733830716], length 0
+16:00:29.721991 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 272:280, ack 445, win 501, options [nop,nop,TS val 1733835646 ecr 1511532239], length 8: OpenFlow
+	version 1.0, type ECHO_REQUEST, length 8, xid 0x00000000
+16:00:29.722090 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 280, win 501, options [nop,nop,TS val 1511537129 ecr 1733835646], length 0
+16:00:29.761231 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 445:453, ack 280, win 501, options [nop,nop,TS val 1511537168 ecr 1733835646], length 8: OpenFlow
+	version 1.0, type ECHO_REPLY, length 8, xid 0x00000000
+16:00:29.804938 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [.], ack 453, win 501, options [nop,nop,TS val 1733835729 ecr 1511537168], length 0
+16:00:29.915297 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 280:340, ack 453, win 501, options [nop,nop,TS val 1733835839 ecr 1511537168], length 60: OpenFlow
+	version 1.0, type PACKET_IN, length 60, xid 0x00000000
+16:00:29.915323 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 340, win 501, options [nop,nop,TS val 1511537322 ecr 1733835839], length 0
+16:00:29.928523 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 453:607, ack 340, win 501, options [nop,nop,TS val 1511537335 ecr 1733835839], length 154: OpenFlow
+	version 1.0, type FLOW_MOD, length 80, xid 0x00000046
+	version 1.0, type BARRIER_REQUEST, length 8, xid 0x00000047
+	version 1.0, type PACKET_OUT, length 66, xid 0x00000048
+16:00:29.929414 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [.], ack 607, win 500, options [nop,nop,TS val 1733835853 ecr 1511537335], length 0
+16:00:29.930031 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 340:348, ack 607, win 500, options [nop,nop,TS val 1733835854 ecr 1511537335], length 8: OpenFlow
+	version 1.0, type BARRIER_REPLY, length 8, xid 0x00000047
+16:00:29.933368 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 348:408, ack 607, win 501, options [nop,nop,TS val 1733835857 ecr 1511537335], length 60: OpenFlow
+	version 1.0, type PACKET_IN, length 60, xid 0x00000000
+16:00:29.933998 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 408, win 501, options [nop,nop,TS val 1511537341 ecr 1733835854], length 0
+16:00:29.936720 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 607:761, ack 408, win 501, options [nop,nop,TS val 1511537344 ecr 1733835854], length 154: OpenFlow
+	version 1.0, type FLOW_MOD, length 80, xid 0x00000049
+	version 1.0, type BARRIER_REQUEST, length 8, xid 0x0000004a
+	version 1.0, type PACKET_OUT, length 66, xid 0x0000004b
+16:00:29.938000 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 408:416, ack 761, win 500, options [nop,nop,TS val 1733835862 ecr 1511537344], length 8: OpenFlow
+	version 1.0, type BARRIER_REPLY, length 8, xid 0x0000004a
+16:00:29.980240 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 416, win 501, options [nop,nop,TS val 1511537387 ecr 1733835862], length 0
+16:00:30.018064 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 416:476, ack 761, win 501, options [nop,nop,TS val 1733835942 ecr 1511537387], length 60: OpenFlow
+	version 1.0, type PACKET_IN, length 60, xid 0x00000000
+16:00:30.018094 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 476, win 501, options [nop,nop,TS val 1511537425 ecr 1733835942], length 0
+16:00:30.054829 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 761:915, ack 476, win 501, options [nop,nop,TS val 1511537462 ecr 1733835942], length 154: OpenFlow
+	version 1.0, type FLOW_MOD, length 80, xid 0x0000004c
+	version 1.0, type BARRIER_REQUEST, length 8, xid 0x0000004d
+	version 1.0, type PACKET_OUT, length 66, xid 0x0000004e
+16:00:30.056238 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 476:484, ack 915, win 500, options [nop,nop,TS val 1733835980 ecr 1511537462], length 8: OpenFlow
+	version 1.0, type BARRIER_REPLY, length 8, xid 0x0000004d
+16:00:30.058514 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 484:544, ack 915, win 501, options [nop,nop,TS val 1733835982 ecr 1511537462], length 60: OpenFlow
+	version 1.0, type PACKET_IN, length 60, xid 0x00000000
+16:00:30.060327 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 544, win 501, options [nop,nop,TS val 1511537467 ecr 1733835980], length 0
+16:00:30.062122 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 915:1069, ack 544, win 501, options [nop,nop,TS val 1511537469 ecr 1733835980], length 154: OpenFlow
+	version 1.0, type FLOW_MOD, length 80, xid 0x0000004f
+	version 1.0, type BARRIER_REQUEST, length 8, xid 0x00000050
+	version 1.0, type PACKET_OUT, length 66, xid 0x00000051
+16:00:30.063482 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 544:552, ack 1069, win 500, options [nop,nop,TS val 1733835987 ecr 1511537469], length 8: OpenFlow
+	version 1.0, type BARRIER_REPLY, length 8, xid 0x00000050
+16:00:30.104247 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 552, win 501, options [nop,nop,TS val 1511537511 ecr 1733835987], length 0
+16:00:34.721621 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 552:560, ack 1069, win 501, options [nop,nop,TS val 1733840645 ecr 1511537511], length 8: OpenFlow
+	version 1.0, type ECHO_REQUEST, length 8, xid 0x00000000
+16:00:34.721676 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [.], ack 560, win 501, options [nop,nop,TS val 1511542128 ecr 1733840645], length 0
+16:00:34.731233 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 1069:1077, ack 560, win 501, options [nop,nop,TS val 1511542138 ecr 1733840645], length 8: OpenFlow
+	version 1.0, type ECHO_REPLY, length 8, xid 0x00000000
+16:00:34.772726 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [.], ack 1077, win 501, options [nop,nop,TS val 1733840697 ecr 1511542138], length 0
+16:00:39.721258 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [P.], seq 560:568, ack 1077, win 501, options [nop,nop,TS val 1733845645 ecr 1511542138], length 8: OpenFlow
+	version 1.0, type ECHO_REQUEST, length 8, xid 0x00000000
+16:00:39.750534 IP pcvm602-4.emulab.net.6633 > pcvm605-4.emulab.net.58526: Flags [P.], seq 1077:1085, ack 568, win 501, options [nop,nop,TS val 1511547157 ecr 1733845645], length 8: OpenFlow
+	version 1.0, type ECHO_REPLY, length 8, xid 0x00000000
+16:00:39.751670 IP pcvm605-4.emulab.net.58526 > pcvm602-4.emulab.net.6633: Flags [.], ack 1085, win 501, options [nop,nop,TS val 1733845675 ecr 1511547157], length 0
+

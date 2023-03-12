@@ -1,0 +1,531 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0080)https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+      GENIExperimenter/Tutorials/OpenFlowOVS/Execute – GENI: geni
+    </title>
+      
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+          <link rel="search" href="https://groups.geni.net/geni/search">
+          <link rel="help" href="https://groups.geni.net/geni/wiki/TracGuide">
+          <link rel="alternate" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute?format=txt" type="text/x-trac-wiki" title="Plain Text">
+          <link rel="up" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS" title="View parent page">
+          <link rel="start" href="https://groups.geni.net/geni/wiki">
+          <link rel="stylesheet" href="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/trac.css" type="text/css">
+          <link rel="stylesheet" href="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/wiki.css" type="text/css">
+          <link rel="icon" href="https://groups.geni.net/geni/chrome/common/geni/geni.ico" type="image/x-icon">
+    
+      <link type="application/opensearchdescription+xml" rel="search" href="https://groups.geni.net/geni/search/opensearch" title="Search GENI: geni">
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/jquery.js.download"></script>
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/babel.js.download"></script>
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/trac.js.download"></script>
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/search.js.download"></script>
+      <script type="text/javascript" charset="utf-8" src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/folding.js.download"></script>
+    <script type="text/javascript">
+      jQuery("#trac-noscript").remove();
+      jQuery(document).ready(function($) {
+        $(".trac-autofocus").focus();
+        $(".trac-target-new").attr("target", "_blank");
+        if ($.ui) { /* is jquery-ui added? */
+          $(".trac-datepicker:not([readonly])").prop("autocomplete", "off").datepicker();
+          $(".trac-datetimepicker:not([readonly])").prop("autocomplete", "off").datetimepicker();
+          $("#main").addClass("trac-nodatetimehint");
+        }
+        $(".trac-disable").disableSubmit(".trac-disable-determinant");
+        setTimeout(function() { $(".trac-scroll").scrollToTop() }, 1);
+        $(".trac-disable-on-submit").disableOnSubmit();
+      });
+    </script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://www.geni.net/"><img src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/header.gif" alt="GENI Wiki"></a>
+      </div>
+      <form id="search" action="https://groups.geni.net/geni/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="">
+          <input type="submit" value="Search">
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="https://groups.geni.net/geni/login">Login</a></li><li><a href="https://groups.geni.net/geni/prefs">Preferences</a></li><li><a href="https://groups.geni.net/geni/wiki/TracGuide">Help/Guide</a></li><li class="last"><a href="https://groups.geni.net/geni/about">About Trac</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="last first active"><a href="https://groups.geni.net/geni/wiki">Wiki</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="https://groups.geni.net/geni/wiki">wiki:</a><a class="pathentry" href="https://groups.geni.net/geni/wiki/GENIExperimenter" title="View GENIExperimenter">GENIExperimenter</a><span class="pathentry sep">/</span><a class="pathentry" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials" title="View GENIExperimenter/Tutorials">Tutorials</a><span class="pathentry sep">/</span><a class="pathentry" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS" title="View GENIExperimenter/Tutorials/OpenFlowOVS">OpenFlowOVS</a><span class="pathentry sep">/</span><a class="pathentry" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute" title="View GENIExperimenter/Tutorials/OpenFlowOVS/Execute">Execute</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+        <ul>
+          <li class="first"><a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS">Up</a></li><li><a href="https://groups.geni.net/geni/wiki/WikiStart">Start Page</a></li><li><a href="https://groups.geni.net/geni/wiki/TitleIndex">Index</a></li><li class="last"><a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute?action=history">History</a></li>
+        </ul>
+        <hr>
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          <div id="wikipage" class="trac-content"><hr>
+<p>
+<em>This tutorial is no longer actively maintained, see the <a class="wiki" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS-Floodlight">OpenFlow Tutorial with FloodLight Controller</a> tutorial for a up-to-date experiment</em>
+</p>
+<hr>
+<h1 id="IntrotoOpenFlowTutorial"><a class="wiki" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS">Intro to OpenFlow Tutorial</a><a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#IntrotoOpenFlowTutorial" title="Link to this section"> ¶</a></h1>
+
+<div style="text-align:center; width:495px; margin-left:auto; margin-right:auto">
+<img id="Image-Maps_5201305222028436" src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/Execute.jpg" usemap="#Image-Maps_5201305222028436" border="0" width="495" height="138" alt="">
+<map id="_Image-Maps_5201305222028436" name="Image-Maps_5201305222028436">
+<area shape="rect" coords="18,18,135,110" href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup" alt="" title="">
+<area shape="rect" coords="180,18,297,111" href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute" alt="" title="">
+<area shape="rect" coords="344,17,460,110" href="http://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Finish" alt="" title="">
+<area shape="rect" coords="493,136,495,138" href="http://www.image-maps.com/index.php?aff=mapped_users_5201305222028436" alt="Image Map" title="Image Map">
+</map>
+</div>
+<p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#IntrotoOpenFlowTutorial">Intro to OpenFlow Tutorial</a>
+    <ol>
+      <li>
+        <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#Step3.ExecuteExperiment">Step 3. Execute Experiment</a>
+        <ol>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3a.Logintoyourhosts">3a. Login to your hosts</a>
+          </li>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3b.UseaLearningSwitchController">3b. Use a Learning Switch Controller</a>
+          </li>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3b.LookaroundyourOVSswitch">3b. Look around your OVS switch</a>
+            <ol>
+              <li>
+                <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#SoftvsHardTimeouts">Soft vs Hard Timeouts</a>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3d.Downloadthepoxapps">3d. Download the pox apps</a>
+            <ol>
+              <li>
+                <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#UsefulTipsforwritingyourcontroller">Useful Tips for writing your controller</a>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3e.DebuggingyourController">3e. Debugging your Controller</a>
+            <ol>
+              <li>
+                <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#i.Printmessages">i. Print messages</a>
+              </li>
+              <li>
+                <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#ii.Checkthestatusintheswitch">ii. Check the status in the switch</a>
+              </li>
+              <li>
+                <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#iii.UseWiresharktoseetheOpenFlowmessages">iii. Use Wireshark to see the OpenFlow messages</a>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3f.Runatrafficduplicationcontroller">3f. Run a traffic duplication controller</a>
+          </li>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3g.RunaportforwardController">3g. Run a port forward Controller</a>
+          </li>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3h.RunaServerProxyController">3h. Run a Server Proxy Controller</a>
+          </li>
+          <li>
+            <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3i.Deleteyourbridge">3i. Delete your bridge</a>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#Prev:DesignandSetupforOVS">[wiki:GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup Prev: Design …</a>
+  </li>
+  <li>
+    <a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#Next:Finish">Next:  Finish</a>
+  </li>
+</ol>
+</div><p>
+</p>
+<h2 id="Step3.ExecuteExperiment">Step 3. Execute Experiment<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#Step3.ExecuteExperiment" title="Link to this section"> ¶</a></h2>
+<p>
+Now that the switch is up and running we are ready to start working on the controller. For this tutorial we are going to use the <a class="ext-link" href="http://www.noxrepo.org/pox/about-pox/"><span class="icon">​</span>POX controller</a>. The software is already installed in the controller host for running POX and can also be found <a class="ext-link" href="https://github.com/GENI-NSF/geni-tutorials/raw/master/OldTutorials/OpenFlowOVS/of-ovs.tar.gz"><span class="icon">​</span>here</a>. 
+</p>
+<h3 id="a3a.Logintoyourhosts">3a. Login to your hosts<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3a.Logintoyourhosts" title="Link to this section"> ¶</a></h3>
+<p>
+To start our experiment we need to ssh all of our hosts. 
+</p>
+<p>
+To get ready for the tutorial you will need to have the following windows open:
+</p>
+<ul><li>one window with ssh into the controller
+</li><li>four windows with ssh into OVS
+</li><li>one window with ssh into host1 
+</li><li>two windows with ssh into host2 
+</li><li>one window with ssh into host3 
+</li></ul><p>
+Depending on which tool and OS you are using there is a slightly different process for logging in. If you don't know how to SSH to your reserved hosts learn <a class="wiki" href="https://groups.geni.net/geni/wiki/HowTo/LoginToNodes">how to login.</a> Once you have logged in follow the rest of the instructions. 
+</p>
+<h3 id="a3b.UseaLearningSwitchController">3b. Use a Learning Switch Controller<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3b.UseaLearningSwitchController" title="Link to this section"> ¶</a></h3>
+<p>
+In this example we are going to run a very simple learning switch controller to forward traffic between <code>host1</code> and <code>host2</code>.
+ 
+</p>
+<ol><li>First start a ping from  <code>host1</code> to <code>host2</code>, which should timeout, since there is no controller running. 
+</li></ol><pre class="wiki">ping host2 -c 10
+</pre><ol start="2"><li>We have installed the POX controller under <code>/tmp/pox</code> on the controller host. POX comes with a set of example modules that you can use out of the box. One of the modules is a learning switch.  Start the learning switch controller which is already available by running the following two commands:
+</li></ol>
+<table id="Table_01" border="0" cellpadding="5" cellspacing="0">
+    <tbody><tr>
+        <td>
+            <img src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/4NotesIcon_512x512.png" width="50" height="50" alt="Note">
+               </td>
+<td>If you want to run your controller in a different port other than the default one (6633) then every time you invoke pox you should include: <code>openflow.of_01 --port=</code> e.g. pox.py  openflow.of_01 --port=443 --verbose forwarding.l2_learning
+</td>
+        </tr>
+</tbody></table>
+
+<table id="Table_01" border="0" cellpadding="5" cellspacing="0">
+    <tbody><tr>
+        <td>
+            <img src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/4NotesIcon_512x512.png" width="50" height="50" alt="Note">
+               </td>
+<td>"l2" below uses the letter `l` as in level and is not the number one. And you should wait for the '''INFO ... connected''' line to ensure that the switch and the controller are communicating.
+</td>
+        </tr>
+</tbody></table>
+<p>
+ 
+</p>
+<pre class="wiki">cd /tmp/pox
+./pox.py --verbose forwarding.l2_learning
+</pre><p>
+The output should look like this:
+</p>
+<pre class="wiki">POX 0.1.0 (betta) / Copyright 2011-2013 James McCauley, et al.
+DEBUG:core:POX 0.1.0 (betta) going up...
+DEBUG:core:Running on CPython (2.7.3/Apr 20 2012 22:39:59)
+DEBUG:core:Platform is Linux-3.2.0-56-generic-x86_64-with-Ubuntu-12.04-precise
+INFO:core:POX 0.1.0 (betta) is up.
+DEBUG:openflow.of_01:Listening on 0.0.0.0:6633
+INFO:openflow.of_01:[9e-38-3e-8d-42-42 1] connected
+DEBUG:forwarding.l2_learning:Connection [9e-38-3e-8d-42-42 1]
+</pre>
+<table id="Table_01" border="0" cellpadding="5" cellspacing="0">
+    <tbody><tr>
+        <td>
+            <img src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/4NotesIcon_512x512.png4NotesIcon_512x512.png" width="50" height="50" alt="Note">
+               </td>
+<td>In the event that you need to move the port of your controller, this is the command -
+<pre>sudo ./pox.py --verbose openflow.of_01 --port=443 forwarding.l2_learning
+</pre>
+  Do not forget to tell the ovs switch that the controller will be listening on this new port, i.e change 6633 to 443 in Step 2c.
+</td>
+        </tr>
+</tbody></table>
+<ol start="3"><li>In the terminal of <code>host1</code>, ping <code>host2</code>:
+<pre class="wiki">[experimenter@host1 ~]$ ping host2 
+PING host2-lan1 (10.10.1.2) 56(84) bytes of data.
+From host1-lan0 (10.10.1.1) icmp_seq=2 Destination Host Unreachable
+From host1-lan0 (10.10.1.1) icmp_seq=3 Destination Host Unreachable
+From host1-lan0 (10.10.1.1) icmp_seq=4 Destination Host Unreachable
+64 bytes from host2-lan1 (10.10.1.2): icmp_req=5 ttl=64 time=23.9 ms
+64 bytes from host2-lan1 (10.10.1.2): icmp_req=6 ttl=64 time=0.717 ms
+64 bytes from host2-lan1 (10.10.1.2): icmp_req=7 ttl=64 time=0.654 ms
+64 bytes from host2-lan1 (10.10.1.2): icmp_req=8 ttl=64 time=0.723 ms
+64 bytes from host2-lan1 (10.10.1.2): icmp_req=9 ttl=64 time=0.596 ms
+</pre></li></ol><blockquote>
+<blockquote>
+<p>
+Now the ping should work. 
+</p>
+</blockquote>
+</blockquote>
+<ol start="4"><li>Go to your controller host and take a look at the print outs. You should see that your controller installed flows based on the mac addresses of your packets.  
+</li></ol>
+<table id="Table_01" border="0" cellpadding="5" cellspacing="0">
+    <tbody><tr>
+        <td>
+            <img src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/4NotesIcon_512x512.png" width="50" height="50" alt="Note">
+               </td>
+<td>There is no way to get this information from the OpenFlow-capable hardware switch.
+</td>
+        </tr>
+</tbody></table>
+<h3 id="a3b.LookaroundyourOVSswitch">3b. Look around your OVS switch<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3b.LookaroundyourOVSswitch" title="Link to this section"> ¶</a></h3>
+<ol><li>If you are using OVS, to see the flow table entries on your OVS switch:
+<pre class="wiki">sudo ovs-ofctl dump-flows br0
+</pre>You should see at least two table entries: One for ICMP Echo (icmp_type=8) messages from host1 to host2 and one for ICMP Echo Reply (icmp_type=0) messages from host2 to host1.  You may also see flow entries for arp packets.
+</li></ol><ol start="2"><li>To see messages go between your switch and your controller, open a new ssh window to your controller node and run tcpdump on the <code>eth0</code> interface and on the tcp port that your controller is listening on usually 6633.  (You can also run <code>tcpdump</code> on the <code>OVS</code> control interface if you desire.)
+<pre class="wiki">sudo tcpdump -i eth0 tcp port 6633
+</pre>You will see (1) periodic keepalive messages being exchanged by the switch and the controller, (2) messages from the switch to the controller (e.g. when there is a table miss) and an ICMP Echo message in, and (3) messages from the controller to the switch (e.g. to install new flow entries).
+</li></ol><ol start="3"><li>Kill your POX controller by pressing <code>Ctrl-C</code>:
+<pre class="wiki">DEBUG:forwarding.l2_learning:installing flow for 02:c7:e8:a7:40:65.1 -&gt; 02:f1:ae:bb:e3:a8.2
+INFO:core:Going down...
+INFO:openflow.of_01:[3a-51-a1-ab-c3-43 1] disconnected
+INFO:core:Down.
+</pre></li></ol><ol start="4"><li>Notice what happens to your ping on host1.
+</li></ol><ol start="5"><li>If you are using OVS, check the flow table entries on your switch:
+<pre class="wiki">sudo ovs-ofctl dump-flows br0
+</pre>Since you set your switch to "secure" mode, i.e. don't forward packets if the controller fails, you will not see flow table entries.  If you see flow table entries, try again after 10 seconds to give the entries time to expire.
+</li></ol><h4 id="SoftvsHardTimeouts">Soft vs Hard Timeouts<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#SoftvsHardTimeouts" title="Link to this section"> ¶</a></h4>
+<p>
+All rules on the switch have two different timeouts:
+</p>
+<ul><li><strong>Soft Timeout</strong>: This determines for how long the flow will remain in the forwarding table of the switch if there are no packets received that match the specific flow. As long as packets from that flow are received the flow remains on the flow table. 
+</li><li><strong>Hard Timeout</strong>: This determines the total time that a flow will remain at the forwarding table, independent of whether packets that match the flow are received; i.e. the flow will be removed after the hard timeout expires. 
+</li></ul><p>
+Can you tell now why there were packets flowing even after you killed your controller?
+</p>
+<h3 id="a3d.Downloadthepoxapps">3d. Download the pox apps<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3d.Downloadthepoxapps" title="Link to this section"> ¶</a></h3>
+<p>
+To help you get started with your controller writing, we will provide: 
+</p>
+<ul><li>skeleton files for the controllers where you only need to complete some missing functionality
+</li><li>the solution: fully implemented controllers
+</li><li>a utility library that makes some of the pox messages easier to write
+</li></ul><p>
+<strong>In the controller terminal execute</strong>:
+</p>
+<pre class="wiki">  cd /tmp/pox/ext
+  wget https://github.com/GENI-NSF/geni-tutorials/raw/master/NFVApps/pox-intro-ctrlapps.tar.gz
+  tar xvfz pox-intro-ctrlapps.tar.gz
+</pre><h4 id="UsefulTipsforwritingyourcontroller">Useful Tips for writing your controller<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#UsefulTipsforwritingyourcontroller" title="Link to this section"> ¶</a></h4>
+<p>
+In order to make this first experience of writing a controller easier, we wrote some helpful functions that will abstract some of the particularities of POX away. 
+These functions are located in <code>/tmp/pox/ext/utils.py</code>, so while you write your controller consult this file for details. 
+</p>
+<p>
+Functions that are implemented include:
+</p>
+<ul><li>packetIsIP : Test if the packet is IP
+</li><li>packetIsARP : Test if the packet is ARP
+</li><li>packetIsRequestARP : Test if this is an ARP Request packet
+</li><li>packetIsReplyARP : Test if this is an ARP Reply packet
+</li><li>packetArpDstIp : Test what is the destination IP in an ARP packet
+</li><li>packetArpSrcIp : Test what is the sources IP in an ARP packet
+</li><li>packetIsTCP : Test if a packet is TCP
+</li><li>packetDstIp : Test the destination IP of a packet
+</li><li>packetSrcIp : Test the source IP of a packet
+</li><li>packetDstTCPPort : Test the destination TCP port of a packet
+</li><li>packetSrcTCPPort : Test the source TCP port of a packet
+</li><li>createOFAction : Create one <a class="wiki" href="https://groups.geni.net/geni/wiki/OpenFlow">OpenFlow</a> action
+</li><li>getFullMatch : get the full match out of a packet
+</li><li>createFlowMod : create a flow mod
+</li><li>createArpRequest : Create an Arp Request for  a different destination IP
+</li><li>createArpReply : Create an Arp Reply for  a different source IP
+</li></ul><h3 id="a3e.DebuggingyourController">3e. Debugging your Controller<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3e.DebuggingyourController" title="Link to this section"> ¶</a></h3>
+<p>
+While you are developing your controller, some useful debugging tools are:
+</p>
+<h4 id="i.Printmessages">i. Print messages<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#i.Printmessages" title="Link to this section"> ¶</a></h4>
+<p>
+Run your controller in verbose mode (add --verbose) and add print messages at various places to see what your controller is seeing. 
+</p>
+<h4 id="ii.Checkthestatusintheswitch">ii. Check the status in the switch<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#ii.Checkthestatusintheswitch" title="Link to this section"> ¶</a></h4>
+<p>
+If you are using an OVS switch, you can dump information from your switch.  For example, to dump the flows:
+</p>
+<pre class="wiki">sudo ovs-ofctl dump-flows br0
+</pre><p>
+Two other useful commands show you the status of your switch:
+</p>
+<pre class="wiki">sudo ovs-vsctl show 
+sudo ovs-ofctl show br0
+</pre><h4 id="iii.UseWiresharktoseetheOpenFlowmessages">iii. Use Wireshark to see the <a class="wiki" href="https://groups.geni.net/geni/wiki/OpenFlow">OpenFlow</a> messages<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#iii.UseWiresharktoseetheOpenFlowmessages" title="Link to this section"> ¶</a></h4>
+<p>
+Many times it is useful to see the <a class="wiki" href="https://groups.geni.net/geni/wiki/OpenFlow">OpenFlow</a> messages being exchanged between your controller and the switch. This will tell you whether the messages that are created by your controller are correct and will allow you to see the details of any errors you might be seeing from the switch. You can use wireshark on both ends of the connection, in hardware switches you have to rely only on the controller view. 
+</p>
+<p>
+The controller host and OVS has wireshark installed, including the openflow dissector. For more information on wireshark you can take a look at the <a class="ext-link" href="http://wiki.wireshark.org/"><span class="icon">​</span>wireshark wiki</a>. 
+</p>
+<p>
+Here we have a simple case of how to use the <a class="wiki" href="https://groups.geni.net/geni/wiki/OpenFlow">OpenFlow</a> dissector for wireshark.
+</p>
+<p>
+If you are on a Linux friendly machine (this includes MACs) open a terminal and ssh to your controller machine using the -Y command line argument, i.e.
+</p>
+<pre class="wiki">ssh -Y &lt;username&gt;@&lt;controller&gt;
+</pre><p>
+Assuming that the public IP address on the controller is eth0, run wireshark by typing: 
+</p>
+<pre class="wiki">sudo wireshark -i eth0&amp;
+</pre><p>
+When the wireshark window pops up, you might still have to choose eth0 for a live capture.  And you will want to use a filter to cut down on the chatter in the wireshark window.   One such filter might be just seeing what shows up on port 6633. To do that type <em>tcp.port eq 6633</em> in the filter window, assuming that 6633 is the port that the controller is
+listening on.   And once you have lines, you can choose one of the lines and choose "Decode as ...." and choose the <em>OFP protocol</em>. 
+</p>
+<h3 id="a3f.Runatrafficduplicationcontroller">3f. Run a traffic duplication controller<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3f.Runatrafficduplicationcontroller" title="Link to this section"> ¶</a></h3>
+<p>
+In the above example we ran a very simple learning switch controller. <br>
+<img width="5%" src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/4NotesIcon_512x512(1).png">
+The power of OpenFlow comes from the fact that you can decide to forward the packet anyway you want based on the supported OpenFlow actions. A very simple but powerful modification you can do, is to duplicate all the traffic of the switch out a specific port. This is very useful for application and network analysis. You can imagine that at the port where you duplicate traffic you connect a device that does analysis. For this tutorial we  are going to verify the duplication by doing <code>tcpdump</code>  on two ports on the OVS switch. 
+</p>
+<ol><li><strong>Use the interfaces that are connected to <code>host2</code> and  <code>host3</code>. </strong>
+<ul><li>Software Switch (OVS): If you have not noted them down you can use the manifest and the MAC address of the interfaces (ovs:if1 and ovs:if2) to figure this out. But you should have noted down the interfaces in Section 2 when you were configuring the software switch. Run tcpdump on these interfaces; one in each of the two ovs terminals you opened. This will allow you to see all traffic going out the interfaces.
+<br>
+</li></ul></li></ol><p>
+   
+</p>
+<blockquote>
+<p>
+To see that duplication is happening, on the ovs host, run:  
+</p>
+<pre class="wiki">sudo tcpdump -i &lt;data_interface_name&gt;  [data_interface to host2]
+sudo tcpdump -i &lt;data_interface_name&gt;  [data_interface to host3]
+</pre></blockquote>
+<blockquote>
+<p>
+You should see traffic from host1 to host2 showing up in the tcpdump window for host3.  As a comparison, you will notice that no traffic shows up in that window when the controller is running the learning switch.
+</p>
+</blockquote>
+<ol start="2"><li><strong>In the controller host directory <code>/tmp/pox/ext</code> you should see two files:</strong>
+</li></ol><ol class="lowerroman"><li><strong>myDuplicateTraffic.py</strong> : This is the file that has instructions about how to complete the missing information. Go ahead and try to implement your first controller. 
+</li><li><strong>DuplicateTraffic.py</strong> : This has the actual solution. You can just run this if you don't want to bother with writing a controller. 
+</li></ol><ol start="3"><li>Run your newly written controller on the &lt;data_interface_name&gt; that corresponds to <em>OVS:if2</em> (which is connected to <code>host3</code>):  
+<pre class="wiki">cd /tmp/pox
+./pox.py --verbose DuplicateTraffic --duplicate_port=?
+</pre></li></ol><blockquote>
+<p>
+For example, if <em>OVS:if2</em> corresponds to "eth1", enter
+</p>
+</blockquote>
+<pre class="wiki">./pox.py --verbose myDuplicateTraffic --duplicate_port=eth1
+</pre><p>
+   
+</p>
+<ol start="4"><li>To test it go to the terminal of host1 and try to ping host2:
+<pre class="wiki">ping 10.10.1.2
+</pre>If your controller is working, your packets will register in both terminals running tcpdump. 
+</li></ol><ol start="5"><li>Stop the POX controller:
+<pre class="wiki">DEBUG:DuplicateTraffic:Got a packet : [02:f1:ae:bb:e3:a8&gt;02:c7:e8:a7:40:65 IP]
+DEBUG:SimpleL2Learning:installing flow for 02:f1:ae:bb:e3:a8.2 -&gt; 02:c7:e8:a7:40:65.[1, 2]
+
+INFO:core:Going down...
+INFO:openflow.of_01:[3a-51-a1-ab-c3-43 1] disconnected
+INFO:core:Down.
+</pre></li></ol><h3 id="a3g.RunaportforwardController">3g. Run a port forward Controller<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3g.RunaportforwardController" title="Link to this section"> ¶</a></h3>
+<p>
+Now let's do a slightly more complicated controller. <a class="wiki" href="https://groups.geni.net/geni/wiki/OpenFlow">OpenFlow</a> gives you the power to overwrite fields of your packets at the switch, for example the TCP source or destination port and do port forwarding. You can have clients trying to contact a server at port 5000, and the <a class="wiki" href="https://groups.geni.net/geni/wiki/OpenFlow">OpenFlow</a> switch can redirect your traffic to a service listening on port 6000. 
+</p>
+<ol><li>Under the <code>/tmp/pox/ext</code> directory there are two files: <strong>PortForwarding.py</strong> and <strong>myPortForwarding.py</strong> that are similar like the previous exercise. Both of these controller are configured by a configuration file at <code>ext/port_forward.config</code>. Use myPortForwarding.py to write your own port forwarding controller.
+</li></ol><ol start="2"><li>To test your controller we are going to use netcat. Go to the two terminals of host2. In one terminal run:
+<pre class="wiki">nc -l 5000
+</pre></li></ol><blockquote>
+<p>
+and in the other terminal run
+</p>
+<pre class="wiki">nc -l 6000
+</pre></blockquote>
+<ol start="3"><li>Now, start the simple layer 2 forwarding controller. We are doing this to see what happens with a simple controller.
+<pre class="wiki">cd /tmp/pox
+./pox.py --verbose forwarding.l2_learning
+</pre></li></ol><ol start="4"><li>Go to the terminal of host1 and connect to host2 at port 5000:
+<pre class="wiki">nc 10.10.1.2 5000
+</pre></li></ol><p>
+   
+</p>
+<ol start="5"><li>Type something and you should see it at the the terminal of host2 at port 5000. 
+</li></ol><ol start="6"><li>Now, stop the simple layer 2 forwarding controller:
+<pre class="wiki">DEBUG:forwarding.l2_learning:installing flow for 02:d4:15:ed:07:4e.3 -&gt; 02:ff:be:1d:19:ea.2
+
+INFO:core:Going down...
+INFO:openflow.of_01:[36-63-8b-d7-16-4b 1] disconnected
+INFO:core:Down.
+</pre></li></ol><ol start="7"><li>And start your port forwarding controller (if you have written your controller then use myPortForwarding in the following command):
+<pre class="wiki">./pox.py --verbose PortForwarding
+</pre></li></ol><ol start="8"><li>Repeat the netcat scenario described above. Now, your text should appear on the other terminal of host2 which is listening to port 6000. 
+</li></ol><ol start="9"><li>Stop your port forwarding controller:
+<pre class="wiki">DEBUG:myPortForwarding:Got a packet : [02:aa:a3:e8:6c:db&gt;33:33:ff:e8:6c:db IPV6]
+
+INFO:core:Going down...
+INFO:openflow.of_01:[36-63-8b-d7-16-4b 1] disconnected
+INFO:core:Down.
+</pre></li></ol><h3 id="a3h.RunaServerProxyController">3h. Run a Server Proxy Controller<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3h.RunaServerProxyController" title="Link to this section"> ¶</a></h3>
+<p>
+As our last exercise, instead of diverting the traffic to a different server running on the same host, we will divert the traffic to a server running on a different host and on a different port. 
+</p>
+<ol><li>Under the <code>/tmp/pox/ext/</code> directory there are two files: <strong>Proxy.py</strong> and <strong>myProxy.py</strong> that are similar like the previous exercise. Both of these controllers are configured by the configuration file <code>proxy.config</code>. Use myProxy.py to write your own proxy controller.
+</li></ol><ol start="2"><li>On the terminal of <code>host3</code> run a netcat server:
+<pre class="wiki">nc -l 7000
+</pre></li></ol><ol start="3"><li>On your controller host, open the /tmp/pox/ext/myProxy.py file, and edit it to implement a controller that will divert traffic destined for <code>host2</code> to <code>host3</code>. Before you start implementing think about what are the side effects of diverting traffic to a different host. 
+<ul><li>Is it enough to just change the IP address? 
+</li><li>Is it enough to just modify the TCP packets? 
+</li></ul></li></ol><blockquote>
+<blockquote>
+<p>
+If you want to see the solution, it's available in file /tmp/pox/ext/Proxy.py file.  
+</p>
+</blockquote>
+</blockquote>
+<p>
+  
+</p>
+<ol start="4"><li>To test your proxy controller run  (if you have written your controller then use myProxy in the following command):: 
+<pre class="wiki">cd /tmp/pox
+./pox.py --verbose Proxy
+</pre></li></ol><ol start="5"><li>Go back to the terminal of <code>host1</code> and try to connect netcat to <code>host2</code> port 5000
+<pre class="wiki">nc 10.10.1.2 5000
+</pre></li></ol><ol start="6"><li>If your controller works correctly, you should see your text showing up on the terminal of <code>host3</code>.
+</li></ol><h3 id="a3i.Deleteyourbridge">3i. Delete your bridge<a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#a3i.Deleteyourbridge" title="Link to this section"> ¶</a></h3>
+<p>
+Before moving to the next step make sure you delete the bridge you have created, especially if you are using the same reservation for a different exercise:
+</p>
+<pre class="wiki">  sudo ovs-vsctl del-br br0
+</pre><hr>
+<h1 id="Prev:DesignandSetupforOVS"><a class="wiki" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/DesignSetup">Prev: Design and Setup for OVS</a><a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#Prev:DesignandSetupforOVS" title="Link to this section"> ¶</a></h1>
+<h1 id="Next:Finish"><a class="wiki" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Finish">Next:  Finish</a><a class="anchor" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute#Next:Finish" title="Link to this section"> ¶</a></h1>
+</div>
+          
+          <div class="trac-modifiedby">
+            <span><a href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute?action=diff&amp;version=154" title="Version 154 by lnevers@bbn.com">Last modified</a> <a class="timeline" href="https://groups.geni.net/geni/timeline?from=2017-05-08T08%3A47%3A39-04%3A00&amp;precision=second" title="See timeline at 05/08/17 08:47:39">6 years ago</a></span>
+            <span class="trac-print">Last modified on 05/08/17 08:47:39</span>
+          </div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="https://groups.geni.net/geni/wiki/GENIExperimenter/Tutorials/OpenFlowOVS/Execute?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr>
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="./GENIExperimenter_Tutorials_OpenFlowOVS_Execute – GENI_ geni_files/trac_logo_mini.png" height="30" width="107" alt="Trac Powered"></a>
+      <p class="left">Powered by <a href="https://groups.geni.net/geni/about"><strong>Trac 1.2.3</strong></a><br>
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">GENI Home Page<br><a href="http://www.geni.net/">http://www.geni.net/</a></p>
+    </div>
+  
+</body></html>
